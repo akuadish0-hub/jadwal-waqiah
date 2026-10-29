@@ -1385,7 +1385,7 @@
   var syncApplying = false;
   var syncPending = false;
   var syncStarted = false;
-  var syncLastJson = "";
+  var syncDirty = false;
 
   function syncReady() {
     return !!(SYNC_CFG.project && SYNC_CFG.key) &&
@@ -1402,12 +1402,19 @@
       if (o && typeof o === "object") {
         syncMeta.at = Number(o.at) || 0;
         syncMeta.updateTime = typeof o.updateTime === "string" ? o.updateTime : "";
+        syncDirty = !!o.dirty;
       }
     } catch (e) { /* abaikan */ }
   }
 
   function saveSyncMeta() {
-    try { localStorage.setItem(SYNC_META_KEY, JSON.stringify(syncMeta)); } catch (e) { /* abaikan */ }
+    try {
+      localStorage.setItem(SYNC_META_KEY, JSON.stringify({
+        at: syncMeta.at,
+        updateTime: syncMeta.updateTime,
+        dirty: syncDirty
+      }));
+    } catch (e) { /* abaikan */ }
   }
 
   function setSyncState(kind) {
@@ -1443,7 +1450,7 @@
 
   function applyRemote(obj, at, updateTime) {
     if (!obj || typeof obj !== "object") return false;
-    if (syncPending || syncTimer) return false;
+    if (syncPending || syncTimer || syncDirty) return false;
     if (at && syncMeta.at && at < syncMeta.at) return false;
     syncApplying = true;
     var ok = applyStored(obj);
@@ -1536,6 +1543,9 @@
       .then(function (res) {
         if (!res || res.conflict) {
           setSyncState("conflict");
+          syncDirty = false;
+          syncPending = false;
+          saveSyncMeta();
           syncPull(true).then(function () {
             toast("Jadwal sudah diubah dari perangkat lain. Silakan ulangi perubahan tadi.");
           });
@@ -1543,7 +1553,7 @@
         }
         var t = res.writeResults && res.writeResults[0] && res.writeResults[0].updateTime;
         syncPending = false;
-        syncLastJson = json;
+        syncDirty = false;
         syncMeta.at = at;
         if (t) syncMeta.updateTime = t;
         saveSyncMeta();
@@ -1555,6 +1565,8 @@
   function syncQueue() {
     if (!syncStarted || !syncReady() || syncApplying) return;
     syncPending = true;
+    syncDirty = true;
+    saveSyncMeta();
     clearTimeout(syncTimer);
     setSyncState("pending");
     syncTimer = setTimeout(function () {
@@ -1567,11 +1579,21 @@
     loadSyncMeta();
     if (!syncReady()) { setSyncState("local"); return; }
     syncStarted = true;
+    setInterval(syncTick, 60000);
+    if (syncDirty) {
+      // ada perubahan lokal yang belum terkirim (mis. saat offline): kirim dulu
+      syncPending = true;
+      syncPush();
+      return;
+    }
     setSyncState("idle");
     syncPull(true);
-    setInterval(function () {
-      if (!document.hidden) syncPull(true);
-    }, 30000);
+  }
+
+  function syncTick() {
+    if (!syncStarted || document.hidden) return;
+    if (syncDirty) { syncPush(); return; }
+    syncPull(true);
   }
 
   /* ---------- navigasi ---------- */
@@ -1855,7 +1877,7 @@
   document.addEventListener("visibilitychange", function () {
     if (!document.hidden) {
       refreshRolling();
-      syncPull(true);
+      syncTick();
       if (prayerLoc.src === "gps" && Date.now() - prayerLoc.at > 600000) refreshGpsIfAllowed();
     }
   });

@@ -10,7 +10,7 @@ Sudah online dan bisa dibuka siapa saja, kapan saja — komputer tidak perlu men
 
 - Pasang di HP: buka link di browser → menu → **Tambahkan ke layar utama** (Add to Home screen).
 - Pembaruan: minta admin mengubah `index.html` lalu unggah ulang (atau hubungi pengelola).
-- **Tersinkron otomatis**: jadwal dan hasil tukar piket tersimpan online (Firebase Firestore, gratis), jadi sama di semua HP/komputer. Perubahan dari satu perangkat masuk ke perangkat lain dalam ±30 detik, atau langsung saat halaman dibuka kembali. Indikator di bawah halaman menunjukkan **Tersinkron 04.12**, **Menyimpan…**, **Mode luring**, atau **Perlu diperbarui**.
+- **Tersinkron otomatis**: jadwal dan hasil tukar piket tersimpan online (Firebase Firestore, gratis), jadi sama di semua HP/komputer. Perubahan dari satu perangkat langsung terlihat saat halaman dibuka di perangkat lain, dan paling lambat ±1 menit bila halaman sedang dibiarkan terbuka. Indikator di bawah halaman menunjukkan **Tersinkron 04.12**, **Menyimpan…**, **Mode luring**, atau **Perlu diperbarui**.
 - Saat tidak ada internet, aplikasi tetap jalan dan menyimpan di perangkat; perubahan dikirim otomatis begitu online. Bila dua perangkat mengubah data pada saat yang sama, yang tersimpan lebih dulu dianggap sumber terbaru dan perangkat lain diberi tahu lewat pesan singkat.
 
 
