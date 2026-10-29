@@ -372,6 +372,30 @@
   .result.is-warn .result-text{color:var(--gold)}
 
   .foot{margin-top:26px; text-align:center; font-size:11.5px; color:var(--muted); line-height:1.7}
+  .sync-badge{
+    display:inline-flex; align-items:center; gap:6px; vertical-align:middle;
+    margin-right:6px; padding:3px 9px 3px 8px;
+    font-size:10.5px; font-weight:700; letter-spacing:.02em;
+    border-radius:999px; border:1px solid var(--line);
+    background:var(--card); color:var(--muted);
+  }
+  .sync-dot{
+    width:6px; height:6px; border-radius:50%; flex:0 0 auto;
+    background:var(--muted); box-shadow:0 0 0 3px rgba(120,120,120,.12);
+  }
+  .sync-badge[data-state="ok"]{color:var(--accent); border-color:var(--accent-line); background:var(--accent-soft)}
+  .sync-badge[data-state="ok"] .sync-dot{background:var(--accent); box-shadow:0 0 0 3px rgba(13,92,70,.14)}
+  .sync-badge[data-state="pending"] .sync-dot,
+  .sync-badge[data-state="idle"] .sync-dot{background:var(--gold); animation:syncPulse 1.1s ease-in-out infinite}
+  .sync-badge[data-state="conflict"]{color:#8a5a12; border-color:#e6d0a0; background:#fbf0d8}
+  html[data-theme="dark"] .sync-badge[data-state="conflict"]{color:#f0c675; border-color:#4a3d22; background:#2c2415}
+  .sync-badge[data-state="conflict"] .sync-dot{background:#c98a1f}
+  .sync-badge[data-state="offline"]{color:var(--muted); border-style:dashed}
+  @keyframes syncPulse{0%,100%{opacity:1}50%{opacity:.35}}
+  @media (prefers-reduced-motion: reduce){
+    .sync-badge[data-state="pending"] .sync-dot,
+    .sync-badge[data-state="idle"] .sync-dot{animation:none}
+  }
   .foot-ar{
     margin:30px 0 2px; text-align:center;
     font-family:"Traditional Arabic", "Scheherazade New", "Amiri", "Noto Naskh Arabic", "Segoe UI", serif;
@@ -591,7 +615,12 @@
   </main>
 
   <p class="foot-ar" lang="ar" dir="rtl">وَاللَّهُ الْمُوَفِّقُ إِلَى أَقْوَمِ الطَّرِيقِ</p>
-  <p class="foot">Jadwal tersimpan di perangkat ini. Halaman pengingat &amp; jadwal dapat diakses siapa saja.</p>
+  <p class="foot">
+    <span class="sync-badge" id="syncBadge" data-state="idle" role="status" aria-live="polite" title="Status penyimpanan online.">
+      <span class="sync-dot" aria-hidden="true"></span><span id="syncText">Menyambungkan…</span>
+    </span>
+    Halaman pengingat &amp; jadwal dapat diakses siapa saja.
+  </p>
 </div>
 
 <!-- Dialog kata sandi admin -->
@@ -653,6 +682,13 @@
   var KEY = "piket-waqiah-v2";
   var THEME_KEY = "piket-waqiah-theme";
   var LOC_KEY = "piket-waqiah-loc";
+  var SYNC_META_KEY = "piket-waqiah-sync";
+  // Penyimpanan online (Firebase Firestore). Kosongkan project/key untuk mode luring saja.
+  var SYNC_CFG = {
+    project: "jadwal-waqiah",
+    key: "AIzaSyB21yQmgSHpUPSx7DnMTJgC_OF7fbNj-u0",
+    doc: "state/main"
+  };
   var ADMIN_PASS = "2405";
   var DAYS = 7;
   var PONDOK_DEFAULT = "PP Nurusy Syuhada' Kedungrejo";
@@ -1000,12 +1036,20 @@
   function save() {
     pruneLocks();
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* abaikan */ }
+    syncQueue();
   }
   function load() {
     try {
       var raw = localStorage.getItem(KEY);
       if (!raw) return false;
-      var o = JSON.parse(raw);
+      return applyStored(JSON.parse(raw));
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function applyStored(o) {
+    try {
       if (!o || typeof o !== "object") return false;
 
       if (typeof o.pondok === "string" && o.pondok.trim()) state.pondok = o.pondok;
@@ -1334,6 +1378,202 @@
     if (has) $("#resultText").textContent = swapResult.text;
   }
 
+  /* ---------- sinkronisasi online ---------- */
+  var syncMeta = { at: 0, updateTime: "" };
+  var syncTimer = 0;
+  var syncBusy = false;
+  var syncApplying = false;
+  var syncPending = false;
+  var syncStarted = false;
+  var syncLastJson = "";
+
+  function syncReady() {
+    return !!(SYNC_CFG.project && SYNC_CFG.key) &&
+      SYNC_CFG.project !== "PROJECT_ID" && SYNC_CFG.key !== "API_KEY";
+  }
+
+  function syncDocPath() {
+    return "projects/" + SYNC_CFG.project + "/databases/(default)/documents/" + SYNC_CFG.doc;
+  }
+
+  function loadSyncMeta() {
+    try {
+      var o = JSON.parse(localStorage.getItem(SYNC_META_KEY) || "null");
+      if (o && typeof o === "object") {
+        syncMeta.at = Number(o.at) || 0;
+        syncMeta.updateTime = typeof o.updateTime === "string" ? o.updateTime : "";
+      }
+    } catch (e) { /* abaikan */ }
+  }
+
+  function saveSyncMeta() {
+    try { localStorage.setItem(SYNC_META_KEY, JSON.stringify(syncMeta)); } catch (e) { /* abaikan */ }
+  }
+
+  function setSyncState(kind) {
+    var badge = $("#syncBadge");
+    var text = $("#syncText");
+    if (!badge || !text) return;
+    badge.dataset.state = kind;
+    if (kind === "ok" && syncMeta.at) {
+      var t = new Date(syncMeta.at).toLocaleTimeString("id-ID", { hour: "2-digit", minute: "2-digit" });
+      text.textContent = "Tersinkron " + t;
+      badge.title = "Jadwal tersimpan online dan sama di semua perangkat.";
+      return;
+    }
+    text.textContent = ({
+      idle: "Menyambungkan…",
+      pending: "Menyimpan…",
+      ok: "Tersinkron",
+      offline: "Mode luring",
+      local: "Hanya perangkat ini",
+      conflict: "Perlu diperbarui"
+    }[kind] || "Tersinkron");
+    badge.title = kind === "offline"
+      ? "Tidak ada koneksi. Perubahan disimpan di perangkat ini dan dikirim saat online."
+      : kind === "local"
+        ? "Penyimpanan online belum diaktifkan."
+        : "Status penyimpanan online.";
+  }
+
+  function isStateObject(o) {
+    return !!o && typeof o === "object" && Array.isArray(o.names) &&
+      o.names.some(function (n) { return typeof n === "string" && n.trim(); });
+  }
+
+  function applyRemote(obj, at, updateTime) {
+    if (!obj || typeof obj !== "object") return false;
+    if (syncPending || syncTimer) return false;
+    if (at && syncMeta.at && at < syncMeta.at) return false;
+    syncApplying = true;
+    var ok = applyStored(obj);
+    syncApplying = false;
+    if (!ok) return false;
+    syncMeta.at = at || Date.now();
+    if (updateTime) syncMeta.updateTime = updateTime;
+    saveSyncMeta();
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* abaikan */ }
+    renderHome();
+    renderSchedule();
+    renderSwap();
+    renderPending();
+    renderResult();
+    return true;
+  }
+
+  function syncPull(silent) {
+    if (!syncReady() || syncBusy) return Promise.resolve(false);
+    syncBusy = true;
+    return fetch("https://firestore.googleapis.com/v1/" + syncDocPath() + "?key=" + SYNC_CFG.key, { cache: "no-store" })
+      .then(function (r) {
+        if (r.status === 404) {
+          // belum ada data online: unggah jadwal perangkat ini sebagai awal
+          syncBusy = false;
+          if (!syncMeta.updateTime) syncPush();
+          else setSyncState("ok");
+          return false;
+        }
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (doc) {
+        if (!doc || !doc.fields) return false;
+        var raw = doc.fields.json ? doc.fields.json.stringValue : "";
+        var at = doc.fields.updatedAt
+          ? Number(doc.fields.updatedAt.integerValue || doc.fields.updatedAt.doubleValue || 0) : 0;
+        var updateTime = doc.updateTime || "";
+        if (!raw) return false;
+        if (updateTime && updateTime === syncMeta.updateTime) { setSyncState("ok"); return false; }
+        var obj;
+        try { obj = JSON.parse(raw); } catch (e) { obj = null; }
+        if (!isStateObject(obj)) {
+          // data online rusak / bukan format jadwal: timpa dengan data perangkat ini
+          syncPush(true);
+          return false;
+        }
+        var changed = applyRemote(obj, at, updateTime);
+        if (changed) {
+          setSyncState("ok");
+          if (!silent) toast("Jadwal diperbarui dari perangkat lain.");
+        } else {
+          setSyncState("ok");
+        }
+        return changed;
+      })
+      .catch(function () { setSyncState("offline"); return false; })
+      .then(function (v) { syncBusy = false; return v; });
+  }
+
+  function syncPush(force) {
+    if (!syncReady() || syncApplying) return;
+    var json = JSON.stringify(state);
+    var at = Date.now();
+    var write = {
+      update: {
+        name: syncDocPath(),
+        fields: {
+          json: { stringValue: json },
+          updatedAt: { integerValue: String(at) }
+        }
+      }
+    };
+    if (!force) {
+      write.currentDocument = syncMeta.updateTime ? { updateTime: syncMeta.updateTime } : { exists: false };
+    }
+    var body = { writes: [write] };
+    setSyncState("pending");
+    fetch("https://firestore.googleapis.com/v1/projects/" + SYNC_CFG.project +
+      "/databases/(default)/documents:commit?key=" + SYNC_CFG.key, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body)
+    })
+      .then(function (r) {
+        if (r.status === 409 || r.status === 400) return { conflict: true };
+        if (!r.ok) throw new Error("HTTP " + r.status);
+        return r.json();
+      })
+      .then(function (res) {
+        if (!res || res.conflict) {
+          setSyncState("conflict");
+          syncPull(true).then(function () {
+            toast("Jadwal sudah diubah dari perangkat lain. Silakan ulangi perubahan tadi.");
+          });
+          return;
+        }
+        var t = res.writeResults && res.writeResults[0] && res.writeResults[0].updateTime;
+        syncPending = false;
+        syncLastJson = json;
+        syncMeta.at = at;
+        if (t) syncMeta.updateTime = t;
+        saveSyncMeta();
+        setSyncState("ok");
+      })
+      .catch(function () { setSyncState("offline"); });
+  }
+
+  function syncQueue() {
+    if (!syncStarted || !syncReady() || syncApplying) return;
+    syncPending = true;
+    clearTimeout(syncTimer);
+    setSyncState("pending");
+    syncTimer = setTimeout(function () {
+      syncTimer = 0;
+      syncPush();
+    }, 900);
+  }
+
+  function syncStart() {
+    loadSyncMeta();
+    if (!syncReady()) { setSyncState("local"); return; }
+    syncStarted = true;
+    setSyncState("idle");
+    syncPull(true);
+    setInterval(function () {
+      if (!document.hidden) syncPull(true);
+    }, 30000);
+  }
+
   /* ---------- navigasi ---------- */
   function setTab(name) {
     activeTab = name;
@@ -1615,6 +1855,7 @@
   document.addEventListener("visibilitychange", function () {
     if (!document.hidden) {
       refreshRolling();
+      syncPull(true);
       if (prayerLoc.src === "gps" && Date.now() - prayerLoc.at > 600000) refreshGpsIfAllowed();
     }
   });
@@ -1623,6 +1864,7 @@
   updateAdminUI();
   renderAll();
   refreshGpsIfAllowed();
+  syncStart();
 })();
 </script>
 </body>

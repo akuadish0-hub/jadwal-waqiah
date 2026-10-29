@@ -10,7 +10,8 @@ Sudah online dan bisa dibuka siapa saja, kapan saja — komputer tidak perlu men
 
 - Pasang di HP: buka link di browser → menu → **Tambahkan ke layar utama** (Add to Home screen).
 - Pembaruan: minta admin mengubah `index.html` lalu unggah ulang (atau hubungi pengelola).
-- Catatan: data tersimpan di browser masing-masing perangkat, jadi jadwal hasil tukar piket tidak otomatis sama antar perangkat. Rotasi dasarnya tetap sama karena dihitung dari tanggal mulai.
+- **Tersinkron otomatis**: jadwal dan hasil tukar piket tersimpan online (Firebase Firestore, gratis), jadi sama di semua HP/komputer. Perubahan dari satu perangkat masuk ke perangkat lain dalam ±30 detik, atau langsung saat halaman dibuka kembali. Indikator di bawah halaman menunjukkan **Tersinkron 04.12**, **Menyimpan…**, **Mode luring**, atau **Perlu diperbarui**.
+- Saat tidak ada internet, aplikasi tetap jalan dan menyimpan di perangkat; perubahan dikirim otomatis begitu online. Bila dua perangkat mengubah data pada saat yang sama, yang tersimpan lebih dulu dianggap sumber terbaru dan perangkat lain diberi tahu lewat pesan singkat.
 
 
 Tampilannya bertema keislaman: logo pondok di samping kiri nama pondok dan judul (sejajar dengan keduanya), latar bermotif bintang delapan, aksen hijau zamrud dan emas, bingkai lengkung seperti mihrab pada kartu pengingat, lafaz basmalah di atas halaman, serta tanggal Hijriah di Beranda.
@@ -89,9 +90,19 @@ Selama masih ada pengajuan yang menunggu, pengajuan baru belum bisa dibuat.
 
 ## Catatan
 
-- Data (jadwal + pengajuan) disimpan di browser lewat `localStorage`, jadi tetap ada setelah ditutup. Ganti browser/perangkat → perlu isi ulang.
+- Data (jadwal + pengajuan) disimpan di browser lewat `localStorage` **dan** disalin ke Firestore, jadi tetap ada setelah ditutup dan sama di semua perangkat. Bila perangkat baru dibuka, data online langsung diambil.
+- Cadangan mandiri: bila ingin memindahkan data tanpa internet, salin nilai `piket-waqiah-v2` dari Developer Tools → Application → Local Storage.
 - Logo sudah ditanam langsung di dalam `index.html`, jadi tetap tampil meski file HTML dipindah sendiri. Berkas `logo-nsy.png` disertakan sebagai gambar sumber.
 - Bila file dibuka di beberapa tab sekaligus, perubahan di satu tab langsung mengikuti tab lain tanpa saling mengembalikan data lama.
 - Tanggal mulai rotasi menentukan siapa yang piket pada hari pertama. Menyimpan pengaturan akan **memulai ulang rotasi** dari tanggal itu dan **membatalkan** pengajuan tukar piket yang sedang menunggu.
 - Pengingat hanya tampil saat halaman dibuka; tidak ada notifikasi/alarm otomatis.
 - Kata sandi admin tertulis di dalam file (`ADMIN_PASS`). Ini hanya pembatas sederhana, bukan keamanan sungguhan.
+
+## Penyimpanan online (untuk pengelola)
+
+- Layanan: **Firebase Firestore** (paket gratis Spark, tanpa kartu kredit) — project `jadwal-waqiah`, dokumen `state/main`, lokasi database `asia-southeast2` (Jakarta).
+- Konfigurasi ada di `index.html` pada `SYNC_CFG` (project + API key). API key web Firebase memang dirancang publik; pengamannya ada di aturan Firestore.
+- Aturan Firestore hanya mengizinkan baca/tulis dokumen `state/main` dengan bentuk data `{json, updatedAt}` dan ukuran di bawah 60 KB. Dokumen lain ditolak.
+- Jadwal disimpan sebagai satu teks JSON di field `json`, ditambah penanda waktu `updatedAt`. Penulisan memakai pengaman `updateTime` Firestore, jadi dua perangkat tidak saling menimpa tanpa peringatan.
+- Bila data online rusak atau bukan format jadwal, aplikasi otomatis menimpanya dengan data perangkat yang sedang dibuka.
+- Untuk mengosongkan data online: hapus dokumen `state/main` di Firebase Console. Perangkat berikutnya yang membuka akan mengunggah ulang datanya.
