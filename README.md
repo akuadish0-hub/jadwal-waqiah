@@ -1,6 +1,6 @@
 # Jadwal Jaga Waqi'ah — PP Nurusy Syuhada' Kedungrejo
 
-Aplikasi web satu file (`index.html`) untuk jadwal piket jaga waqi'ah mulai **03.00 dini hari**. Cuma tiga halaman: pengingat, jadwal 7 hari yang bergulir, dan tukar piket. Jadwal berjalan terus mengikuti kalender. Bisa **dipasang di Android seperti aplikasi biasa** (PWA) dan tetap terbuka tanpa internet.
+Aplikasi web statis (utama `index.html`) untuk jadwal piket jaga waqi'ah mulai **03.00 dini hari**. Cuma tiga halaman: pengingat, jadwal 7 hari yang bergulir, dan tukar piket. Jadwal berjalan terus mengikuti kalender. Bisa **dipasang di Android seperti aplikasi biasa** (PWA) dan tetap terbuka tanpa internet.
 
 ## Link online
 
