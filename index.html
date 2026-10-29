@@ -5,6 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Jadwal Jaga Waqi'ah — PP Nurusy Syuhada' Kedungrejo</title>
 <meta name="theme-color" content="#0d5c46">
+<meta name="description" content="Jadwal piket jaga waqi'ah PP Nurusy Syuhada' Kedungrejo mulai 03.00 dini hari, lengkap dengan jam salat dan tukar piket.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Jadwal Waqi'ah">
+<meta name="application-name" content="Jadwal Waqi'ah">
 <script>
   (function () {
     try {
@@ -25,7 +33,7 @@
     --card-soft:#f8f3e6;
     --ink:#1d2a24;
     --ink-soft:#3b4a41;
-    --muted:#6b7462;
+    --muted:#66705c;
     --line:#e7ddc6;
     --line-soft:#f0e8d6;
     --accent:#0d5c46;
@@ -396,6 +404,21 @@
     .sync-badge[data-state="pending"] .sync-dot,
     .sync-badge[data-state="idle"] .sync-dot{animation:none}
   }
+  .install-wrap{margin-top:14px; text-align:center}
+  .install-btn{
+    display:inline-flex; align-items:center; gap:8px;
+    padding:9px 18px; border-radius:999px;
+    border:1px solid var(--accent-line); background:var(--accent-soft); color:var(--accent);
+    font:inherit; font-size:12.5px; font-weight:700; cursor:pointer;
+    transition:transform .12s ease, filter .12s ease;
+  }
+  .install-btn:hover{filter:brightness(1.04)}
+  .install-btn:active{transform:translateY(1px)}
+  .install-btn:focus-visible{outline:2px solid var(--accent); outline-offset:3px}
+  .install-btn svg{width:14px; height:14px; flex:0 0 auto}
+  .install-note{margin:7px 0 0; font-size:11px; color:var(--muted)}
+  @media (display-mode: standalone){ .install-wrap{display:none !important} }
+
   .foot-ar{
     margin:30px 0 2px; text-align:center;
     font-family:"Traditional Arabic", "Scheherazade New", "Amiri", "Noto Naskh Arabic", "Segoe UI", serif;
@@ -621,6 +644,18 @@
     </span>
     Halaman pengingat &amp; jadwal dapat diakses siapa saja.
   </p>
+
+  <div class="install-wrap" id="installWrap" hidden>
+    <button type="button" class="install-btn" id="btnInstall">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 3v11"></path>
+        <path d="m7.5 9.5 4.5 4.5 4.5-4.5"></path>
+        <path d="M4 17v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2"></path>
+      </svg>
+      <span>Pasang aplikasi</span>
+    </button>
+    <p class="install-note">Dipasang di layar utama, bisa dibuka tanpa internet.</p>
+  </div>
 </div>
 
 <!-- Dialog kata sandi admin -->
@@ -1887,6 +1922,66 @@
   renderAll();
   refreshGpsIfAllowed();
   syncStart();
+
+  /* ---------- pasang sebagai aplikasi (PWA) ---------- */
+  var installPrompt = null;
+  var installWrap = $("#installWrap");
+  var btnInstall = $("#btnInstall");
+
+  function isStandalone() {
+    try {
+      if (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) return true;
+    } catch (e) { /* abaikan */ }
+    return window.navigator.standalone === true;
+  }
+  function showInstall(on) {
+    if (!installWrap) return;
+    installWrap.hidden = !on || isStandalone();
+  }
+  function isIos() {
+    var ua = navigator.userAgent || "";
+    if (/iphone|ipad|ipod/i.test(ua)) return true;
+    return /macintosh/i.test(ua) && navigator.maxTouchPoints > 1;
+  }
+
+  window.addEventListener("beforeinstallprompt", function (e) {
+    e.preventDefault();
+    installPrompt = e;
+    showInstall(true);
+  });
+  window.addEventListener("appinstalled", function () {
+    installPrompt = null;
+    showInstall(false);
+    toast("Aplikasi sudah terpasang di layar utama.");
+  });
+  if (btnInstall) {
+    btnInstall.addEventListener("click", function () {
+      if (installPrompt) {
+        var prompt = installPrompt;
+        installPrompt = null;
+        prompt.prompt();
+        if (prompt.userChoice && prompt.userChoice.then) {
+          prompt.userChoice.then(function (res) {
+            showInstall(!(res && res.outcome === "accepted"));
+          }).catch(function () { showInstall(false); });
+        } else {
+          showInstall(false);
+        }
+        return;
+      }
+      // iPhone/iPad dan browser yang tidak menyediakan tombol pasang otomatis
+      toast("Buka menu browser, lalu pilih \u201cTambahkan ke layar utama\u201d.");
+    });
+  }
+  // iPhone/iPad: tampilkan tombol panduan karena tidak ada beforeinstallprompt
+  if (isIos() && !isStandalone()) showInstall(true);
+
+  /* ---------- mode luring (service worker) ---------- */
+  if ("serviceWorker" in navigator && location.protocol !== "file:") {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("sw.js").catch(function () { /* diabaikan */ });
+    });
+  }
 })();
 </script>
 </body>

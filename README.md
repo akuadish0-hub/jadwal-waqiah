@@ -1,6 +1,6 @@
 # Jadwal Jaga Waqi'ah — PP Nurusy Syuhada' Kedungrejo
 
-Aplikasi web satu file (`index.html`) untuk jadwal piket jaga waqi'ah mulai **03.00 dini hari**. Cuma tiga halaman: pengingat, jadwal 7 hari yang bergulir, dan tukar piket. Jadwal berjalan terus mengikuti kalender.
+Aplikasi web satu file (`index.html`) untuk jadwal piket jaga waqi'ah mulai **03.00 dini hari**. Cuma tiga halaman: pengingat, jadwal 7 hari yang bergulir, dan tukar piket. Jadwal berjalan terus mengikuti kalender. Bisa **dipasang di Android seperti aplikasi biasa** (PWA) dan tetap terbuka tanpa internet.
 
 ## Link online
 
@@ -8,10 +8,23 @@ Aplikasi web satu file (`index.html`) untuk jadwal piket jaga waqi'ah mulai **03
 
 Sudah online dan bisa dibuka siapa saja, kapan saja — komputer tidak perlu menyala. Bisa dibagikan lewat WhatsApp atau dipindai dari kode QR `qr-jadwal-waqiah.png`.
 
-- Pasang di HP: buka link di browser → menu → **Tambahkan ke layar utama** (Add to Home screen).
+- Pasang di HP: buka link di browser → tekan tombol **Pasang aplikasi** di bawah halaman (atau menu ⋮ → **Instal aplikasi** / **Tambahkan ke layar utama**).
 - Pembaruan: minta admin mengubah `index.html` lalu unggah ulang (atau hubungi pengelola).
 - **Tersinkron otomatis**: jadwal dan hasil tukar piket tersimpan online (Firebase Firestore, gratis), jadi sama di semua HP/komputer. Perubahan dari satu perangkat langsung terlihat saat halaman dibuka di perangkat lain, dan paling lambat ±1 menit bila halaman sedang dibiarkan terbuka. Indikator di bawah halaman menunjukkan **Tersinkron 04.12**, **Menyimpan…**, **Mode luring**, atau **Perlu diperbarui**.
 - Saat tidak ada internet, aplikasi tetap jalan dan menyimpan di perangkat; perubahan dikirim otomatis begitu online. Bila dua perangkat mengubah data pada saat yang sama, yang tersimpan lebih dulu dianggap sumber terbaru dan perangkat lain diberi tahu lewat pesan singkat.
+
+## Pasang di Android (seperti aplikasi)
+
+1. Buka **https://akuadish0-hub.github.io/jadwal-waqiah/** di **Chrome** pada HP.
+2. Tunggu beberapa saat sampai tombol **Pasang aplikasi** muncul di bawah halaman, lalu tekan tombol itu.
+   Bila tombol belum muncul: tekan menu **⋮** di kanan atas Chrome → **Instal aplikasi** (atau **Tambahkan ke layar utama**).
+3. Konfirmasi **Instal**. Ikon Jadwal Waqi'ah muncul di layar utama dan di daftar aplikasi HP.
+4. Buka dari ikon tersebut — tampil layar penuh tanpa address bar, seperti aplikasi biasa.
+
+- Di **iPhone/iPad (Safari)**: tombol di bawah halaman menampilkan panduan; pakai tombol **Bagikan** → **Tambah ke Layar Utama**.
+- Sudah terpasang? Tombol pasang otomatis disembunyikan.
+- Aplikasi yang sudah pernah dibuka tetap bisa dibuka **tanpa internet** (data terakhir yang tersimpan tetap tampil); sinkronisasi jalan lagi saat online.
+- Untuk menghapus: tekan lama ikon → **Hapus** / **Uninstall**. Data di perangkat ikut terhapus, tetapi salinan online tetap ada.
 
 
 Tampilannya bertema keislaman: logo pondok di samping kiri nama pondok dan judul (sejajar dengan keduanya), latar bermotif bintang delapan, aksen hijau zamrud dan emas, bingkai lengkung seperti mihrab pada kartu pengingat, lafaz basmalah di atas halaman, serta tanggal Hijriah di Beranda.
@@ -106,3 +119,20 @@ Selama masih ada pengajuan yang menunggu, pengajuan baru belum bisa dibuat.
 - Jadwal disimpan sebagai satu teks JSON di field `json`, ditambah penanda waktu `updatedAt`. Penulisan memakai pengaman `updateTime` Firestore, jadi dua perangkat tidak saling menimpa tanpa peringatan.
 - Bila data online rusak atau bukan format jadwal, aplikasi otomatis menimpanya dengan data perangkat yang sedang dibuka.
 - Untuk mengosongkan data online: hapus dokumen `state/main` di Firebase Console. Perangkat berikutnya yang membuka akan mengunggah ulang datanya.
+
+## Berkas & pemasangan aplikasi (untuk pengelola)
+
+| Berkas | Fungsi |
+|---|---|
+| `index.html` | seluruh aplikasi (tampilan, logika, sinkronisasi) |
+| `manifest.webmanifest` | identitas aplikasi saat dipasang (nama, ikon, warna, layar penuh) |
+| `sw.js` | mode luring: menyimpan halaman + ikon di HP, dipakai saat internet mati |
+| `icon-192.png`, `icon-512.png` | ikon aplikasi di layar utama |
+| `icon-maskable-512.png` | ikon bentuk bulat/persegi pada HP Android tertentu |
+| `apple-touch-icon.png` | ikon untuk iPhone/iPad |
+| `logo-nsy.png` | gambar sumber logo (tidak dipakai langsung oleh halaman) |
+| `qr-jadwal-waqiah.png` | kode QR menuju link online |
+
+- **Setelah mengubah `index.html` atau ikon:** naikkan angka `CACHE` di baris pertama `sw.js` (mis. `waqiah-2026-10-29-2` → `-3`), lalu unggah keduanya. Ini memaksa HP mengambil versi baru.
+- Halaman tetap memakai **network-first**, jadi selama online pembaruan `index.html` langsung terlihat tanpa perlu menaikkan `CACHE`; angka itu hanya memastikan salinan luring ikut diperbarui.
+- Uji lokal: jalankan server statis (`python -m http.server 8765`) lalu buka `http://localhost:8765/`. Service worker hanya aktif di `https://` atau `localhost`, tidak saat file dibuka lewat `file://` (aplikasi tetap jalan, hanya mode luring yang tidak aktif).
