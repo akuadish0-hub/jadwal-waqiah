@@ -2,6 +2,17 @@
 
 Aplikasi web satu file (`index.html`) untuk jadwal piket jaga waqi'ah mulai **03.00 dini hari**. Cuma tiga halaman: pengingat, jadwal 7 hari yang bergulir, dan tukar piket. Jadwal berjalan terus mengikuti kalender.
 
+## Link online
+
+**https://akuadish0-hub.github.io/jadwal-waqiah/**
+
+Sudah online dan bisa dibuka siapa saja, kapan saja — komputer tidak perlu menyala. Bisa dibagikan lewat WhatsApp atau dipindai dari kode QR `qr-jadwal-waqiah.png`.
+
+- Pasang di HP: buka link di browser → menu → **Tambahkan ke layar utama** (Add to Home screen).
+- Pembaruan: minta admin mengubah `index.html` lalu unggah ulang (atau hubungi pengelola).
+- Catatan: data tersimpan di browser masing-masing perangkat, jadi jadwal hasil tukar piket tidak otomatis sama antar perangkat. Rotasi dasarnya tetap sama karena dihitung dari tanggal mulai.
+
+
 Tampilannya bertema keislaman: logo pondok di samping kiri nama pondok dan judul (sejajar dengan keduanya), latar bermotif bintang delapan, aksen hijau zamrud dan emas, bingkai lengkung seperti mihrab pada kartu pengingat, lafaz basmalah di atas halaman, serta tanggal Hijriah di Beranda.
 
 ## Jadwal sholat
