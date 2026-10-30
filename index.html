@@ -45,8 +45,8 @@
     --gold-bg:#faf2dc;
     --gold-line:#e6d5a8;
     --danger:#a4423a;
-    --shadow:0 1px 2px rgba(70,55,20,.06), 0 18px 34px -26px rgba(70,55,20,.45);
-    --radius:16px;
+    --shadow:0 1px 3px rgba(70,55,20,.05), 0 20px 40px -24px rgba(70,55,20,.35);
+    --radius:18px;
     --pattern:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%230d5c46' stroke-width='.9'%3E%3Crect x='24' y='24' width='32' height='32'/%3E%3Crect x='24' y='24' width='32' height='32' transform='rotate(45 40 40)'/%3E%3Ccircle cx='40' cy='40' r='4'/%3E%3C/g%3E%3C/svg%3E");
   }
   html[data-theme="dark"]{
@@ -68,7 +68,7 @@
     --gold-bg:#1e1a10;
     --gold-line:#3d3420;
     --danger:#e08b83;
-    --shadow:0 1px 2px rgba(0,0,0,.5), 0 18px 34px -24px rgba(0,0,0,.9);
+    --shadow:0 1px 3px rgba(0,0,0,.4), 0 20px 40px -24px rgba(0,0,0,.8);
     --pattern:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23e3c077' stroke-width='.9'%3E%3Crect x='24' y='24' width='32' height='32'/%3E%3Crect x='24' y='24' width='32' height='32' transform='rotate(45 40 40)'/%3E%3Ccircle cx='40' cy='40' r='4'/%3E%3C/g%3E%3C/svg%3E");
   }
   *{box-sizing:border-box}
@@ -81,14 +81,14 @@
   }
   body::before{
     content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
-    background-image:var(--pattern); background-size:80px 80px; opacity:.05;
+    background-image:var(--pattern); background-size:80px 80px; opacity:.04;
   }
   .wrap{max-width:620px; margin:0 auto; padding:22px 18px 48px; position:relative; z-index:1}
 
   .bismillah{
-    margin:2px 0 14px; text-align:center;
-    font-family:"Traditional Arabic", "Scheherazade New", "Amiri", "Noto Naskh Arabic", "Segoe UI", serif;
-    font-size:17px; line-height:2; color:var(--gold);
+    margin:4px 0 16px; text-align:center;
+    font-family:"Traditional Arabic", "Scheherazade New", "Amiri", "Noto Naskh Arabic", serif;
+    font-size:19px; line-height:2; color:var(--gold); letter-spacing:.5px;
   }
 
   .orn{
@@ -106,15 +106,19 @@
   .brand{display:flex; align-items:center; gap:12px; min-width:0}
   .brand-text{min-width:0}
   
-  .brand-logo{
-    display:block; width:48px; height:50px; flex:0 0 auto;
-    object-fit:contain; padding:3px; border-radius:13px;
-    background:#fbf6e8; border:1px solid #e6d5a8;
-    box-shadow:0 1px 2px rgba(70,55,20,.08), 0 10px 20px -16px rgba(70,55,20,.5);
+  /* LOGO MODERN & ESTETIK BERBASIS ELEMEN GAMBAR ANDA */
+  .brand-logo-wrap{
+    display:flex; align-items:center; justify-content:center;
+    width:52px; height:52px; flex:0 0 auto;
+    padding:6px; border-radius:14px;
+    background:linear-gradient(135deg, #fbf6e8 0%, #f3ecda 100%);
+    border:1px solid var(--gold-line);
+    box-shadow:0 4px 12px rgba(138,106,34,0.12);
   }
+  .brand-logo-wrap svg{width:36px; height:36px;}
 
   .pondok{
-    margin:0 0 4px; font-size:10px; letter-spacing:.14em; text-transform:uppercase;
+    margin:0 0 4px; font-size:10px; letter-spacing:.16em; text-transform:uppercase;
     color:var(--muted); font-weight:700;
   }
   h1{
@@ -123,70 +127,72 @@
   }
   .top-actions{display:flex; gap:8px; flex:0 0 auto}
   .icon-btn{
-    position:relative; width:38px; height:38px; display:grid; place-items:center;
+    position:relative; width:40px; height:40px; display:grid; place-items:center;
     background:var(--card); color:var(--ink-soft);
     border:1px solid var(--line); border-radius:50%; cursor:pointer;
-    transition:background .15s, color .15s, border-color .15s;
+    transition:all .15s ease;
   }
-  .icon-btn:hover{background:var(--card-soft); border-color:var(--accent-line); color:var(--ink)}
-  .icon-btn svg{width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
+  .icon-btn:hover{background:var(--card-soft); border-color:var(--accent-line); color:var(--ink); transform:translateY(-1px)}
+  .icon-btn svg{width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
   .icon-btn .icon-moon{display:none}
   html[data-theme="dark"] .icon-btn .icon-sun{display:none}
   html[data-theme="dark"] .icon-btn .icon-moon{display:block}
 
   .tabs{
-    display:grid; grid-template-columns:repeat(3, 1fr); gap:4px;
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:6px;
     background:var(--card); border:1px solid var(--line); border-radius:16px;
-    padding:5px; margin:16px 0 18px; box-shadow:var(--shadow);
+    padding:6px; margin:18px 0 20px; box-shadow:var(--shadow);
   }
   .tab{
-    font:inherit; font-size:12px; font-weight:600; cursor:pointer;
+    font:inherit; font-size:12.5px; font-weight:600; cursor:pointer;
     border:0; background:transparent; color:var(--muted);
-    padding:10px 4px; border-radius:11px; text-align:center;
-    transition:background .15s, color .15s;
+    padding:10px 4px; border-radius:12px; text-align:center;
+    transition:all .15s ease;
   }
-  .tab:hover{color:var(--ink)}
+  .tab:hover{color:var(--ink); background:var(--card-soft)}
   .tab[aria-current="page"]{
     background:var(--accent); color:var(--accent-ink);
-    box-shadow:inset 0 0 0 1px rgba(227,192,119,.5);
+    box-shadow:0 2px 8px rgba(13,92,70,0.25);
   }
 
   .page[hidden]{display:none}
-  .page{animation:fade .18s ease}
-  @keyframes fade{from{opacity:0; transform:translateY(3px)} to{opacity:1; transform:none}}
+  .page{animation:fade .2s ease}
+  @keyframes fade{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none}}
 
-  /* KARTU UTAMA LEBIH BESAR */
+  /* KARTU UTAMA ESTETIK */
   .duty{
     position:relative; text-align:center;
     border:2px solid var(--gold-line);
-    border-radius:84px 84px 26px 26px;
-    background:radial-gradient(130% 100% at 50% 0%, var(--card) 0%, var(--duty-bg) 75%);
-    padding:52px 24px 34px;
+    border-radius:84px 84px 28px 28px;
+    background:radial-gradient(140% 110% at 50% 0%, var(--card) 0%, var(--duty-bg) 75%);
+    padding:48px 24px 30px;
     box-shadow:var(--shadow);
   }
   .duty::after{
     content:""; position:absolute; inset:8px; pointer-events:none;
-    border:1px solid var(--gold-line); opacity:.75;
+    border:1px solid var(--gold-line); opacity:.6;
     border-radius:76px 76px 20px 20px;
   }
   .duty > *{position:relative; z-index:1}
   .duty-label{
-    margin:0 0 10px; font-size:11px; letter-spacing:.22em; text-transform:uppercase;
+    margin:0 0 10px; font-size:11px; letter-spacing:0.24em; text-transform:uppercase;
     font-weight:800; color:var(--accent);
   }
   .duty-name{
     margin:0; font-family:"Georgia", "Palatino Linotype", serif;
-    font-size:clamp(36px, 9vw, 52px); line-height:1.1; font-weight:700; color:var(--ink);
+    font-size:clamp(34px, 8.5vw, 48px); line-height:1.15; font-weight:700; color:var(--ink);
+    text-shadow:0 1px 2px rgba(0,0,0,0.03);
   }
-  .duty-date{margin:12px 0 0; font-size:15px; font-weight:600; color:var(--ink-soft)}
+  .duty-date{margin:10px 0 0; font-size:15px; font-weight:600; color:var(--ink-soft)}
   
-  /* PENGINGAT BESOK PIKET ANDA */
+  /* PENGINGAT BESOK PIKET (AKTIF JAM 07:00 - 19:00) */
   .next-duty-card{
     margin-top:16px; background:var(--gold-bg); border:1px solid var(--gold-line);
     border-radius:14px; padding:12px 16px; text-align:center;
+    box-shadow:0 2px 8px rgba(138,106,34,0.08);
   }
   .next-duty-title{
-    font-size:10.5px; text-transform:uppercase; letter-spacing:.14em; font-weight:800; color:var(--gold);
+    font-size:10.5px; text-transform:uppercase; letter-spacing:.15em; font-weight:800; color:var(--gold);
     margin-bottom:3px;
   }
   .next-duty-val{
@@ -195,10 +201,10 @@
 
   .card{
     background:var(--card); border:1px solid var(--line); border-top:2px solid var(--gold-line);
-    border-radius:var(--radius); box-shadow:var(--shadow); padding:20px; margin-top:16px;
+    border-radius:var(--radius); box-shadow:var(--shadow); padding:22px; margin-top:18px;
   }
   .card h2{
-    margin:0 0 12px; font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    margin:0 0 14px; font-size:12px; letter-spacing:.14em; text-transform:uppercase;
     color:var(--muted); font-weight:700;
   }
   .card h2::before{
@@ -210,7 +216,7 @@
   .sched{list-style:none; margin:0; padding:0}
   .sched li{
     display:grid; grid-template-columns:92px minmax(0,1fr) auto; gap:12px; align-items:center;
-    padding:12px 0; border-bottom:1px solid var(--line-soft);
+    padding:13px 0; border-bottom:1px solid var(--line-soft);
   }
   .sched li:last-child{border-bottom:0}
   .sched .d{font-size:13px; font-weight:600}
@@ -218,7 +224,7 @@
   .sched .n{font-size:15px; font-weight:600; color:var(--ink)}
   .sched .t{font-size:11.5px; color:var(--muted); font-variant-numeric:tabular-nums}
   .sched li.today{
-    background:var(--accent-soft); border-radius:10px; border-bottom-color:transparent;
+    background:var(--accent-soft); border-radius:12px; border-bottom-color:transparent;
     box-shadow:inset 3px 0 0 var(--gold); padding-left:12px; padding-right:12px; margin:0 -12px;
   }
   .sched li.today .d span{color:var(--accent)}
@@ -227,11 +233,12 @@
   .weekly-toggle-wrap{margin-top:16px; text-align:center;}
   .weekly-btn{
     background:var(--accent-soft); border:1px solid var(--accent-line); color:var(--accent);
-    font:inherit; font-size:13px; font-weight:700; padding:10px 18px; border-radius:99px;
-    cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:filter .15s;
+    font:inherit; font-size:13.5px; font-weight:700; padding:12px 20px; border-radius:99px;
+    cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .15s ease;
+    box-shadow:0 2px 6px rgba(13,92,70,0.1);
   }
-  .weekly-btn:hover{filter:brightness(1.05)}
-  .weekly-content{display:none; margin-top:14px; padding-top:14px; border-top:1px dashed var(--line);}
+  .weekly-btn:hover{filter:brightness(1.05); transform:translateY(-1px)}
+  .weekly-content{display:none; margin-top:16px; padding-top:16px; border-top:1px dashed var(--line);}
   .weekly-content.open{display:block;}
 
   /* FORM TUKAR */
@@ -250,25 +257,25 @@
   .field label{display:block; font-size:12px; font-weight:600; margin-bottom:5px; color:var(--ink-soft)}
   select, input[type="text"], input[type="date"], textarea{
     width:100%; font:inherit; font-size:13.5px; color:var(--ink);
-    background:var(--card-soft); border:1px solid var(--line); border-radius:10px;
-    padding:9px 11px; outline:none;
+    background:var(--card-soft); border:1px solid var(--line); border-radius:12px;
+    padding:10px 12px; outline:none; transition:all .15s ease;
   }
   select:focus, input:focus, textarea:focus{
     border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); background:var(--card);
   }
   .btn{
     font:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
-    border-radius:10px; padding:8px 12px; border:1px solid var(--line);
-    background:var(--card); color:var(--ink-soft);
+    border-radius:12px; padding:10px 16px; border:1px solid var(--line);
+    background:var(--card); color:var(--ink-soft); transition:all .15s ease;
   }
   .btn.primary{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
   .btn.danger{background:var(--danger); border-color:var(--danger); color:#fff}
-  .btn.sm{font-size:11.5px; padding:4px 8px; border-radius:6px}
+  .btn.sm{font-size:11.5px; padding:5px 10px; border-radius:8px}
   .btn.block{width:100%; margin-top:14px}
 
-  .foot{margin-top:26px; text-align:center; font-size:11.5px; color:var(--muted); line-height:1.7}
+  .foot{margin-top:30px; text-align:center; font-size:11.5px; color:var(--muted); line-height:1.7}
   .sync-badge{
-    display:inline-flex; align-items:center; gap:6px; padding:3px 9px;
+    display:inline-flex; align-items:center; gap:6px; padding:4px 10px;
     font-size:10.5px; font-weight:700; border-radius:999px; border:1px solid var(--accent-line);
     background:var(--accent-soft); color:var(--accent);
   }
@@ -276,48 +283,59 @@
 
   /* MODAL ADMIN */
   dialog.modal{
-    width:min(94vw, 480px); padding:20px; margin:auto;
+    width:min(94vw, 480px); padding:22px; margin:auto;
     background:var(--card); color:var(--ink);
-    border:1px solid var(--line); border-radius:16px;
+    border:1px solid var(--line); border-radius:20px;
     box-shadow:0 30px 60px -30px rgba(0,0,0,.5);
     max-height:88vh; overflow-y:auto;
   }
-  dialog.modal::backdrop{background:rgba(8,16,13,.45); backdrop-filter:blur(2px)}
-  .modal-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:18px}
+  dialog.modal::backdrop{background:rgba(8,16,13,.5); backdrop-filter:blur(3px)}
+  .modal-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:20px}
   .admin-panel{display:none}
   .admin-panel.active{display:block}
-  .admin-tab-nav{display:flex; gap:6px; margin:12px 0; border-bottom:1px solid var(--line); padding-bottom:8px}
-  .admin-tab-btn{background:none; border:none; padding:6px 10px; font-size:12px; font-weight:600; cursor:pointer; color:var(--muted)}
-  .admin-tab-btn.active{color:var(--accent); border-bottom:2px solid var(--accent)}
+  .admin-tab-nav{display:flex; gap:6px; margin:14px 0; border-bottom:1px solid var(--line); padding-bottom:8px}
+  .admin-tab-btn{background:none; border:none; padding:6px 10px; font-size:12px; font-weight:600; cursor:pointer; color:var(--muted); border-radius:6px}
+  .admin-tab-btn.active{color:var(--accent); border-bottom:2px solid var(--accent); background:var(--accent-soft)}
   .list-item-admin{
     display:flex; align-items:center; justify-content:space-between;
-    padding:8px; background:var(--card-soft); border:1px solid var(--line);
-    border-radius:8px; margin-bottom:6px; font-size:13px;
+    padding:9px 12px; background:var(--card-soft); border:1px solid var(--line);
+    border-radius:10px; margin-bottom:8px; font-size:13px;
   }
-  .list-item-actions{display:flex; gap:4px}
+  .list-item-actions{display:flex; gap:5px}
   .pending-card{
     background:var(--gold-bg); border:1px solid var(--gold-line);
-    padding:10px; border-radius:8px; margin-bottom:8px; font-size:12px;
+    padding:12px; border-radius:10px; margin-bottom:10px; font-size:12.5px;
   }
 </style>
 </head>
 <body>
 <div class="wrap">
 
+  <!-- BISMILLAH TUNGGAL YANG RAPI -->
   <p class="bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
 
   <header class="top">
     <div class="brand">
-      <img class="brand-logo" id="pondokLogo" alt="Logo PP Nurusy Syuhada'" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAADICAYAAACtWK6CAAAACXBIWXMAAA7DAAAOwwHHbdePAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABxJJREFUeNrsnTF24zAMhJ1t2WfE3v86q4c8WdKn1V1pT9AASyA51qYh2N13lP6HhJ7v+6y60BwI8R7Fv39/e3X59f+u/P7/vP3eN9N2W7q8d/8W73M6eO9p9c9v61O4y12u/M86w+lP4w190P/f5/rO+e242O96nJ/D5zO88lJ0e3H71X/65Z84zO2y+P0571u7d45t+/x2f9z72vj5z/X8f+a7WvH4L63uT2sM81b+X3fM6jG7F7b/K1Z3qfX89f7P5Tz1zLz/tLbf+vP/u7+5t0P/v6T11a5vX35Pft53f86ff2/f172v82+fJ+0/vH1X/1xV8z8G4P+f559K38/n1vX97ZfufT1Vn7p7+9W+O275b2f2zM1O22N6a11e8z9/3P39yXv8O/c/4P/v88ffu6N6z5Z/+r2X+j1l/9t0//x7b//O1e04/Z0/+u96b99//d/XG38Z/0/H/b+n5n//4s1//w38/vtf/V2O3t537b/l+h6c21p6b3r33e89vfX/zN937d0XN/3O//v3u8c//t4ef3H9ff3+N2n9e871n7+n9e1f/v0d9z//+f7789fX3+d+//r22c+/5/83f73uf+3f35+vO2/vv/3f/3z+3Xb/9/p3rf/s37e/3s//n3f3u/f1359L9/f33+s3u/n2f3f//vv6/H/73W/+3f399f/v3O9rf87v9v2t4u4f6t//b9+zefP//7f39f/b3//Pff//P7//u+/7f5/v7Xn2fP3d//zfb/3u3/f/b/u/38f1///r7f9/n19/f3+d///P//n3v/n///n/v7//v7ef3/387v38//v/c/+u7f1/f3n//d//7//9v//3/b7ff3b+v7/472P3d//7vf//vfv/9//v/f3+//v334P67v7f//t/c/+vvffb9vvvvvvvvv//7vvv9v//vv77/u/7ffv/3vffv9vv77//99v8/f3v//b/+n3+vv3sf3v//+9///vvvvvvv/fftf//tvff/vf7vvv9v//vv38ffvv9///vv9vvf//v//vffv//vv//v//ffvv/v//b//v//v9vvvvv9vvvvv//vvf//ffvvvvvvvvv//7vvv//v//t37vv9v7//vvvvv//v7f///7f+//7v//v//9///fvvvv//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//v//y9Xq4AAAAlElFTkSuQmCC"/></data:image/png>
-</head>
-<body>
-<div class="wrap">
-
-  <p class="bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
-
-  <header class="top">
-    <div class="brand">
-      <img class="brand-logo" id="pondokLogo" alt="Logo PP Nurusy Syuhada'" src="data:image/png;base64,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agent">
+      <!-- LOGO ESTETIK BERDASARKAN GAMBAR ANDA -->
+      <div class="brand-logo-wrap" title="PP Nurusy Syuhada'">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Pita Emas Bawah "Nurusy Syuhada'" -->
+          <path d="M15 75C15 75 35 88 50 88C65 88 85 75 85 75C85 75 68 95 50 95C32 95 15 75 15 75Z" fill="#D4AF37"/>
+          <path d="M18 76C35 86 50 86 82 76" stroke="#8A6A22" stroke-width="2" stroke-linecap="round"/>
+          <!-- Buku Terbuka / Halaman (Lapisan Kuning, Hijau, Hitam) -->
+          <path d="M20 52C28 48 42 56 50 60C58 56 72 48 80 52C80 52 75 66 50 70C25 66 20 52 20 52Z" fill="#1C2A22"/>
+          <path d="M22 47C30 43 42 51 50 55C58 51 70 43 78 47C78 47 72 61 50 65C28 61 22 47 22 47Z" fill="#3B7A57"/>
+          <path d="M25 42C32 38 42 46 50 50C58 46 68 38 75 42C75 42 70 56 50 60C30 56 25 42 25 42Z" fill="#D4AF37"/>
+          <!-- Pena / Pulpen Tengah Tegak -->
+          <rect x="46" y="22" width="8" height="38" rx="4" fill="#1A1A1A"/>
+          <path d="M46 50H54V57C54 59.2 52.2 61 50 61C47.8 61 46 59.2 46 57V50Z" fill="#D4AF37"/>
+          <path d="M49 61L50 64L51 61H49Z" fill="#D4AF37"/>
+          <path d="M48 24H52V28H48V24Z" fill="#E6E6E6"/>
+          <!-- Kaligrafi Estetik / Kubah di Atas Pena -->
+          <path d="M50 8C35 8 30 18 38 22C44 25 48 18 50 14C52 18 56 25 62 22C70 18 65 8 50 8Z" fill="#D4AF37"/>
+          <path d="M50 11C40 11 36 17 41 20C46 22 48 17 50 13C52 17 54 22 59 20C64 17 60 11 50 11Z" fill="#C93B2B"/>
+        </svg>
+      </div>
       <div class="brand-text">
         <p class="pondok">PP Nurusy Syuhada' Kedungrejo</p>
         <h1>JADWAL PIKET WAQIAH DAN BANGUNKAN SANTRI</h1>
@@ -348,11 +366,11 @@
       <h2 class="duty-name" id="mainDutyName">-</h2>
       <div class="orn"><svg viewBox="0 0 10 10"><polygon points="5,0 10,5 5,10 0,5"/></svg></div>
       <p class="duty-date" id="mainDutyDate">-</p>
-      <span class="duty-time" style="display:inline-block; margin-top:12px; font-size:12px; font-weight:600; color:var(--accent); background:var(--card); border:1px solid var(--gold-line); border-radius:999px; padding:5px 12px;">Mulai Pukul 03.00 WIB</span>
+      <span style="display:inline-block; margin-top:12px; font-size:12px; font-weight:600; color:var(--accent); background:var(--card); border:1px solid var(--gold-line); border-radius:999px; padding:6px 14px;">Mulai Pukul 03.00 WIB</span>
     </section>
 
-    <!-- PENGINGAT PETUGAS BERIKUTNYA / BESOK -->
-    <div class="next-duty-card">
+    <!-- PENGINGAT BESOK PIKET (AKTIF JAM 07:00 S.D 19:00) -->
+    <div class="next-duty-card" id="mainNextCard" style="display:none;">
       <div class="next-duty-title">Besok Piket Anda</div>
       <div class="next-duty-val" id="mainNextDutyVal">-</div>
     </div>
@@ -370,7 +388,7 @@
         <ul class="sched" id="mainSchedList"></ul>
       </div>
 
-      <div class="tukar-trigger" style="margin-top:16px;">
+      <div class="tukar-trigger" style="margin-top:18px;">
         <button type="button" class="tukar-btn-toggle" onclick="toggleTukarForm()">
           🔄 Ingin Tukar Jadwal Piket? Klik Disini
         </button>
@@ -416,11 +434,11 @@
       <h2 class="duty-name" id="putraDutyName">-</h2>
       <div class="orn"><svg viewBox="0 0 10 10"><polygon points="5,0 10,5 5,10 0,5"/></svg></div>
       <p class="duty-date" id="putraDutyDate">Rotasi Tiap 2 Hari Sekali</p>
-      <span style="display:inline-block; margin-top:12px; font-size:12px; font-weight:600; color:var(--accent); background:var(--card); border:1px solid var(--gold-line); border-radius:999px; padding:5px 12px;" id="putraRotasiLabel">Rotasi Berjalan</span>
+      <span style="display:inline-block; margin-top:12px; font-size:12px; font-weight:600; color:var(--accent); background:var(--card); border:1px solid var(--gold-line); border-radius:999px; padding:6px 14px;" id="putraRotasiLabel">Rotasi Berjalan</span>
     </section>
 
-    <!-- PENGINGAT BESOK -->
-    <div class="next-duty-card">
+    <!-- PENGINGAT BESOK (AKTIF JAM 07:00 S.D 19:00) -->
+    <div class="next-duty-card" id="putraNextCard" style="display:none;">
       <div class="next-duty-title">Besok Piket Anda</div>
       <div class="next-duty-val" id="putraNextDutyVal">-</div>
     </div>
@@ -438,11 +456,11 @@
       <h2 class="duty-name" id="putriDutyName">-</h2>
       <div class="orn"><svg viewBox="0 0 10 10"><polygon points="5,0 10,5 5,10 0,5"/></svg></div>
       <p class="duty-date" id="putriDutyDate">Rotasi Harian (Bergilir)</p>
-      <span style="display:inline-block; margin-top:12px; font-size:12px; font-weight:600; color:var(--accent); background:var(--card); border:1px solid var(--gold-line); border-radius:999px; padding:5px 12px;" id="putriRotasiLabel">Rotasi Berjalan</span>
+      <span style="display:inline-block; margin-top:12px; font-size:12px; font-weight:600; color:var(--accent); background:var(--card); border:1px solid var(--gold-line); border-radius:999px; padding:6px 14px;" id="putriRotasiLabel">Rotasi Berjalan</span>
     </section>
 
-    <!-- PENGINGAT BESOK -->
-    <div class="next-duty-card">
+    <!-- PENGINGAT BESOK (AKTIF JAM 07:00 S.D 19:00) -->
+    <div class="next-duty-card" id="putriNextCard" style="display:none;">
       <div class="next-duty-title">Besok Piket Anda</div>
       <div class="next-duty-val" id="putriNextDutyVal">-</div>
     </div>
@@ -457,7 +475,6 @@
   <footer class="foot">
     <p><span class="sync-badge"><span class="sync-dot"></span>Sistem Aktif & Ter-sinkronisasi</span></p>
     <p>© PP Nurusy Syuhada' Kedungrejo — Kedisiplinan & Ibadah</p>
-    <p class="bismillah" style="margin-top:10px; font-size:15px;" lang="ar" dir="rtl">اللَّهُمَّ بَارِكْ لَنَا فِي أَوْقَاتِنَا</p>
   </footer>
 
 </div>
@@ -469,7 +486,7 @@
     <h3 style="margin:0 0 12px; font-size:18px;">Login Admin</h3>
     <div class="field">
       <label>Sandi Admin</label>
-      <input type="password" id="adminPass" placeholder="Masukkan sandi...">
+      <input type="password" id="adminPass" placeholder="Masukkan sandi (2405)...">
     </div>
     <p id="adminErr" style="color:var(--danger); font-size:12px; margin:8px 0 0; display:none;">Sandi salah!</p>
     <div class="modal-actions">
@@ -490,14 +507,13 @@
 
     <div id="adminTabContent"></div>
 
-    <div class="modal-actions" style="margin-top:20px; border-top:1px solid var(--line); padding-top:10px;">
+    <div class="modal-actions" style="margin-top:20px; border-top:1px solid var(--line); padding-top:12px;">
       <button class="btn" onclick="closeAdmin()">Tutup</button>
     </div>
   </div>
 </dialog>
 
 <script>
-  // ---------- DATA DEFAULT ----------
   const DEFAULT_MAIN = ["Gus Fazlur", "Gus Adis", "Ning Maris", "Ning Amel", "Ning Ninid"];
   const DEFAULT_PUTRA = ["Gus Fazlur", "Gus Adis"];
   const DEFAULT_PUTRI = ["Ning Maris", "Ning Amel", "Ning Ninid", "Ustadzah Ima"];
@@ -553,35 +569,48 @@
 
   function initApp() {
     const today = new Date();
+    const currentHour = today.getHours();
+    
+    // Batasan Waktu Pengingat Besok: Jam 07:00 s.d 19:00
+    const showReminder = currentHour >= 7 && currentHour < 19;
+
     const diff = getDiffDays(BASE_DATE, today);
     const fToday = formatDate(today);
 
-    // Besok date
     const tomorrow = new Date(today);
     tomorrow.setDate(today.getDate() + 1);
     const diffTom = getDiffDays(BASE_DATE, tomorrow);
     const fTom = formatDate(tomorrow);
 
-    // 1. Piket Utama Waqi'ah
+    // 1. Piket Waqi'ah
     const mainDuty = getOverrideDuty('waqiah', fToday.isoDate) || getDutyFromList(listMain, diff);
     const mainTomDuty = getOverrideDuty('waqiah', fTom.isoDate) || getDutyFromList(listMain, diffTom);
     document.getElementById("mainDutyName").textContent = mainDuty;
     document.getElementById("mainDutyDate").textContent = `${fToday.dayName}, ${fToday.dateStr}`;
     document.getElementById("mainNextDutyVal").textContent = `${mainTomDuty} (${fTom.dayName}, ${fTom.dateStr})`;
+    
+    const mainCard = document.getElementById("mainNextCard");
+    mainCard.style.display = showReminder ? "block" : "none";
 
-    // 2. Piket Putra (2 hari sekali)
+    // 2. Piket Putra
     const putraDuty = getOverrideDuty('putra', fToday.isoDate) || getDutyFromList(listPutra, Math.floor(diff / 2));
     const putraTomDuty = getOverrideDuty('putra', fTom.isoDate) || getDutyFromList(listPutra, Math.floor(diffTom / 2));
     document.getElementById("putraDutyName").textContent = putraDuty;
     document.getElementById("putraRotasiLabel").textContent = listPutra.join(" ⇄ ");
     document.getElementById("putraNextDutyVal").textContent = `${putraTomDuty} (${fTom.dayName}, ${fTom.dateStr})`;
+    
+    const putraCard = document.getElementById("putraNextCard");
+    putraCard.style.display = showReminder ? "block" : "none";
 
-    // 3. Piket Putri (1 hari sekali)
+    // 3. Piket Putri
     const putriDuty = getOverrideDuty('putri', fToday.isoDate) || getDutyFromList(listPutri, diff);
     const putriTomDuty = getOverrideDuty('putri', fTom.isoDate) || getDutyFromList(listPutri, diffTom);
     document.getElementById("putriDutyName").textContent = putriDuty;
     document.getElementById("putriRotasiLabel").textContent = listPutri.join(" → ");
     document.getElementById("putriNextDutyVal").textContent = `${putriTomDuty} (${fTom.dayName}, ${fTom.dateStr})`;
+    
+    const putriCard = document.getElementById("putriNextCard");
+    putriCard.style.display = showReminder ? "block" : "none";
 
     // Render Proyeksi 7 Hari
     renderScheduleList("mainSchedList", today, (d) => {
