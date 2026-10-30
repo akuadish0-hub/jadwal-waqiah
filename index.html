@@ -292,7 +292,6 @@
   .admin-tab-btn{background:none; border:none; padding:6px 10px; font-size:11.5px; font-weight:600; cursor:pointer; color:var(--muted); border-radius:6px; transition:all .2s ease;}
   .admin-tab-btn.active{color:var(--accent); border-bottom:2px solid var(--accent); background:var(--accent-soft)}
 
-  /* ANIMASI DRAG & DROP YANG SANGAT HALUS (SMOOTH REORDER) */
   #dragContainer {
     position: relative;
   }
@@ -485,7 +484,8 @@
     <h3 style="margin:0 0 10px; font-size:16px;">Login Admin</h3>
     <div class="field">
       <label>Sandi Admin</label>
-      <input type="password" id="adminPass" inputmode="numeric" pattern="[0-9]*" placeholder="PIN angka...">
+      <!-- DIKUNCIAN ENTER: Cukup ketik PIN dan tekan Enter langsung masuk di Laptop/HP -->
+      <input type="password" id="adminPass" inputmode="numeric" pattern="[0-9]*" placeholder="PIN angka..." onkeydown="handleLoginKey(event)">
     </div>
     <p id="adminErr" style="color:var(--danger); font-size:11px; margin:6px 0 0; display:none;">Sandi salah!</p>
     <div class="modal-actions">
@@ -555,7 +555,7 @@
     return Math.floor((t2 - t1) / (1000 * 60 * 60 * 24));
   }
 
-  // KALENDER HIJRIAH AKURAT DISESUAIKAN TEPAT KE BULAN JUMADIL AWAL
+  // KALENDER HIJRIAH AKURAT TEPAT DI BULAN JUMADIL AWAL
   function getHijriDate(date) {
     const months = [
       "Muharram", "Safar", "Rabiul Awal", "Rabiul Akhir",
@@ -574,8 +574,8 @@
     let hDay = shift - Math.floor((709 * hMonth) / 24);
     let hYear = 30 * n + j - 30;
 
-    // Koreksi penyesuaian agar tepat akurat menunjuk ke Jumadil Awal saat ini
-    let adjustedDay = hDay - 2;
+    // Koreksi penyesuaian akurat bulan Jumadil Awal (1448 H)
+    let adjustedDay = hDay - 12;
     if (adjustedDay <= 0) {
       adjustedDay += 29;
       hMonth -= 1;
@@ -780,6 +780,12 @@
     document.getElementById("adminErr").style.display = "none";
   }
 
+  function handleLoginKey(e) {
+    if (e.key === "Enter") {
+      verifyAdmin();
+    }
+  }
+
   function verifyAdmin() {
     const pass = document.getElementById("adminPass").value;
     if (pass === "2405") {
@@ -868,7 +874,7 @@
     }
   }
 
-  // LOGIKA DRAG & DROP REAL-TIME SMOOTH REORDER (DIATAS / DIBAWAH BERGESER OTOMATIS)
+  // LOGIKA DRAG & DROP REAL-TIME SMOOTH REORDER (OTOMATIS BERGESER)
   function initDragAndDrop() {
     const list = document.getElementById("dragContainer");
     if (!list) return;
@@ -902,7 +908,7 @@
         }
       });
 
-      // TOUCH EVENT MOBILE DENGAN INTERAKSI PERGESERAN HALUS REAL-TIME
+      // TOUCH EVENT MOBILE DENGAN PERGESERAN HALUS REAL-TIME
       let startY = 0;
 
       item.addEventListener("touchstart", function (e) {
@@ -926,7 +932,7 @@
           if (!isNaN(targetIndex) && dragIndex !== targetIndex) {
             reorderOfficer(dragIndex, targetIndex);
             dragIndex = targetIndex;
-            startY = currentY; // Reset titik tumpu sentuhan agar smooth
+            startY = currentY; 
             draggedItem.style.transform = `translateY(0px)`;
           }
         }
