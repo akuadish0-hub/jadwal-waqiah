@@ -12,7 +12,19 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- FIREBASE SDK (DATABASE ONLINE REAL-TIME) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
 <script>
+  // KONFIGURASI FIREBASE BARU ANDA
+  const firebaseConfig = {
+    databaseURL: "https://jadwal-waqiah-83ceb-default-rtdb.asia-southeast1.firebasedatabase.app/"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
   (function () {
     try {
       var saved = localStorage.getItem("piket-waqiah-theme");
@@ -438,7 +450,7 @@
   </main>
 
   <footer class="foot">
-    <p><span class="sync-badge"><span class="sync-dot"></span>Sistem Aktif & Ter-sinkronisasi</span></p>
+    <p><span class="sync-badge"><span class="sync-dot"></span>Online Real-Time Sinkron</span></p>
     <p>© PP Nurusy Syuhada' Kedungrejo — Kedisiplinan & Ibadah</p>
   </footer>
 
@@ -484,7 +496,6 @@
     <h3 style="margin:0 0 10px; font-size:16px;">Login Admin</h3>
     <div class="field">
       <label>Sandi Admin</label>
-      <!-- Tekan Enter di Laptop atau HP langsung masuk -->
       <input type="password" id="adminPass" inputmode="numeric" pattern="[0-9]*" placeholder="PIN angka..." onkeydown="handleLoginKey(event)">
     </div>
     <p id="adminErr" style="color:var(--danger); font-size:11px; margin:6px 0 0; display:none;">Sandi salah!</p>
@@ -519,12 +530,29 @@
   const DEFAULT_PUTRI = ["Ning Maris", "Ning Amel", "Ning Ninid", "Ustadzah Ima"];
   const BASE_DATE = new Date(2026, 9, 27); // 27 Oktober 2026
 
-  let listMain = JSON.parse(localStorage.getItem("listMain")) || DEFAULT_MAIN;
-  let listPutra = JSON.parse(localStorage.getItem("listPutra")) || DEFAULT_PUTRA;
-  let listPutri = JSON.parse(localStorage.getItem("listPutri")) || DEFAULT_PUTRI;
-  let tukarRequests = JSON.parse(localStorage.getItem("tukarRequests")) || [];
+  let listMain = [...DEFAULT_MAIN];
+  let listPutra = [...DEFAULT_PUTRA];
+  let listPutri = [...DEFAULT_PUTRI];
+  let tukarRequests = [];
 
   let currentAdminTab = "waqiah";
+
+  // SINKRONISASI REAL-TIME DARI FIREBASE DATABASE BARU
+  db.ref("/piketData").on("value", (snapshot) => {
+    const data = snapshot.val();
+    if (data) {
+      if (data.listMain) listMain = data.listMain;
+      if (data.listPutra) listPutra = data.listPutra;
+      if (data.listPutri) listPutri = data.listPutri;
+      if (data.tukarRequests) tukarRequests = data.tukarRequests;
+    } else {
+      saveDataToFirebase(); // Inisialisasi data awal jika kosong
+    }
+    initApp();
+    if (document.getElementById("adminPanelSection").style.display === "block") {
+      renderAdminTabContent();
+    }
+  });
 
   function toggleTheme(){
     var current = document.documentElement.getAttribute("data-theme");
@@ -555,7 +583,7 @@
     return Math.floor((t2 - t1) / (1000 * 60 * 60 * 24));
   }
 
-  // KALENDER HIJRIAH DIKUNCI TEPAT KE BULAN JUMADIL AWAL 1448 H (BERBASIS TITIK REFERENSI KEMENAG)
+  // KALENDER HIJRIAH AKURAT JUMADIL AWAL 1448 H
   function getHijriDate(date) {
     const months = [
       "Muharram", "Safar", "Rabiul Awal", "Rabiul Akhir",
@@ -563,16 +591,14 @@
       "Ramadhan", "Syawal", "Dzulqa'dah", "Dzulhijjah"
     ];
 
-    // Titik acuan pasti: 30 Oktober 2026 M = 19 Jumadil Awal 1448 H
-    const refMasehi = new Date(2026, 9, 30); // Bulan 9 adalah Oktober
+    const refMasehi = new Date(2026, 9, 30); // 30 Oktober 2026 = 19 Jumadil Awal 1448 H
     const diffTime = date.getTime() - refMasehi.getTime();
     const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
 
     let hDay = 19 + diffDays;
-    let hMonth = 4; // Indeks ke-4 adalah Jumadil Awal (0=Muharram, dst)
+    let hMonth = 4; // Jumadil Awal
     let hYear = 1448;
 
-    // Penyesuaian rotasi bulan hijriah (umur bulan 29 / 30 hari secara bergantian)
     while (hDay > 29) {
       hDay -= 29;
       hMonth++;
@@ -766,7 +792,7 @@
       status: 'pending'
     };
     tukarRequests.push(req);
-    localStorage.setItem("tukarRequests", JSON.stringify(tukarRequests));
+    saveDataToFirebase();
 
     alert("Permohonan tukar piket berhasil dikirim! Menunggu persetujuan Admin.");
     closeTukarModal();
@@ -870,15 +896,13 @@
   }
 
   function confirmSaveAdmin() {
-    if (confirm("Apakah Anda yakin ingin menyimpan perubahan urutan/data petugas ini?")) {
-      saveData();
-      alert("Perubahan berhasil disimpan!");
-      initApp();
+    if (confirm("Simpan perubahan ini secara online ke semua perangkat?")) {
+      saveDataToFirebase();
+      alert("Perubahan berhasil disinkronkan ke seluruh perangkat!");
       closeAdmin();
     }
   }
 
-  // LOGIKA DRAG & DROP REAL-TIME SMOOTH REORDER
   function initDragAndDrop() {
     const list = document.getElementById("dragContainer");
     if (!list) return;
@@ -1006,23 +1030,22 @@
           targetList.splice(idx, 1);
         }
         targetList.push(nameToMove);
-        saveData();
       }
 
-      localStorage.setItem("tukarRequests", JSON.stringify(tukarRequests));
-      alert(isApproved ? "Permohonan tukar disetujui & otomatis digeser ke sesi hari terakhir!" : "Permohonan tukar ditolak.");
+      saveDataToFirebase();
+      alert(isApproved ? "Permohonan tukar disetujui & otomatis digeser!" : "Permohonan tukar ditolak.");
       renderAdminTabContent();
-      initApp();
     }
   }
 
-  function saveData() {
-    localStorage.setItem("listMain", JSON.stringify(listMain));
-    localStorage.setItem("listPutra", JSON.stringify(listPutra));
-    localStorage.setItem("listPutri", JSON.stringify(listPutri));
+  function saveDataToFirebase() {
+    db.ref("/piketData").set({
+      listMain: listMain,
+      listPutra: listPutra,
+      listPutri: listPutri,
+      tukarRequests: tukarRequests
+    });
   }
-
-  document.addEventListener("DOMContentLoaded", initApp);
 </script>
 </body>
 </html>
