@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Jadwal Jaga Waqi'ah & Piket — PP Nurusy Syuhada' Kedungrejo</title>
+<title>Jadwal Jaga Waqi'ah — PP Nurusy Syuhada' Kedungrejo</title>
 <meta name="theme-color" content="#0d5c46">
-<meta name="description" content="Jadwal piket jaga waqi'ah dan piket bangunkan santri PP Nurusy Syuhada' Kedungrejo.">
+<meta name="description" content="Jadwal piket jaga waqi'ah PP Nurusy Syuhada' Kedungrejo mulai 03.00 dini hari, lengkap dengan jam salat dan tukar piket.">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
@@ -75,58 +75,83 @@
   html,body{margin:0}
   body{
     font-family:"Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
-    background:var(--bg); color:var(--ink); min-height:100vh;
+    background:var(--bg);
+    color:var(--ink);
+    min-height:100vh;
     -webkit-font-smoothing:antialiased;
     transition:background-color .2s ease, color .2s ease;
   }
   body::before{
     content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
-    background-image:var(--pattern); background-size:80px 80px; opacity:.05;
+    background-image:var(--pattern); background-size:80px 80px;
+    opacity:.05;
   }
   .wrap{max-width:620px; margin:0 auto; padding:22px 18px 48px; position:relative; z-index:1}
 
   .bismillah{
     margin:2px 0 14px; text-align:center;
     font-family:"Traditional Arabic", "Scheherazade New", "Amiri", "Noto Naskh Arabic", "Segoe UI", serif;
-    font-size:17px; line-height:2; color:var(--gold);
+    font-size:17px; line-height:2; letter-spacing:0;
+    color:var(--gold);
   }
 
-  .orn{display:flex; align-items:center; justify-content:center; gap:10px; margin:0 auto; max-width:220px; color:var(--gold)}
-  .orn::before, .orn::after{content:""; flex:1; height:1px; background:linear-gradient(90deg, transparent, var(--gold-line))}
+  .orn{
+    display:flex; align-items:center; justify-content:center; gap:10px;
+    margin:0 auto; max-width:220px; color:var(--gold);
+  }
+  .orn::before, .orn::after{
+    content:""; flex:1; height:1px;
+    background:linear-gradient(90deg, transparent, var(--gold-line));
+  }
   .orn::after{background:linear-gradient(90deg, var(--gold-line), transparent)}
   .orn svg{width:11px; height:11px; flex:0 0 auto}
 
   .top{display:flex; align-items:center; justify-content:space-between; gap:14px}
   .brand{display:flex; align-items:center; gap:12px; min-width:0}
+  .brand-text{min-width:0}
   .brand-logo{
     display:block; width:48px; height:50px; flex:0 0 auto;
     object-fit:contain; padding:4px; border-radius:13px;
     background:#fbf6e8; border:1px solid #e6d5a8;
     box-shadow:0 1px 2px rgba(70,55,20,.08), 0 10px 20px -16px rgba(70,55,20,.5);
   }
-  .pondok{margin:0 0 6px; font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); font-weight:700}
-  h1{margin:0; font-family:"Georgia", "Palatino Linotype", serif; font-size:clamp(20px, 4.2vw, 26px); font-weight:600; line-height:1.2}
-
+  .pondok{
+    margin:0 0 6px; font-size:11px; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--muted); font-weight:700;
+  }
+  h1{
+    margin:0; font-family:"Georgia", "Palatino Linotype", "Book Antiqua", "Times New Roman", serif;
+    font-size:clamp(22px, 4.6vw, 28px); font-weight:600; letter-spacing:.005em; line-height:1.2;
+  }
   .top-actions{display:flex; gap:8px; flex:0 0 auto}
   .icon-btn{
+    position:relative;
     width:38px; height:38px; display:grid; place-items:center;
     background:var(--card); color:var(--ink-soft);
     border:1px solid var(--line); border-radius:50%; cursor:pointer;
     transition:background .15s, color .15s, border-color .15s;
   }
   .icon-btn:hover{background:var(--card-soft); border-color:var(--accent-line); color:var(--ink)}
+  .icon-btn:focus-visible{outline:2px solid var(--accent); outline-offset:2px}
   .icon-btn svg{width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.7; stroke-linecap:round; stroke-linejoin:round}
   .icon-btn .icon-moon{display:none}
   html[data-theme="dark"] .icon-btn .icon-sun{display:none}
   html[data-theme="dark"] .icon-btn .icon-moon{display:block}
+  .icon-btn.is-admin{background:var(--accent-soft); border-color:var(--accent-line); color:var(--accent)}
+  .icon-btn.is-admin::after{
+    content:""; position:absolute; top:6px; right:6px;
+    width:6px; height:6px; border-radius:50%; background:var(--gold);
+  }
 
-  /* ---------- TABS NAV ---------- */
+  /* ---------- TABS BERANDA & PIKET ---------- */
   .tabs{
     display:grid; grid-template-columns:repeat(3, 1fr); gap:4px;
     background:var(--card); border:1px solid var(--line); border-radius:16px;
-    padding:5px; margin:16px 0 18px; box-shadow:var(--shadow);
+    padding:5px; margin:16px 0 18px;
+    box-shadow:var(--shadow);
   }
   .tab{
+    position:relative;
     font:inherit; font-size:12.5px; font-weight:600; cursor:pointer;
     border:0; background:transparent; color:var(--muted);
     padding:10px 4px; border-radius:11px; text-align:center;
@@ -142,13 +167,14 @@
   .page{animation:fade .18s ease}
   @keyframes fade{from{opacity:0; transform:translateY(3px)} to{opacity:1; transform:none}}
 
-  /* ---------- MIHRAB DUTY CARD ---------- */
+  /* ---------- MIHRAB CARD ---------- */
   .duty{
     position:relative; text-align:center;
     border:1px solid var(--gold-line);
     border-radius:76px 76px 22px 22px;
     background:radial-gradient(130% 100% at 50% 0%, var(--card) 0%, var(--duty-bg) 72%);
-    padding:40px 20px 24px; box-shadow:var(--shadow);
+    padding:44px 24px 26px;
+    box-shadow:var(--shadow);
   }
   .duty::after{
     content:""; position:absolute; inset:6px; pointer-events:none;
@@ -156,25 +182,66 @@
     border-radius:70px 70px 17px 17px;
   }
   .duty > *{position:relative; z-index:1}
-  .duty-label{margin:0 0 8px; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; font-weight:800; color:var(--accent)}
-  .duty-name{
-    margin:0; font-family:"Georgia", "Palatino Linotype", serif;
-    font-size:clamp(30px, 7.5vw, 42px); line-height:1.15; font-weight:700; color:var(--ink);
+  .duty-label{
+    margin:0 0 10px; font-size:10.5px; letter-spacing:.2em; text-transform:uppercase;
+    font-weight:800; color:var(--accent);
   }
-  .duty-date{margin:10px 0 0; font-size:13.5px; color:var(--ink-soft)}
+  .duty-name{
+    margin:0; font-family:"Georgia", "Palatino Linotype", "Book Antiqua", "Times New Roman", serif;
+    font-size:clamp(32px, 8vw, 44px); line-height:1.12; font-weight:700;
+  }
+  .duty-date{margin:10px 0 0; font-size:14px; color:var(--ink-soft)}
   .duty-time{
     display:inline-block; margin-top:12px; font-size:12px; font-weight:600;
     color:var(--accent); background:var(--card);
-    border:1px solid var(--gold-line); border-radius:999px; padding:5px 14px;
+    border:1px solid var(--gold-line); border-radius:999px; padding:5px 12px;
   }
 
-  /* ---------- LIST SCHEDULE ---------- */
+  /* ---------- JADWAL SHOLAT ---------- */
+  .prayer{
+    margin-top:16px; padding:12px 14px 10px;
+    background:var(--card); border:1px solid var(--line); border-top:2px solid var(--gold-line);
+    border-radius:14px; box-shadow:var(--shadow);
+  }
+  .prayer-head{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:9px}
+  .prayer-kicker{
+    display:inline-flex; align-items:center; gap:6px; flex:0 0 auto;
+    font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; font-weight:800; color:var(--gold);
+  }
+  .prayer-meta{
+    font-size:11.5px; font-weight:600; color:var(--accent);
+    text-align:right; font-variant-numeric:tabular-nums;
+  }
+  .prayer-grid{display:grid; grid-template-columns:repeat(5, minmax(0, 1fr)); gap:4px}
+  .prayer-item{text-align:center; padding:6px 2px; border:1px solid transparent; border-radius:9px}
+  .prayer-item span{
+    display:block; font-size:9px; letter-spacing:.05em; text-transform:uppercase;
+    font-weight:700; color:var(--muted); white-space:nowrap;
+  }
+  .prayer-item b{
+    display:block; margin-top:2px; font-size:13px; font-weight:600;
+    font-variant-numeric:tabular-nums; color:var(--ink);
+  }
+  .prayer-item.next{
+    background:var(--accent-soft); border-color:var(--accent-line);
+    box-shadow:inset 0 -2px 0 var(--gold);
+  }
+  .prayer-item.next span, .prayer-item.next b{color:var(--accent)}
+
+  /* ---------- CARD & LIST ---------- */
   .card{
     background:var(--card); border:1px solid var(--line); border-top:2px solid var(--gold-line);
     border-radius:var(--radius); box-shadow:var(--shadow); padding:20px; margin-top:16px;
   }
-  .card h2{margin:0 0 12px; font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); font-weight:700}
-  .card h2::before{content:""; display:inline-block; width:6px; height:6px; margin-right:8px; transform:rotate(45deg); background:var(--gold); border-radius:1px}
+  .card h2{
+    margin:0 0 12px; font-size:12px; letter-spacing:.14em; text-transform:uppercase;
+    color:var(--muted); font-weight:700;
+  }
+  .card h2::before{
+    content:""; display:inline-block; width:6px; height:6px; margin-right:8px;
+    transform:rotate(45deg); background:var(--gold); border-radius:1px;
+    vertical-align:middle;
+  }
 
   .sched{list-style:none; margin:0; padding:0}
   .sched li{
@@ -184,21 +251,50 @@
   .sched li:last-child{border-bottom:0}
   .sched .d{font-size:13px; font-weight:600}
   .sched .d span{display:block; font-size:11px; font-weight:400; color:var(--muted); margin-top:2px}
-  .sched .n{font-size:14.5px; font-weight:600; color:var(--ink)}
-  .sched .t{font-size:11.5px; color:var(--muted)}
+  .sched .n{font-size:14.5px; font-weight:500; overflow-wrap:anywhere}
+  .sched .t{font-size:11.5px; color:var(--muted); font-variant-numeric:tabular-nums}
   .sched li.today{
     background:var(--accent-soft); border-radius:10px; border-bottom-color:transparent;
     box-shadow:inset 3px 0 0 var(--gold); padding-left:12px; padding-right:12px; margin:0 -12px;
   }
   .sched li.today .d span{color:var(--accent)}
 
+  /* ---------- FORM & BUTTONS ---------- */
+  .field{margin-top:14px}
+  .field label{display:block; font-size:12.5px; font-weight:600; margin-bottom:6px; color:var(--ink-soft)}
+  select, input[type="text"], input[type="date"], input[type="password"], textarea{
+    width:100%; font:inherit; font-size:14px; color:var(--ink);
+    background:var(--card-soft); border:1px solid var(--line); border-radius:10px;
+    padding:10px 12px; outline:none;
+  }
+  select:focus, input:focus, textarea:focus{
+    border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); background:var(--card);
+  }
+  .btn{
+    font:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
+    border-radius:10px; padding:10px 15px; border:1px solid var(--line);
+    background:var(--card); color:var(--ink-soft);
+  }
+  .btn.primary{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+  .btn.block{width:100%; margin-top:16px}
+
   .foot{margin-top:26px; text-align:center; font-size:11.5px; color:var(--muted); line-height:1.7}
   .sync-badge{
     display:inline-flex; align-items:center; gap:6px; padding:3px 9px;
-    font-size:10.5px; font-weight:700; border-radius:999px; border:1px solid var(--line);
-    background:var(--card); color:var(--accent); border-color:var(--accent-line);
+    font-size:10.5px; font-weight:700; border-radius:999px; border:1px solid var(--accent-line);
+    background:var(--accent-soft); color:var(--accent);
   }
   .sync-dot{width:6px; height:6px; border-radius:50%; background:var(--accent)}
+
+  /* ---------- MODAL DIALOG ---------- */
+  dialog.modal{
+    width:min(92vw, 380px); padding:22px; margin:auto;
+    background:var(--card); color:var(--ink);
+    border:1px solid var(--line); border-radius:16px;
+    box-shadow:0 30px 60px -30px rgba(0,0,0,.5);
+  }
+  dialog.modal::backdrop{background:rgba(8,16,13,.45); backdrop-filter:blur(2px)}
+  .modal-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:18px}
 </style>
 </head>
 <body>
@@ -208,7 +304,7 @@
 
   <header class="top">
     <div class="brand">
-      <img class="brand-logo" alt="Logo" src="data:image/png;base64,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...">
+      <img class="brand-logo" id="pondokLogo" src="data:image/png;base64,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agent">
       <div class="brand-text">
         <p class="pondok">PP Nurusy Syuhada' Kedungrejo</p>
         <h1>Jadwal Jaga & Piket Santri</h1>
@@ -218,6 +314,9 @@
       <button class="icon-btn" id="themeBtn" title="Ganti Tema" onclick="toggleTheme()">
         <svg class="icon-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
         <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+      <button class="icon-btn" id="adminBtn" title="Menu Admin" onclick="openAdmin()">
+        <svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </button>
     </div>
   </header>
@@ -232,15 +331,60 @@
   <!-- PAGE 1: BERANDA & WAQI'AH -->
   <main class="page" id="page-waqiah">
     <section class="duty">
-      <p class="duty-label">Piket Utama Waqi'ah Hari Ini</p>
-      <h2 class="duty-name" id="mainDutyName">Gus Fazlur</h2>
+      <p class="duty-label">Piket Jaga Waqi'ah Hari Ini</p>
+      <h2 class="duty-name" id="mainDutyName">-</h2>
       <div class="orn"><svg viewBox="0 0 10 10"><polygon points="5,0 10,5 5,10 0,5"/></svg></div>
-      <p class="duty-date" id="mainDutyDate">Hari Ini, 03.00 WIB</p>
-      <span class="duty-time">Mulai 03.00 Dini Hari</span>
+      <p class="duty-date" id="mainDutyDate">-</p>
+      <span class="duty-time">Mulai Pukul 03.00 WIB</span>
+    </section>
+
+    <!-- JADWAL SHOLAT -->
+    <section class="prayer">
+      <div class="prayer-head">
+        <span class="prayer-kicker">
+          <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          Waktu Salat Kedungrejo
+        </span>
+        <span class="prayer-meta" id="prayerMeta">Memuat...</span>
+      </div>
+      <div class="prayer-grid" id="prayerGrid">
+        <div class="prayer-item"><span>Subuh</span><b id="pSubuh">--:--</b></div>
+        <div class="prayer-item"><span>Dzuhur</span><b id="pDzuhur">--:--</b></div>
+        <div class="prayer-item"><span>Ashar</span><b id="pAshar">--:--</b></div>
+        <div class="prayer-item"><span>Maghrib</span><b id="pMaghrib">--:--</b></div>
+        <div class="prayer-item"><span>Isya</span><b id="pIsya">--:--</b></div>
+      </div>
+    </section>
+
+    <!-- FORM TUKAR PIKET -->
+    <section class="card">
+      <h2>Formulir Tukar Piket</h2>
+      <form id="tukarForm" onsubmit="submitTukar(event)">
+        <div class="field">
+          <label>Nama Pemohon</label>
+          <select id="pemohon" required>
+            <option value="">Pilih Petugas...</option>
+            <option value="Gus Fazlur">Gus Fazlur</option>
+            <option value="Gus Adis">Gus Adis</option>
+            <option value="Ning Maris">Ning Maris</option>
+            <option value="Ning Amel">Ning Amel</option>
+            <option value="Ning Ninid">Ning Ninid</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Tanggal Piket yang Ingin Ditukar</label>
+          <input type="date" id="tglTukar" required>
+        </div>
+        <div class="field">
+          <label>Alasan / Keterangan</label>
+          <textarea id="alasanTukar" placeholder="Tuliskan alasan penutupan/tukar jadwal..." required></textarea>
+        </div>
+        <button type="submit" class="btn primary block">Kirim Permohonan Tukar</button>
+      </form>
     </section>
 
     <section class="card">
-      <h2>Mendatang (Jadwal Utama)</h2>
+      <h2>Jadwal 7 Hari ke Depan (Waqi'ah)</h2>
       <ul class="sched" id="mainSchedList"></ul>
     </section>
   </main>
@@ -248,15 +392,15 @@
   <!-- PAGE 2: PIKET BANGUNKAN SANTRI PUTRA -->
   <main class="page" id="page-putra" hidden>
     <section class="duty">
-      <p class="duty-label">Piket Bangunkan Santri Putra (2 Hari Sekali)</p>
+      <p class="duty-label">Piket Bangunkan Santri Putra</p>
       <h2 class="duty-name" id="putraDutyName">-</h2>
       <div class="orn"><svg viewBox="0 0 10 10"><polygon points="5,0 10,5 5,10 0,5"/></svg></div>
-      <p class="duty-date" id="putraDutyDate">Petugas Hari Ini</p>
-      <span class="duty-time">Rotasi Tiap 2 Hari</span>
+      <p class="duty-date" id="putraDutyDate">Rotasi Tiap 2 Hari Sekali</p>
+      <span class="duty-time">Gus Fazlur ⇄ Gus Adis</span>
     </section>
 
     <section class="card">
-      <h2>Proyeksi Piket Putra (7 Hari)</h2>
+      <h2>Proyeksi Jadwal Piket Putra (7 Hari)</h2>
       <ul class="sched" id="putraSchedList"></ul>
     </section>
   </main>
@@ -264,38 +408,49 @@
   <!-- PAGE 3: PIKET BANGUNKAN SANTRI PUTRI -->
   <main class="page" id="page-putri" hidden>
     <section class="duty">
-      <p class="duty-label">Piket Bangunkan Santri Putri (1 Hari Sekali)</p>
+      <p class="duty-label">Piket Bangunkan Santri Putri</p>
       <h2 class="duty-name" id="putriDutyName">-</h2>
       <div class="orn"><svg viewBox="0 0 10 10"><polygon points="5,0 10,5 5,10 0,5"/></svg></div>
-      <p class="duty-date" id="putriDutyDate">Petugas Hari Ini</p>
-      <span class="duty-time">Rotasi Tiap 1 Hari</span>
+      <p class="duty-date" id="putriDutyDate">Rotasi Harian (Bergilir)</p>
+      <span class="duty-time">Ning Maris → Ning Amel → Ning Ninid → Ustadzah Ima</span>
     </section>
 
     <section class="card">
-      <h2>Proyeksi Piket Putri (7 Hari)</h2>
+      <h2>Proyeksi Jadwal Piket Putri (7 Hari)</h2>
       <ul class="sched" id="putriSchedList"></ul>
     </section>
   </main>
 
   <!-- FOOTER -->
   <footer class="foot">
-    <p>
-      <span class="sync-badge" data-state="ok"><span class="sync-dot"></span>Sistem Aktif & Ter-sinkronisasi</span>
-    </p>
+    <p><span class="sync-badge"><span class="sync-dot"></span>Sistem Aktif & Ter-sinkronisasi</span></p>
     <p>© PP Nurusy Syuhada' Kedungrejo — Kedisiplinan & Ibadah</p>
-    <p class="foot-ar" lang="ar" dir="rtl">اللَّهُمَّ بَارِكْ لَنَا فِي أَوْقَاتِنَا</p>
+    <p class="bismillah" style="margin-top:10px; font-size:15px;" lang="ar" dir="rtl">اللَّهُمَّ بَارِكْ لَنَا فِي أَوْقَاتِنَا</p>
   </footer>
 
 </div>
+
+<!-- MODAL ADMIN -->
+<dialog class="modal" id="adminModal">
+  <h2>Akses Pengurus</h2>
+  <h3 style="margin:0 0 12px; font-size:18px;">Login Admin</h3>
+  <div class="field">
+    <label>Sandi Admin</label>
+    <input type="password" id="adminPass" placeholder="Masukkan sandi...">
+  </div>
+  <p id="adminErr" style="color:var(--danger); font-size:12px; margin:8px 0 0; display:none;">Sandi salah!</p>
+  <div class="modal-actions">
+    <button class="btn" onclick="closeAdmin()">Batal</button>
+    <button class="btn primary" onclick="verifyAdmin()">Masuk</button>
+  </div>
+</dialog>
 
 <script>
   // ---------- DATA MASTER ----------
   const LIST_MAIN = ["Gus Fazlur", "Gus Adis", "Ning Maris", "Ning Amel", "Ning Ninid"];
   const LIST_PUTRA = ["Gus Fazlur", "Gus Adis"];
   const LIST_PUTRI = ["Ning Maris", "Ning Amel", "Ning Ninid", "Ustadzah Ima"];
-
-  // Epoch Anchor (27 Okt 2026 sebagai basis hitungan)
-  const BASE_DATE = new Date(2026, 9, 27); 
+  const BASE_DATE = new Date(2026, 9, 27); // 27 Oktober 2026
 
   // ---------- TEMA (DARK/LIGHT) ----------
   function toggleTheme(){
@@ -305,7 +460,7 @@
     localStorage.setItem("piket-waqiah-theme", next);
   }
 
-  // ---------- NAVIGASI HALAMAN / TAB ----------
+  // ---------- TAB NAVIGASI ----------
   function switchPage(pageId){
     document.querySelectorAll('.tab').forEach(b => b.removeAttribute('aria-current'));
     document.querySelectorAll('.page').forEach(p => p.hidden = true);
@@ -314,7 +469,7 @@
     document.getElementById('page-' + pageId).hidden = false;
   }
 
-  // ---------- LOGIKA HITUNG PIKET ----------
+  // ---------- HITUNG SELISIH HARI ----------
   function getDiffDays(d1, d2) {
     const t1 = Date.UTC(d1.getFullYear(), d1.getMonth(), d1.getDate());
     const t2 = Date.UTC(d2.getFullYear(), d2.getMonth(), d2.getDate());
@@ -330,24 +485,27 @@
     };
   }
 
+  // ---------- INISIALISASI UTAMA ----------
   function initApp() {
     const today = new Date();
     const diff = getDiffDays(BASE_DATE, today);
+    const fToday = formatDate(today);
 
-    // 1. Piket Utama (Setiap Hari)
+    // 1. Piket Utama Waqi'ah
     const mainIdx = ((diff % LIST_MAIN.length) + LIST_MAIN.length) % LIST_MAIN.length;
     document.getElementById("mainDutyName").textContent = LIST_MAIN[mainIdx];
+    document.getElementById("mainDutyDate").textContent = `${fToday.dayName}, ${fToday.dateStr}`;
 
-    // 2. Piket Putra (Rotasi Tiap 2 Hari)
+    // 2. Piket Putra (2 hari sekali)
     const putraStep = Math.floor(diff / 2);
     const putraIdx = ((putraStep % LIST_PUTRA.length) + LIST_PUTRA.length) % LIST_PUTRA.length;
     document.getElementById("putraDutyName").textContent = LIST_PUTRA[putraIdx];
 
-    // 3. Piket Putri (Rotasi Tiap 1 Hari)
+    // 3. Piket Putri (1 hari sekali)
     const putriIdx = ((diff % LIST_PUTRI.length) + LIST_PUTRI.length) % LIST_PUTRI.length;
     document.getElementById("putriDutyName").textContent = LIST_PUTRI[putriIdx];
 
-    // Render Proyeksi List
+    // Render List Proyeksi 7 Hari
     renderScheduleList("mainSchedList", today, (d) => {
       const df = getDiffDays(BASE_DATE, d);
       return LIST_MAIN[((df % LIST_MAIN.length) + LIST_MAIN.length) % LIST_MAIN.length];
@@ -363,10 +521,19 @@
       const df = getDiffDays(BASE_DATE, d);
       return LIST_PUTRI[((df % LIST_PUTRI.length) + LIST_PUTRI.length) % LIST_PUTRI.length];
     });
+
+    // Simulasi Jadwal Sholat Sederhana
+    document.getElementById("prayerMeta").textContent = fToday.dateStr;
+    document.getElementById("pSubuh").textContent = "04:12";
+    document.getElementById("pDzuhur").textContent = "11:34";
+    document.getElementById("pAshar").textContent = "14:48";
+    document.getElementById("pMaghrib").textContent = "17:42";
+    document.getElementById("pIsya").textContent = "18:53";
   }
 
   function renderScheduleList(elemId, startDate, getDutyFn) {
     const ul = document.getElementById(elemId);
+    if (!ul) return;
     ul.innerHTML = "";
 
     for (let i = 0; i < 7; i++) {
@@ -389,6 +556,32 @@
         <div class="t">03.00 WIB</div>
       `;
       ul.appendChild(li);
+    }
+  }
+
+  // ---------- FORM TUKAR PIKET ----------
+  function submitTukar(e) {
+    e.preventDefault();
+    alert("Permohonan tukar piket berhasil dikirim ke pengurus!");
+    document.getElementById("tukarForm").reset();
+  }
+
+  // ---------- ADMIN MODAL ----------
+  function openAdmin() {
+    document.getElementById("adminModal").showModal();
+  }
+  function closeAdmin() {
+    document.getElementById("adminModal").close();
+    document.getElementById("adminPass").value = "";
+    document.getElementById("adminErr").style.display = "none";
+  }
+  function verifyAdmin() {
+    const pass = document.getElementById("adminPass").value;
+    if (pass === "admin123" || pass === "nurusy") {
+      alert("Berhasil masuk sebagai Admin!");
+      closeAdmin();
+    } else {
+      document.getElementById("adminErr").style.display = "block";
     }
   }
 
