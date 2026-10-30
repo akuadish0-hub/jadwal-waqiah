@@ -106,16 +106,16 @@
   .brand{display:flex; align-items:center; gap:12px; min-width:0}
   .brand-text{min-width:0}
   
-  /* LOGO MODERN & ESTETIK BERBASIS ELEMEN GAMBAR ANDA */
+  /* LOGO PRESISI & RAPI */
   .brand-logo-wrap{
     display:flex; align-items:center; justify-content:center;
     width:52px; height:52px; flex:0 0 auto;
-    padding:6px; border-radius:14px;
+    padding:4px; border-radius:14px;
     background:linear-gradient(135deg, #fbf6e8 0%, #f3ecda 100%);
     border:1px solid var(--gold-line);
     box-shadow:0 4px 12px rgba(138,106,34,0.12);
   }
-  .brand-logo-wrap svg{width:36px; height:36px;}
+  .brand-logo-wrap svg{width:42px; height:42px;}
 
   .pondok{
     margin:0 0 4px; font-size:10px; letter-spacing:.16em; text-transform:uppercase;
@@ -141,7 +141,7 @@
   .tabs{
     display:grid; grid-template-columns:repeat(3, 1fr); gap:6px;
     background:var(--card); border:1px solid var(--line); border-radius:16px;
-    padding:6px; margin:18px 0 20px; box-shadow:var(--shadow);
+    padding:6px; margin:18px 0 16px; box-shadow:var(--shadow);
   }
   .tab{
     font:inherit; font-size:12.5px; font-weight:600; cursor:pointer;
@@ -159,7 +159,21 @@
   .page{animation:fade .2s ease}
   @keyframes fade{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none}}
 
-  /* KARTU UTAMA ESTETIK */
+  /* KARTU PENGINGAT DI BAGIAN ATAS (JAM 7 PAGI) */
+  .next-duty-card{
+    margin-bottom:16px; background:var(--gold-bg); border:1px solid var(--gold-line);
+    border-radius:14px; padding:12px 16px; text-align:center;
+    box-shadow:0 2px 8px rgba(138,106,34,0.08);
+  }
+  .next-duty-title{
+    font-size:10.5px; text-transform:uppercase; letter-spacing:.15em; font-weight:800; color:var(--gold);
+    margin-bottom:3px;
+  }
+  .next-duty-val{
+    font-size:15px; font-weight:700; color:var(--ink);
+  }
+
+  /* KARTU UTAMA */
   .duty{
     position:relative; text-align:center;
     border:2px solid var(--gold-line);
@@ -184,20 +198,6 @@
     text-shadow:0 1px 2px rgba(0,0,0,0.03);
   }
   .duty-date{margin:10px 0 0; font-size:15px; font-weight:600; color:var(--ink-soft)}
-  
-  /* PENGINGAT BESOK PIKET (AKTIF JAM 07:00 - 19:00) */
-  .next-duty-card{
-    margin-top:16px; background:var(--gold-bg); border:1px solid var(--gold-line);
-    border-radius:14px; padding:12px 16px; text-align:center;
-    box-shadow:0 2px 8px rgba(138,106,34,0.08);
-  }
-  .next-duty-title{
-    font-size:10.5px; text-transform:uppercase; letter-spacing:.15em; font-weight:800; color:var(--gold);
-    margin-bottom:3px;
-  }
-  .next-duty-val{
-    font-size:15px; font-weight:700; color:var(--ink);
-  }
 
   .card{
     background:var(--card); border:1px solid var(--line); border-top:2px solid var(--gold-line);
@@ -316,24 +316,24 @@
 
   <header class="top">
     <div class="brand">
-      <!-- LOGO ESTETIK BERDASARKAN GAMBAR ANDA -->
+      <!-- LOGO RAPI, ESTETIK DAN PRESISI -->
       <div class="brand-logo-wrap" title="PP Nurusy Syuhada'">
-        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <!-- Pita Emas Bawah "Nurusy Syuhada'" -->
-          <path d="M15 75C15 75 35 88 50 88C65 88 85 75 85 75C85 75 68 95 50 95C32 95 15 75 15 75Z" fill="#D4AF37"/>
-          <path d="M18 76C35 86 50 86 82 76" stroke="#8A6A22" stroke-width="2" stroke-linecap="round"/>
-          <!-- Buku Terbuka / Halaman (Lapisan Kuning, Hijau, Hitam) -->
-          <path d="M20 52C28 48 42 56 50 60C58 56 72 48 80 52C80 52 75 66 50 70C25 66 20 52 20 52Z" fill="#1C2A22"/>
-          <path d="M22 47C30 43 42 51 50 55C58 51 70 43 78 47C78 47 72 61 50 65C28 61 22 47 22 47Z" fill="#3B7A57"/>
-          <path d="M25 42C32 38 42 46 50 50C58 46 68 38 75 42C75 42 70 56 50 60C30 56 25 42 25 42Z" fill="#D4AF37"/>
-          <!-- Pena / Pulpen Tengah Tegak -->
-          <rect x="46" y="22" width="8" height="38" rx="4" fill="#1A1A1A"/>
-          <path d="M46 50H54V57C54 59.2 52.2 61 50 61C47.8 61 46 59.2 46 57V50Z" fill="#D4AF37"/>
-          <path d="M49 61L50 64L51 61H49Z" fill="#D4AF37"/>
-          <path d="M48 24H52V28H48V24Z" fill="#E6E6E6"/>
-          <!-- Kaligrafi Estetik / Kubah di Atas Pena -->
-          <path d="M50 8C35 8 30 18 38 22C44 25 48 18 50 14C52 18 56 25 62 22C70 18 65 8 50 8Z" fill="#D4AF37"/>
-          <path d="M50 11C40 11 36 17 41 20C46 22 48 17 50 13C52 17 54 22 59 20C64 17 60 11 50 11Z" fill="#C93B2B"/>
+        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <!-- Pita Emas Bawah -->
+          <path d="M12 90C12 90 35 106 60 106C85 106 108 90 108 90C108 90 85 116 60 116C35 116 12 90 12 90Z" fill="#D4AF37"/>
+          <path d="M16 92C38 104 60 104 104 92" stroke="#7A5A18" stroke-width="2.5" stroke-linecap="round"/>
+          <!-- Lapisan Buku -->
+          <path d="M18 64C28 58 45 68 60 74C75 68 92 58 102 64C102 64 92 82 60 88C28 82 18 64 18 64Z" fill="#1C2A22"/>
+          <path d="M21 57C30 51 45 61 60 67C75 61 90 51 99 57C99 57 88 75 60 81C32 75 21 57 21 57Z" fill="#3B7A57"/>
+          <path d="M25 50C34 44 45 53 60 59C75 53 86 44 95 50C95 50 84 68 60 74C36 68 25 50 25 50Z" fill="#E6CA65"/>
+          <!-- Pena / Pulpen Tengah -->
+          <rect x="55" y="24" width="10" height="42" rx="5" fill="#151E1A"/>
+          <path d="M55 58H65V67C65 69.8 62.8 72 60 72C57.2 72 55 69.8 55 67V58Z" fill="#D4AF37"/>
+          <path d="M58 72L60 76L62 72H58Z" fill="#D4AF37"/>
+          <rect x="57" y="28" width="6" height="5" fill="#EAEAEA"/>
+          <!-- Kubah / Mahkota Merah & Emas di Atas -->
+          <path d="M60 6C42 6 36 18 45 23C52 27 57 18 60 13C63 18 68 27 75 23C84 18 78 6 60 6Z" fill="#D4AF37"/>
+          <path d="M60 9C46 9 41 17 48 21C53 24 57 17 60 12C63 17 67 24 72 21C79 17 74 9 60 9Z" fill="#C93B2B"/>
         </svg>
       </div>
       <div class="brand-text">
@@ -361,6 +361,12 @@
 
   <!-- PAGE 1: BERANDA & WAQI'AH -->
   <main class="page" id="page-waqiah">
+    <!-- PENGINGAT BESOK DI ATAS (MUNCUL JAM 07:00 - 19:00) -->
+    <div class="next-duty-card" id="mainNextCard" style="display:none;">
+      <div class="next-duty-title">Besok Piket Anda</div>
+      <div class="next-duty-val" id="mainNextDutyVal">-</div>
+    </div>
+
     <section class="duty">
       <p class="duty-label">Petugas Jaga Waqi'ah Hari Ini</p>
       <h2 class="duty-name" id="mainDutyName">-</h2>
@@ -368,12 +374,6 @@
       <p class="duty-date" id="mainDutyDate">-</p>
       <span style="display:inline-block; margin-top:12px; font-size:12px; font-weight:600; color:var(--accent); background:var(--card); border:1px solid var(--gold-line); border-radius:999px; padding:6px 14px;">Mulai Pukul 03.00 WIB</span>
     </section>
-
-    <!-- PENGINGAT BESOK PIKET (AKTIF JAM 07:00 S.D 19:00) -->
-    <div class="next-duty-card" id="mainNextCard" style="display:none;">
-      <div class="next-duty-title">Besok Piket Anda</div>
-      <div class="next-duty-val" id="mainNextDutyVal">-</div>
-    </div>
 
     <!-- PROYEKSI JADWAL WAQIAH (COLLAPSIBLE MINGGUAN) -->
     <section class="card">
@@ -429,6 +429,12 @@
 
   <!-- PAGE 2: PIKET BANGUNKAN SANTRI PUTRA -->
   <main class="page" id="page-putra" hidden>
+    <!-- PENGINGAT BESOK DI ATAS (MUNCUL JAM 07:00 - 19:00) -->
+    <div class="next-duty-card" id="putraNextCard" style="display:none;">
+      <div class="next-duty-title">Besok Piket Anda</div>
+      <div class="next-duty-val" id="putraNextDutyVal">-</div>
+    </div>
+
     <section class="duty">
       <p class="duty-label">Piket Bangunkan Santri Putra</p>
       <h2 class="duty-name" id="putraDutyName">-</h2>
@@ -436,12 +442,6 @@
       <p class="duty-date" id="putraDutyDate">Rotasi Tiap 2 Hari Sekali</p>
       <span style="display:inline-block; margin-top:12px; font-size:12px; font-weight:600; color:var(--accent); background:var(--card); border:1px solid var(--gold-line); border-radius:999px; padding:6px 14px;" id="putraRotasiLabel">Rotasi Berjalan</span>
     </section>
-
-    <!-- PENGINGAT BESOK (AKTIF JAM 07:00 S.D 19:00) -->
-    <div class="next-duty-card" id="putraNextCard" style="display:none;">
-      <div class="next-duty-title">Besok Piket Anda</div>
-      <div class="next-duty-val" id="putraNextDutyVal">-</div>
-    </div>
 
     <section class="card">
       <h2>Proyeksi Jadwal Piket Putra (7 Hari)</h2>
@@ -451,6 +451,12 @@
 
   <!-- PAGE 3: PIKET BANGUNKAN SANTRI PUTRI -->
   <main class="page" id="page-putri" hidden>
+    <!-- PENGINGAT BESOK DI ATAS (MUNCUL JAM 07:00 - 19:00) -->
+    <div class="next-duty-card" id="putriNextCard" style="display:none;">
+      <div class="next-duty-title">Besok Piket Anda</div>
+      <div class="next-duty-val" id="putriNextDutyVal">-</div>
+    </div>
+
     <section class="duty">
       <p class="duty-label">Piket Bangunkan Santri Putri</p>
       <h2 class="duty-name" id="putriDutyName">-</h2>
@@ -458,12 +464,6 @@
       <p class="duty-date" id="putriDutyDate">Rotasi Harian (Bergilir)</p>
       <span style="display:inline-block; margin-top:12px; font-size:12px; font-weight:600; color:var(--accent); background:var(--card); border:1px solid var(--gold-line); border-radius:999px; padding:6px 14px;" id="putriRotasiLabel">Rotasi Berjalan</span>
     </section>
-
-    <!-- PENGINGAT BESOK (AKTIF JAM 07:00 S.D 19:00) -->
-    <div class="next-duty-card" id="putriNextCard" style="display:none;">
-      <div class="next-duty-title">Besok Piket Anda</div>
-      <div class="next-duty-val" id="putriNextDutyVal">-</div>
-    </div>
 
     <section class="card">
       <h2>Proyeksi Jadwal Piket Putri (7 Hari)</h2>
@@ -571,7 +571,7 @@
     const today = new Date();
     const currentHour = today.getHours();
     
-    // Batasan Waktu Pengingat Besok: Jam 07:00 s.d 19:00
+    // Aktif mulai jam 07:00 pagi hingga 19:00 malam
     const showReminder = currentHour >= 7 && currentHour < 19;
 
     const diff = getDiffDays(BASE_DATE, today);
