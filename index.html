@@ -12,19 +12,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-<!-- FIREBASE SDK (DATABASE ONLINE REAL-TIME) -->
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-
 <script>
-  // KONFIGURASI FIREBASE ANDA
-  const firebaseConfig = {
-    databaseURL: "https://jadwal-waqiah-default-rtdb.firebaseio.com/"
-  };
-  firebase.initializeApp(firebaseConfig);
-  const db = firebase.database();
-
   (function () {
     try {
       var saved = localStorage.getItem("piket-waqiah-theme");
@@ -354,7 +342,7 @@
         <svg class="icon-moon" viewBox="0 0 24 24"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
       </button>
       <button class="icon-btn" id="adminBtn" title="Menu Admin" onclick="openAdmin()">
-        <svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l-.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
       </button>
     </div>
   </header>
@@ -450,7 +438,7 @@
   </main>
 
   <footer class="foot">
-    <p><span class="sync-badge"><span class="sync-dot"></span>Online Real-Time Sinkron</span></p>
+    <p><span class="sync-badge"><span class="sync-dot"></span>Sistem Aktif & Ter-sinkronisasi</span></p>
     <p>© PP Nurusy Syuhada' Kedungrejo — Kedisiplinan & Ibadah</p>
   </footer>
 
@@ -496,6 +484,7 @@
     <h3 style="margin:0 0 10px; font-size:16px;">Login Admin</h3>
     <div class="field">
       <label>Sandi Admin</label>
+      <!-- Tekan Enter di Laptop atau HP langsung masuk -->
       <input type="password" id="adminPass" inputmode="numeric" pattern="[0-9]*" placeholder="PIN angka..." onkeydown="handleLoginKey(event)">
     </div>
     <p id="adminErr" style="color:var(--danger); font-size:11px; margin:6px 0 0; display:none;">Sandi salah!</p>
@@ -530,29 +519,12 @@
   const DEFAULT_PUTRI = ["Ning Maris", "Ning Amel", "Ning Ninid", "Ustadzah Ima"];
   const BASE_DATE = new Date(2026, 9, 27); // 27 Oktober 2026
 
-  let listMain = [...DEFAULT_MAIN];
-  let listPutra = [...DEFAULT_PUTRA];
-  let listPutri = [...DEFAULT_PUTRI];
-  let tukarRequests = [];
+  let listMain = JSON.parse(localStorage.getItem("listMain")) || DEFAULT_MAIN;
+  let listPutra = JSON.parse(localStorage.getItem("listPutra")) || DEFAULT_PUTRA;
+  let listPutri = JSON.parse(localStorage.getItem("listPutri")) || DEFAULT_PUTRI;
+  let tukarRequests = JSON.parse(localStorage.getItem("tukarRequests")) || [];
 
   let currentAdminTab = "waqiah";
-
-  // SINKRONISASI REAL-TIME DARI FIREBASE DATABASE
-  db.ref("/piketData").on("value", (snapshot) => {
-    const data = snapshot.val();
-    if (data) {
-      if (data.listMain) listMain = data.listMain;
-      if (data.listPutra) listPutra = data.listPutra;
-      if (data.listPutri) listPutri = data.listPutri;
-      if (data.tukarRequests) tukarRequests = data.tukarRequests;
-    } else {
-      saveDataToFirebase(); // Simpan default pertama kali jika kosong
-    }
-    initApp();
-    if (document.getElementById("adminPanelSection").style.display === "block") {
-      renderAdminTabContent();
-    }
-  });
 
   function toggleTheme(){
     var current = document.documentElement.getAttribute("data-theme");
@@ -583,7 +555,7 @@
     return Math.floor((t2 - t1) / (1000 * 60 * 60 * 24));
   }
 
-  // KALENDER HIJRIAH AKURAT JUMADIL AWAL 1448 H
+  // KALENDER HIJRIAH DIKUNCI TEPAT KE BULAN JUMADIL AWAL 1448 H (BERBASIS TITIK REFERENSI KEMENAG)
   function getHijriDate(date) {
     const months = [
       "Muharram", "Safar", "Rabiul Awal", "Rabiul Akhir",
@@ -591,14 +563,16 @@
       "Ramadhan", "Syawal", "Dzulqa'dah", "Dzulhijjah"
     ];
 
-    const refMasehi = new Date(2026, 9, 30); // 30 Oktober 2026 = 19 Jumadil Awal 1448 H
+    // Titik acuan pasti: 30 Oktober 2026 M = 19 Jumadil Awal 1448 H
+    const refMasehi = new Date(2026, 9, 30); // Bulan 9 adalah Oktober
     const diffTime = date.getTime() - refMasehi.getTime();
     const diffDays = Math.round(diffTime / (1000 * 60 * 60 * 24));
 
     let hDay = 19 + diffDays;
-    let hMonth = 4; // Jumadil Awal
+    let hMonth = 4; // Indeks ke-4 adalah Jumadil Awal (0=Muharram, dst)
     let hYear = 1448;
 
+    // Penyesuaian rotasi bulan hijriah (umur bulan 29 / 30 hari secara bergantian)
     while (hDay > 29) {
       hDay -= 29;
       hMonth++;
@@ -792,7 +766,7 @@
       status: 'pending'
     };
     tukarRequests.push(req);
-    saveDataToFirebase();
+    localStorage.setItem("tukarRequests", JSON.stringify(tukarRequests));
 
     alert("Permohonan tukar piket berhasil dikirim! Menunggu persetujuan Admin.");
     closeTukarModal();
@@ -896,13 +870,15 @@
   }
 
   function confirmSaveAdmin() {
-    if (confirm("Simpan perubahan ini secara online ke semua perangkat?")) {
-      saveDataToFirebase();
-      alert("Perubahan berhasil disinkronkan ke seluruh perangkat!");
+    if (confirm("Apakah Anda yakin ingin menyimpan perubahan urutan/data petugas ini?")) {
+      saveData();
+      alert("Perubahan berhasil disimpan!");
+      initApp();
       closeAdmin();
     }
   }
 
+  // LOGIKA DRAG & DROP REAL-TIME SMOOTH REORDER
   function initDragAndDrop() {
     const list = document.getElementById("dragContainer");
     if (!list) return;
@@ -1030,22 +1006,23 @@
           targetList.splice(idx, 1);
         }
         targetList.push(nameToMove);
+        saveData();
       }
 
-      saveDataToFirebase();
-      alert(isApproved ? "Permohonan tukar disetujui & otomatis digeser!" : "Permohonan tukar ditolak.");
+      localStorage.setItem("tukarRequests", JSON.stringify(tukarRequests));
+      alert(isApproved ? "Permohonan tukar disetujui & otomatis digeser ke sesi hari terakhir!" : "Permohonan tukar ditolak.");
       renderAdminTabContent();
+      initApp();
     }
   }
 
-  function saveDataToFirebase() {
-    db.ref("/piketData").set({
-      listMain: listMain,
-      listPutra: listPutra,
-      listPutri: listPutri,
-      tukarRequests: tukarRequests
-    });
+  function saveData() {
+    localStorage.setItem("listMain", JSON.stringify(listMain));
+    localStorage.setItem("listPutra", JSON.stringify(listPutra));
+    localStorage.setItem("listPutri", JSON.stringify(listPutri));
   }
+
+  document.addEventListener("DOMContentLoaded", initApp);
 </script>
 </body>
 </html>
