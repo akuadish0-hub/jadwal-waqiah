@@ -242,29 +242,12 @@
   }
   .sched li.today .d span{color:var(--accent)}
 
-  /* TOMBOL COLLAPSIBLE JADWAL MINGGUAN */
-  .weekly-toggle-wrap{margin-top:16px; text-align:center;}
-  .weekly-btn{
-    background:var(--accent-soft); border:1px solid var(--accent-line); color:var(--accent);
-    font:inherit; font-size:13px; font-weight:700; padding:11px 18px; border-radius:99px;
-    cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .15s ease;
-    box-shadow:0 2px 6px rgba(13,92,70,0.1);
-  }
-  .weekly-btn:hover{filter:brightness(1.05); transform:translateY(-1px)}
-  .weekly-content{display:none; margin-top:16px; padding-top:16px; border-top:1px dashed var(--line);}
-  .weekly-content.open{display:block;}
-
-  /* FORM TUKAR */
+  /* TOMBOL BUKA MODAL TUKAR JADWAL */
   .tukar-trigger{margin-top:16px; text-align:center;}
   .tukar-btn-toggle{
     background:none; border:none; color:var(--gold); font-size:13px; font-weight:700;
     cursor:pointer; text-decoration:underline; text-underline-offset:4px;
   }
-  .tukar-form-wrap{
-    margin-top:14px; padding-top:14px; border-top:1px dashed var(--line);
-    display:none;
-  }
-  .tukar-form-wrap.open{display:block}
 
   .field{margin-top:12px}
   .field label{display:block; font-size:12px; font-weight:600; margin-bottom:5px; color:var(--ink-soft)}
@@ -300,7 +283,7 @@
   }
   .sync-dot{width:6px; height:6px; border-radius:50%; background:var(--accent)}
 
-  /* MODAL ADMIN */
+  /* MODAL UMUM & ADMIN */
   dialog.modal{
     width:min(94vw, 480px); padding:22px; margin:auto;
     background:var(--card); color:var(--ink);
@@ -391,54 +374,15 @@
       <div id="mainLusaEventBadge"></div>
     </section>
 
-    <!-- PROYEKSI JADWAL WAQIAH (COLLAPSIBLE MINGGUAN) -->
+    <!-- PROYEKSI JADWAL WAQIAH (TERBUKA PERMANEN TANPA COLLAPSE) -->
     <section class="card">
-      <div class="weekly-toggle-wrap" style="margin-top:0;">
-        <button type="button" class="weekly-btn" onclick="toggleWeeklyWaqiah()">
-          📅 Klik Untuk Lihat Jadwal Waqi'ah Seminggu
-        </button>
-      </div>
-
-      <div class="weekly-content" id="weeklyWaqiahContent">
-        <h2>Jadwal Lengkap 7 Hari</h2>
-        <ul class="sched" id="mainSchedList"></ul>
-      </div>
+      <h2>Jadwal Lengkap Waqi'ah 7 Hari</h2>
+      <ul class="sched" id="mainSchedList"></ul>
 
       <div class="tukar-trigger">
-        <button type="button" class="tukar-btn-toggle" onclick="toggleTukarForm()">
+        <button type="button" class="tukar-btn-toggle" onclick="openTukarModal()">
           🔄 Ingin Tukar Jadwal Piket? Klik Disini
         </button>
-      </div>
-
-      <div class="tukar-form-wrap" id="tukarFormWrap">
-        <h3 style="margin:0 0 10px; font-size:14px; color:var(--accent);">Formulir Permohonan Tukar Piket</h3>
-        <form id="tukarForm" onsubmit="submitTukar(event)">
-          <div class="field">
-            <label>Kategori Piket</label>
-            <select id="katTukar" required>
-              <option value="waqiah">Jadwal Waqi'ah</option>
-              <option value="putra">Piket Putra</option>
-              <option value="putri">Piket Putri</option>
-            </select>
-          </div>
-          <div class="field">
-            <label>Nama Pemohon</label>
-            <input type="text" id="pemohon" placeholder="Masukkan nama Anda..." required>
-          </div>
-          <div class="field">
-            <label>Tanggal Piket yang Ingin Ditukar</label>
-            <input type="date" id="tglTukar" required>
-          </div>
-          <div class="field">
-            <label>Digantikan Oleh (Opsional)</label>
-            <input type="text" id="pengganti" placeholder="Nama pengganti jika ada...">
-          </div>
-          <div class="field">
-            <label>Alasan / Keterangan</label>
-            <textarea id="alasanTukar" placeholder="Tuliskan alasan penutupan/tukar..." required></textarea>
-          </div>
-          <button type="submit" class="btn primary block">Kirim Permohonan ke Admin</button>
-        </form>
       </div>
     </section>
   </main>
@@ -501,6 +445,41 @@
 
 </div>
 
+<!-- MODAL POP-UP PERMOHONAN TUKAR JADWAL -->
+<dialog class="modal" id="tukarModal">
+  <h2 style="margin:0 0 12px; font-size:16px; color:var(--accent);">Formulir Permohonan Tukar Piket</h2>
+  <form id="tukarForm" onsubmit="submitTukar(event)">
+    <div class="field">
+      <label>Kategori Piket</label>
+      <select id="katTukar" required>
+        <option value="waqiah">Jadwal Waqi'ah</option>
+        <option value="putra">Piket Putra</option>
+        <option value="putri">Piket Putri</option>
+      </select>
+    </div>
+    <div class="field">
+      <label>Nama Pemohon</label>
+      <input type="text" id="pemohon" placeholder="Masukkan nama Anda..." required>
+    </div>
+    <div class="field">
+      <label>Tanggal Piket yang Ingin Ditukar</label>
+      <input type="date" id="tglTukar" required>
+    </div>
+    <div class="field">
+      <label>Digantikan Oleh (Opsional)</label>
+      <input type="text" id="pengganti" placeholder="Nama pengganti jika ada...">
+    </div>
+    <div class="field">
+      <label>Alasan / Keterangan</label>
+      <textarea id="alasanTukar" placeholder="Tuliskan alasan penutupan/tukar..." required></textarea>
+    </div>
+    <div class="modal-actions">
+      <button type="button" class="btn" onclick="closeTukarModal()">Batal</button>
+      <button type="submit" class="btn primary">Kirim ke Admin</button>
+    </div>
+  </form>
+</dialog>
+
 <!-- MODAL ADMIN -->
 <dialog class="modal" id="adminModal">
   <div id="loginSection">
@@ -555,14 +534,13 @@
     localStorage.setItem("piket-waqiah-theme", next);
   }
 
-  function toggleTukarForm() {
-    const wrap = document.getElementById("tukarFormWrap");
-    wrap.classList.toggle("open");
+  // KONTROL MODAL TUKAR JADWAL (POP-UP)
+  function openTukarModal() {
+    document.getElementById("tukarModal").showModal();
   }
-
-  function toggleWeeklyWaqiah() {
-    const wrap = document.getElementById("weeklyWaqiahContent");
-    wrap.classList.toggle("open");
+  function closeTukarModal() {
+    document.getElementById("tukarModal").close();
+    document.getElementById("tukarForm").reset();
   }
 
   function switchPage(pageId){
@@ -579,18 +557,15 @@
     return Math.floor((t2 - t1) / (1000 * 60 * 60 * 24));
   }
 
-  // KALENDER HIJRIAH AKURAT BERDASARKAN KONVERSI JULIAN / ISLAMIC CALENDAR
+  // KALENDER HIJRIAH (DIPERBAIKI AGAR TIDAK DOBEL H)
   function getHijriDate(d) {
     try {
-      // Menggunakan penyesuaian koreksi hari agar akurat dengan rukyatul hilal Indonesia (-1 atau -2 hari jika diperlukan)
-      const adjustedDate = new Date(d.getTime());
-      
       const formatter = new Intl.DateTimeFormat('id-ID-u-ca-islamic-umalqura', {
         day: 'numeric',
         month: 'long',
         year: 'numeric'
       });
-      return formatter.format(adjustedDate) + " H";
+      return formatter.format(d);
     } catch(e) {
       return "";
     }
@@ -773,8 +748,7 @@
     localStorage.setItem("tukarRequests", JSON.stringify(tukarRequests));
 
     alert("Permohonan tukar piket berhasil dikirim! Menunggu persetujuan Admin.");
-    document.getElementById("tukarForm").reset();
-    toggleTukarForm();
+    closeTukarModal();
   }
 
   function openAdmin() {
@@ -957,7 +931,6 @@
 
     saveData();
     renderAdminTabContent();
-    initAdminTabContent();
     initApp();
   }
 
@@ -975,12 +948,27 @@
     initApp();
   }
 
+  // JIKA DISETUJUI, NAMA PEMOHON BERGESER OTOMATIS KE POSISI HARI TERAKHIR DALAM ROTASI
   function approveTukar(id, isApproved) {
     const req = tukarRequests.find(r => r.id === id);
     if (req) {
       req.status = isApproved ? 'approved' : 'rejected';
+      
+      if (isApproved && req.pemohon) {
+        let targetList = req.kat === 'waqiah' ? listMain : (req.kat === 'putra' ? listPutra : listPutri);
+        const nameToMove = req.pengganti ? req.pengganti : req.pemohon;
+        
+        // Geser ke posisi terakhir dalam array list rotasi
+        const idx = targetList.indexOf(nameToMove);
+        if (idx !== -1) {
+          targetList.splice(idx, 1);
+        }
+        targetList.push(nameToMove);
+        saveData();
+      }
+
       localStorage.setItem("tukarRequests", JSON.stringify(tukarRequests));
-      alert(isApproved ? "Permohonan tukar disetujui!" : "Permohonan tukar ditolak.");
+      alert(isApproved ? "Permohonan tukar disetujui & otomatis digeser ke sesi hari terakhir!" : "Permohonan tukar ditolak.");
       renderAdminTabContent();
       initApp();
     }
