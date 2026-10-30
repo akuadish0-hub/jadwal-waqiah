@@ -110,7 +110,6 @@
   .brand{display:flex; align-items:center; gap:12px; min-width:0}
   .brand-text{min-width:0}
   
-  /* SVG Logo Masjid/Pondok */
   .brand-logo-wrap{
     display:flex; align-items:center; justify-content:center;
     width:48px; height:50px; flex:0 0 auto;
@@ -143,7 +142,6 @@
   html[data-theme="dark"] .icon-btn .icon-sun{display:none}
   html[data-theme="dark"] .icon-btn .icon-moon{display:block}
 
-  /* ---------- TABS BERANDA & PIKET ---------- */
   .tabs{
     display:grid; grid-template-columns:repeat(3, 1fr); gap:4px;
     background:var(--card); border:1px solid var(--line); border-radius:16px;
@@ -166,7 +164,6 @@
   .page{animation:fade .18s ease}
   @keyframes fade{from{opacity:0; transform:translateY(3px)} to{opacity:1; transform:none}}
 
-  /* ---------- CARD UTAMA ---------- */
   .duty{
     position:relative; text-align:center;
     border:1px solid var(--gold-line);
@@ -196,7 +193,6 @@
     border:1px solid var(--gold-line); border-radius:999px; padding:5px 12px;
   }
 
-  /* ---------- JADWAL SHOLAT (POSISI SEMULA) ---------- */
   .prayer{
     margin-top:16px; padding:12px 14px 10px;
     background:var(--card); border:1px solid var(--line); border-top:2px solid var(--gold-line);
@@ -222,7 +218,6 @@
     font-variant-numeric:tabular-nums; color:var(--ink);
   }
 
-  /* ---------- CARD & LIST ---------- */
   .card{
     background:var(--card); border:1px solid var(--line); border-top:2px solid var(--gold-line);
     border-radius:var(--radius); box-shadow:var(--shadow); padding:20px; margin-top:16px;
@@ -253,10 +248,7 @@
   }
   .sched li.today .d span{color:var(--accent)}
 
-  /* ---------- FORM TUKAR PIKET (COLLAPSIBLE) ---------- */
-  .tukar-trigger{
-    margin-top:18px; text-align:center;
-  }
+  .tukar-trigger{margin-top:18px; text-align:center;}
   .tukar-btn-toggle{
     background:none; border:none; color:var(--gold); font-size:13px; font-weight:700;
     cursor:pointer; text-decoration:underline; text-underline-offset:4px;
@@ -280,10 +272,12 @@
   }
   .btn{
     font:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
-    border-radius:10px; padding:10px 15px; border:1px solid var(--line);
+    border-radius:10px; padding:8px 12px; border:1px solid var(--line);
     background:var(--card); color:var(--ink-soft);
   }
   .btn.primary{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+  .btn.danger{background:var(--danger); border-color:var(--danger); color:#fff}
+  .btn.sm{font-size:11.5px; padding:4px 8px; border-radius:6px}
   .btn.block{width:100%; margin-top:14px}
 
   .foot{margin-top:26px; text-align:center; font-size:11.5px; color:var(--muted); line-height:1.7}
@@ -294,15 +288,33 @@
   }
   .sync-dot{width:6px; height:6px; border-radius:50%; background:var(--accent)}
 
-  /* ---------- MODAL ADMIN ---------- */
+  /* Modal Admin Styles */
   dialog.modal{
-    width:min(92vw, 380px); padding:22px; margin:auto;
+    width:min(94vw, 480px); padding:20px; margin:auto;
     background:var(--card); color:var(--ink);
     border:1px solid var(--line); border-radius:16px;
     box-shadow:0 30px 60px -30px rgba(0,0,0,.5);
+    max-height:88vh; overflow-y:auto;
   }
   dialog.modal::backdrop{background:rgba(8,16,13,.45); backdrop-filter:blur(2px)}
   .modal-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:18px}
+
+  .admin-panel{display:none}
+  .admin-panel.active{display:block}
+  .admin-tab-nav{display:flex; gap:6px; margin:12px 0; border-bottom:1px solid var(--line); padding-bottom:8px}
+  .admin-tab-btn{background:none; border:none; padding:6px 10px; font-size:12px; font-weight:600; cursor:pointer; color:var(--muted)}
+  .admin-tab-btn.active{color:var(--accent); border-bottom:2px solid var(--accent)}
+
+  .list-item-admin{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:8px; background:var(--card-soft); border:1px solid var(--line);
+    border-radius:8px; margin-bottom:6px; font-size:13px;
+  }
+  .list-item-actions{display:flex; gap:4px}
+  .pending-card{
+    background:var(--gold-bg); border:1px solid var(--gold-line);
+    padding:10px; border-radius:8px; margin-bottom:8px; font-size:12px;
+  }
 </style>
 </head>
 <body>
@@ -348,7 +360,7 @@
       <span class="duty-time">Mulai Pukul 03.00 WIB</span>
     </section>
 
-    <!-- JADWAL SHOLAT (POSISI SEMULA) -->
+    <!-- JADWAL SHOLAT -->
     <section class="prayer">
       <div class="prayer-head">
         <span class="prayer-kicker">
@@ -371,7 +383,6 @@
       <h2>Mendatang (Jadwal Waqi'ah 7 Hari)</h2>
       <ul class="sched" id="mainSchedList"></ul>
 
-      <!-- TOMBOL & FORMULIR TUKAR PIKET (TERSEMBUNYI) -->
       <div class="tukar-trigger">
         <button type="button" class="tukar-btn-toggle" onclick="toggleTukarForm()">
           🔄 Ingin Tukar Jadwal Piket? Klik Disini
@@ -382,25 +393,30 @@
         <h3 style="margin:0 0 10px; font-size:14px; color:var(--accent);">Formulir Permohonan Tukar Piket</h3>
         <form id="tukarForm" onsubmit="submitTukar(event)">
           <div class="field">
-            <label>Nama Pemohon</label>
-            <select id="pemohon" required>
-              <option value="">Pilih Petugas...</option>
-              <option value="Gus Fazlur">Gus Fazlur</option>
-              <option value="Gus Adis">Gus Adis</option>
-              <option value="Ning Maris">Ning Maris</option>
-              <option value="Ning Amel">Ning Amel</option>
-              <option value="Ning Ninid">Ning Ninid</option>
+            <label>Kategori Piket</label>
+            <select id="katTukar" required>
+              <option value="waqiah">Jadwal Waqi'ah</option>
+              <option value="putra">Piket Putra</option>
+              <option value="putri">Piket Putri</option>
             </select>
+          </div>
+          <div class="field">
+            <label>Nama Pemohon</label>
+            <input type="text" id="pemohon" placeholder="Masukkan nama Anda..." required>
           </div>
           <div class="field">
             <label>Tanggal Piket yang Ingin Ditukar</label>
             <input type="date" id="tglTukar" required>
           </div>
           <div class="field">
-            <label>Alasan / Keterangan Penutupan</label>
+            <label>Digantikan Oleh (Opsional / Admin Akan Mencari)</label>
+            <input type="text" id="pengganti" placeholder="Nama pengganti jika ada...">
+          </div>
+          <div class="field">
+            <label>Alasan / Keterangan</label>
             <textarea id="alasanTukar" placeholder="Tuliskan alasan penutupan/tukar..." required></textarea>
           </div>
-          <button type="submit" class="btn primary block">Kirim Permohonan Tukar</button>
+          <button type="submit" class="btn primary block">Kirim Permohonan ke Admin</button>
         </form>
       </div>
     </section>
@@ -413,7 +429,7 @@
       <h2 class="duty-name" id="putraDutyName">-</h2>
       <div class="orn"><svg viewBox="0 0 10 10"><polygon points="5,0 10,5 5,10 0,5"/></svg></div>
       <p class="duty-date" id="putraDutyDate">Rotasi Tiap 2 Hari Sekali</p>
-      <span class="duty-time">Gus Fazlur ⇄ Gus Adis</span>
+      <span class="duty-time" id="putraRotasiLabel">Rotasi Berjalan</span>
     </section>
 
     <section class="card">
@@ -429,7 +445,7 @@
       <h2 class="duty-name" id="putriDutyName">-</h2>
       <div class="orn"><svg viewBox="0 0 10 10"><polygon points="5,0 10,5 5,10 0,5"/></svg></div>
       <p class="duty-date" id="putriDutyDate">Rotasi Harian (Bergilir)</p>
-      <span class="duty-time">Ning Maris → Ning Amel → Ning Ninid → Ustadzah Ima</span>
+      <span class="duty-time" id="putriRotasiLabel">Rotasi Berjalan</span>
     </section>
 
     <section class="card">
@@ -449,25 +465,54 @@
 
 <!-- MODAL ADMIN -->
 <dialog class="modal" id="adminModal">
-  <h2>Akses Pengurus</h2>
-  <h3 style="margin:0 0 12px; font-size:18px;">Login Admin</h3>
-  <div class="field">
-    <label>Sandi Admin</label>
-    <input type="password" id="adminPass" placeholder="Masukkan sandi...">
+  <div id="loginSection">
+    <h2>Akses Pengurus</h2>
+    <h3 style="margin:0 0 12px; font-size:18px;">Login Admin</h3>
+    <div class="field">
+      <label>Sandi Admin</label>
+      <input type="password" id="adminPass" placeholder="Masukkan sandi...">
+    </div>
+    <p id="adminErr" style="color:var(--danger); font-size:12px; margin:8px 0 0; display:none;">Sandi salah!</p>
+    <div class="modal-actions">
+      <button class="btn" onclick="closeAdmin()">Batal</button>
+      <button class="btn primary" onclick="verifyAdmin()">Masuk</button>
+    </div>
   </div>
-  <p id="adminErr" style="color:var(--danger); font-size:12px; margin:8px 0 0; display:none;">Sandi salah!</p>
-  <div class="modal-actions">
-    <button class="btn" onclick="closeAdmin()">Batal</button>
-    <button class="btn primary" onclick="verifyAdmin()">Masuk</button>
+
+  <div id="adminPanelSection" style="display:none;">
+    <h2 style="margin:0;">Panel Kontrol Admin</h2>
+    
+    <div class="admin-tab-nav">
+      <button class="admin-tab-btn active" onclick="switchAdminTab('waqiah')">Piket Waqi'ah</button>
+      <button class="admin-tab-btn" onclick="switchAdminTab('putra')">Piket Putra</button>
+      <button class="admin-tab-btn" onclick="switchAdminTab('putri')">Piket Putri</button>
+      <button class="admin-tab-btn" onclick="switchAdminTab('tukar')">Persetujuan Tukar</button>
+    </div>
+
+    <!-- ADMIN: KELOLA PETUGAS WAQIAH/PUTRA/PUTRI -->
+    <div id="adminTabContent">
+      <!-- Content populated dynamically -->
+    </div>
+
+    <div class="modal-actions" style="margin-top:20px; border-top:1px solid var(--line); padding-top:10px;">
+      <button class="btn" onclick="closeAdmin()">Tutup</button>
+    </div>
   </div>
 </dialog>
 
 <script>
-  // ---------- DATA MASTER ----------
-  const LIST_MAIN = ["Gus Fazlur", "Gus Adis", "Ning Maris", "Ning Amel", "Ning Ninid"];
-  const LIST_PUTRA = ["Gus Fazlur", "Gus Adis"];
-  const LIST_PUTRI = ["Ning Maris", "Ning Amel", "Ning Ninid", "Ustadzah Ima"];
+  // ---------- DATA DEFAULT ----------
+  const DEFAULT_MAIN = ["Gus Fazlur", "Gus Adis", "Ning Maris", "Ning Amel", "Ning Ninid"];
+  const DEFAULT_PUTRA = ["Gus Fazlur", "Gus Adis"];
+  const DEFAULT_PUTRI = ["Ning Maris", "Ning Amel", "Ning Ninid", "Ustadzah Ima"];
   const BASE_DATE = new Date(2026, 9, 27); // 27 Oktober 2026
+
+  let listMain = JSON.parse(localStorage.getItem("listMain")) || DEFAULT_MAIN;
+  let listPutra = JSON.parse(localStorage.getItem("listPutra")) || DEFAULT_PUTRA;
+  let listPutri = JSON.parse(localStorage.getItem("listPutri")) || DEFAULT_PUTRI;
+  let tukarRequests = JSON.parse(localStorage.getItem("tukarRequests")) || [];
+
+  let currentAdminTab = "waqiah";
 
   // ---------- TEMA (DARK/LIGHT) ----------
   function toggleTheme(){
@@ -477,13 +522,11 @@
     localStorage.setItem("piket-waqiah-theme", next);
   }
 
-  // ---------- TOGGLE FORM TUKAR PIKET ----------
   function toggleTukarForm() {
     const wrap = document.getElementById("tukarFormWrap");
     wrap.classList.toggle("open");
   }
 
-  // ---------- TAB NAVIGASI ----------
   function switchPage(pageId){
     document.querySelectorAll('.tab').forEach(b => b.removeAttribute('aria-current'));
     document.querySelectorAll('.page').forEach(p => p.hidden = true);
@@ -492,7 +535,6 @@
     document.getElementById('page-' + pageId).hidden = false;
   }
 
-  // ---------- HITUNG SELISIH HARI ----------
   function getDiffDays(d1, d2) {
     const t1 = Date.UTC(d1.getFullYear(), d1.getMonth(), d1.getDate());
     const t2 = Date.UTC(d2.getFullYear(), d2.getMonth(), d2.getDate());
@@ -504,48 +546,63 @@
     const months = ["Jan", "Feb", "Mar", "Apr", "Mei", "Jun", "Jul", "Agt", "Sep", "Okt", "Nov", "Des"];
     return {
       dayName: days[d.getDay()],
-      dateStr: `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`
+      dateStr: `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`,
+      isoDate: d.toISOString().split('T')[0]
     };
   }
 
-  // ---------- INISIALISASI UTAMA ----------
+  // ---------- INISIALISASI TAMPILAN JADWAL ----------
   function initApp() {
     const today = new Date();
     const diff = getDiffDays(BASE_DATE, today);
     const fToday = formatDate(today);
 
     // 1. Piket Utama Waqi'ah
-    const mainIdx = ((diff % LIST_MAIN.length) + LIST_MAIN.length) % LIST_MAIN.length;
-    document.getElementById("mainDutyName").textContent = LIST_MAIN[mainIdx];
+    const mainDuty = getOverrideDuty('waqiah', fToday.isoDate) || getDutyFromList(listMain, diff, 1);
+    document.getElementById("mainDutyName").textContent = mainDuty;
     document.getElementById("mainDutyDate").textContent = `${fToday.dayName}, ${fToday.dateStr}`;
 
     // 2. Piket Putra (2 hari sekali)
-    const putraStep = Math.floor(diff / 2);
-    const putraIdx = ((putraStep % LIST_PUTRA.length) + LIST_PUTRA.length) % LIST_PUTRA.length;
-    document.getElementById("putraDutyName").textContent = LIST_PUTRA[putraIdx];
+    const putraDuty = getOverrideDuty('putra', fToday.isoDate) || getDutyFromList(listPutra, Math.floor(diff / 2), 1);
+    document.getElementById("putraDutyName").textContent = putraDuty;
+    document.getElementById("putraRotasiLabel").textContent = listPutra.join(" ⇄ ");
 
     // 3. Piket Putri (1 hari sekali)
-    const putriIdx = ((diff % LIST_PUTRI.length) + LIST_PUTRI.length) % LIST_PUTRI.length;
-    document.getElementById("putriDutyName").textContent = LIST_PUTRI[putriIdx];
+    const putriDuty = getOverrideDuty('putri', fToday.isoDate) || getDutyFromList(listPutri, diff, 1);
+    document.getElementById("putriDutyName").textContent = putriDuty;
+    document.getElementById("putriRotasiLabel").textContent = listPutri.join(" → ");
 
-    // Render List Proyeksi 7 Hari
+    // Render Proyeksi 7 Hari
     renderScheduleList("mainSchedList", today, (d) => {
-      const df = getDiffDays(BASE_DATE, d);
-      return LIST_MAIN[((df % LIST_MAIN.length) + LIST_MAIN.length) % LIST_MAIN.length];
+      const f = formatDate(d);
+      return getOverrideDuty('waqiah', f.isoDate) || getDutyFromList(listMain, getDiffDays(BASE_DATE, d), 1);
     });
 
     renderScheduleList("putraSchedList", today, (d) => {
-      const df = getDiffDays(BASE_DATE, d);
-      const st = Math.floor(df / 2);
-      return LIST_PUTRA[((st % LIST_PUTRA.length) + LIST_PUTRA.length) % LIST_PUTRA.length];
+      const f = formatDate(d);
+      return getOverrideDuty('putra', f.isoDate) || getDutyFromList(listPutra, Math.floor(getDiffDays(BASE_DATE, d) / 2), 1);
     });
 
     renderScheduleList("putriSchedList", today, (d) => {
-      const df = getDiffDays(BASE_DATE, d);
-      return LIST_PUTRI[((df % LIST_PUTRI.length) + LIST_PUTRI.length) % LIST_PUTRI.length];
+      const f = formatDate(d);
+      return getOverrideDuty('putri', f.isoDate) || getDutyFromList(listPutri, getDiffDays(BASE_DATE, d), 1);
     });
 
     document.getElementById("prayerMeta").textContent = fToday.dateStr;
+  }
+
+  function getDutyFromList(arr, step) {
+    if (!arr || arr.length === 0) return "Belum ada petugas";
+    const idx = ((step % arr.length) + arr.length) % arr.length;
+    return arr[idx];
+  }
+
+  function getOverrideDuty(kat, dateStr) {
+    const approved = tukarRequests.find(r => r.kat === kat && r.tgl === dateStr && r.status === 'approved');
+    if (approved) {
+      return approved.pengganti ? `${approved.pengganti} (Tukar)` : `${approved.pemohon} (Izin/Tukar)`;
+    }
+    return null;
   }
 
   function renderScheduleList(elemId, startDate, getDutyFn) {
@@ -579,28 +636,167 @@
   // ---------- FORM TUKAR PIKET ----------
   function submitTukar(e) {
     e.preventDefault();
-    alert("Permohonan tukar piket berhasil dikirim ke pengurus!");
+    const req = {
+      id: Date.now(),
+      kat: document.getElementById("katTukar").value,
+      pemohon: document.getElementById("pemohon").value,
+      tgl: document.getElementById("tglTukar").value,
+      pengganti: document.getElementById("pengganti").value,
+      alasan: document.getElementById("alasanTukar").value,
+      status: 'pending'
+    };
+    tukarRequests.push(req);
+    localStorage.setItem("tukarRequests", JSON.stringify(tukarRequests));
+
+    alert("Permohonan tukar piket berhasil dikirim! Menunggu persetujuan Admin.");
     document.getElementById("tukarForm").reset();
     toggleTukarForm();
   }
 
-  // ---------- ADMIN MODAL ----------
+  // ---------- ADMIN MODAL & FUNCTIONS ----------
   function openAdmin() {
     document.getElementById("adminModal").showModal();
+    document.getElementById("loginSection").style.display = "block";
+    document.getElementById("adminPanelSection").style.display = "none";
   }
+
   function closeAdmin() {
     document.getElementById("adminModal").close();
     document.getElementById("adminPass").value = "";
     document.getElementById("adminErr").style.display = "none";
   }
+
   function verifyAdmin() {
     const pass = document.getElementById("adminPass").value;
-    if (pass === "admin123" || pass === "nurusy") {
-      alert("Berhasil masuk sebagai Admin!");
-      closeAdmin();
+    if (pass === "2405") {
+      document.getElementById("loginSection").style.display = "none";
+      document.getElementById("adminPanelSection").style.display = "block";
+      switchAdminTab('waqiah');
     } else {
       document.getElementById("adminErr").style.display = "block";
     }
+  }
+
+  function switchAdminTab(tab) {
+    currentAdminTab = tab;
+    document.querySelectorAll(".admin-tab-btn").forEach(b => b.classList.remove("active"));
+    event.target.classList.add("active");
+
+    renderAdminTabContent();
+  }
+
+  function renderAdminTabContent() {
+    const container = document.getElementById("adminTabContent");
+    container.innerHTML = "";
+
+    if (currentAdminTab === 'tukar') {
+      // TAB PERSETUJUAN TUKAR PIKET
+      const pending = tukarRequests.filter(r => r.status === 'pending');
+      if (pending.length === 0) {
+        container.innerHTML = "<p style='font-size:12px; color:var(--muted); text-align:center;'>Tidak ada permohonan tukar piket baru.</p>";
+        return;
+      }
+
+      pending.forEach(r => {
+        const div = document.createElement("div");
+        div.className = "pending-card";
+        div.innerHTML = `
+          <strong>Kategori:</strong> ${r.kat.toUpperCase()} <br>
+          <strong>Pemohon:</strong> ${r.pemohon} | <strong>Tanggal:</strong> ${r.tgl} <br>
+          <strong>Pengganti:</strong> ${r.pengganti || '-'} <br>
+          <strong>Alasan:</strong> ${r.alasan}
+          <div style="margin-top:8px; display:flex; gap:6px;">
+            <button class="btn sm primary" onclick="approveTukar(${r.id}, true)">Setujui</button>
+            <button class="btn sm danger" onclick="approveTukar(${r.id}, false)">Tolak</button>
+          </div>
+        `;
+        container.appendChild(div);
+      });
+    } else {
+      // TAB KELOLA PETUGAS (WAQIAH / PUTRA / PUTRI)
+      let currentList = currentAdminTab === 'waqiah' ? listMain : (currentAdminTab === 'putra' ? listPutra : listPutri);
+
+      let html = `<div style="margin-bottom:12px;">
+        <label style="font-size:12px; font-weight:600;">Tambah Petugas Baru:</label>
+        <div style="display:flex; gap:6px; margin-top:4px;">
+          <input type="text" id="newOfficerName" placeholder="Nama petugas...">
+          <button class="btn primary sm" onclick="addOfficer()">Tambah</button>
+        </div>
+      </div>
+      <label style="font-size:12px; font-weight:600;">Urutan Petugas (Gunakan panah untuk geser):</label>
+      <div style="margin-top:6px;">`;
+
+      currentList.forEach((name, idx) => {
+        html += `
+          <div class="list-item-admin">
+            <span>${idx + 1}. <strong>${name}</strong></span>
+            <div class="list-item-actions">
+              <button class="btn sm" onclick="moveOfficer(${idx}, -1)">⬆️</button>
+              <button class="btn sm" onclick="moveOfficer(${idx}, 1)">⬇️</button>
+              <button class="btn sm danger" onclick="removeOfficer(${idx})">🗑️</button>
+            </div>
+          </div>
+        `;
+      });
+
+      html += `</div>`;
+      container.innerHTML = html;
+    }
+  }
+
+  function addOfficer() {
+    const input = document.getElementById("newOfficerName");
+    const name = input.value.trim();
+    if (!name) return;
+
+    if (currentAdminTab === 'waqiah') listMain.push(name);
+    else if (currentAdminTab === 'putra') listPutra.push(name);
+    else if (currentAdminTab === 'putri') listPutri.push(name);
+
+    saveData();
+    renderAdminTabContent();
+    initApp();
+  }
+
+  function removeOfficer(idx) {
+    if (currentAdminTab === 'waqiah') listMain.splice(idx, 1);
+    else if (currentAdminTab === 'putra') listPutra.splice(idx, 1);
+    else if (currentAdminTab === 'putri') listPutri.splice(idx, 1);
+
+    saveData();
+    renderAdminTabContent();
+    initApp();
+  }
+
+  function moveOfficer(idx, direction) {
+    let currentList = currentAdminTab === 'waqiah' ? listMain : (currentAdminTab === 'putra' ? listPutra : listPutri);
+    const newIdx = idx + direction;
+    if (newIdx < 0 || newIdx >= currentList.length) return;
+
+    const temp = currentList[idx];
+    currentList[idx] = currentList[newIdx];
+    currentList[newIdx] = temp;
+
+    saveData();
+    renderAdminTabContent();
+    initApp();
+  }
+
+  function approveTukar(id, isApproved) {
+    const req = tukarRequests.find(r => r.id === id);
+    if (req) {
+      req.status = isApproved ? 'approved' : 'rejected';
+      localStorage.setItem("tukarRequests", JSON.stringify(tukarRequests));
+      alert(isApproved ? "Permohonan tukar disetujui!" : "Permohonan tukar ditolak.");
+      renderAdminTabContent();
+      initApp();
+    }
+  }
+
+  function saveData() {
+    localStorage.setItem("listMain", JSON.stringify(listMain));
+    localStorage.setItem("listPutra", JSON.stringify(listPutra));
+    localStorage.setItem("listPutri", JSON.stringify(listPutri));
   }
 
   document.addEventListener("DOMContentLoaded", initApp);
