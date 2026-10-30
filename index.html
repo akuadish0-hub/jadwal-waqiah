@@ -160,7 +160,7 @@
   .page{animation:fade .2s ease}
   @keyframes fade{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none}}
 
-  /* KARTU UTAMA: PETUGAS JAGA HARI BERIKUTNYA (BESOK) */
+  /* KARTU UTAMA: PETUGAS JAGA BESOK */
   .duty-next{
     position:relative; text-align:center;
     border:2px solid var(--gold-line);
@@ -192,7 +192,7 @@
     border-radius:999px; background:var(--gold-bg); border:1px solid var(--gold-line); color:var(--gold);
   }
 
-  /* KARTU PETUGAS 2 HARI KE DEPAN (LUSA) */
+  /* KARTU PETUGAS LUSA */
   .duty-lusa{
     position:relative; text-align:center;
     border:1px solid var(--line);
@@ -246,7 +246,7 @@
   .weekly-toggle-wrap{margin-top:16px; text-align:center;}
   .weekly-btn{
     background:var(--accent-soft); border:1px solid var(--accent-line); color:var(--accent);
-    font:inherit; font-size:13px; font-weight:700; padding:11px 18px; border-radius:99px;
+    font:inherit; font-size:13px; font-weight:700; padding:11px 18px; border-radius:999px;
     cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .15s ease;
     box-shadow:0 2px 6px rgba(13,92,70,0.1);
   }
@@ -315,12 +315,22 @@
   .admin-tab-nav{display:flex; gap:6px; margin:14px 0; border-bottom:1px solid var(--line); padding-bottom:8px}
   .admin-tab-btn{background:none; border:none; padding:6px 10px; font-size:12px; font-weight:600; cursor:pointer; color:var(--muted); border-radius:6px}
   .admin-tab-btn.active{color:var(--accent); border-bottom:2px solid var(--accent); background:var(--accent-soft)}
+
+  /* STYLES KHUSUS DRAG & DROP ITEM ADMIN */
   .list-item-admin{
     display:flex; align-items:center; justify-content:space-between;
-    padding:9px 12px; background:var(--card-soft); border:1px solid var(--line);
-    border-radius:10px; margin-bottom:8px; font-size:13px;
+    padding:10px 12px; background:var(--card-soft); border:1px solid var(--line);
+    border-radius:12px; margin-bottom:8px; font-size:13px; cursor:grab;
+    user-select:none; touch-action:none; transition:all .15s ease;
   }
-  .list-item-actions{display:flex; gap:5px}
+  .list-item-admin:active{cursor:grabbing;}
+  .list-item-admin.dragging{
+    opacity:0.4; border:2px dashed var(--accent); background:var(--accent-soft);
+  }
+  .drag-handle{
+    display:inline-flex; align-items:center; margin-right:10px; color:var(--muted); cursor:grab; font-size:14px;
+  }
+  .list-item-actions{display:flex; gap:5px; align-items:center;}
   .pending-card{
     background:var(--gold-bg); border:1px solid var(--gold-line);
     padding:12px; border-radius:10px; margin-bottom:10px; font-size:12.5px;
@@ -372,7 +382,7 @@
       <div id="mainNextEventBadge"></div>
     </section>
 
-    <!-- KARTU PENDUKUNG: DIGANTI MENJADI PETUGAS 2 HARI KE DEPAN (LUSA) -->
+    <!-- KARTU PENDUKUNG: PETUGAS 2 HARI KE DEPAN (LUSA) -->
     <section class="duty-lusa">
       <p class="duty-lusa-label" id="mainLusaTitleLabel">Petugas Jaga 2 Hari Ke Depan (Lusa)</p>
       <h2 class="duty-lusa-name" id="mainLusaDutyVal">-</h2>
@@ -569,7 +579,6 @@
     return Math.floor((t2 - t1) / (1000 * 60 * 60 * 24));
   }
 
-  // KALENDER HIJRIAH OTOMATIS
   function getHijriDate(d) {
     try {
       const formatter = new Intl.DateTimeFormat('id-ID-u-ca-islamic-uma-nu', {
@@ -583,12 +592,10 @@
     }
   }
 
-  // MOMEN & HARI BESAR NASIONAL / ISLAM
   function getCalendarEvent(d, hijriStr) {
     const m = d.getMonth() + 1;
     const date = d.getDate();
 
-    // Hari Besar Masehi
     if (m === 1 && date === 1) return "🎉 Tahun Baru Masehi";
     if (m === 5 && date === 1) return "🛠️ Hari Buruh Nasional";
     if (m === 6 && date === 1) return "🇮🇩 Hari Lahir Pancasila";
@@ -596,7 +603,6 @@
     if (m === 10 && date === 22) return "🕌 Hari Santri Nasional";
     if (m === 12 && date === 25) return "🎄 Hari Raya Natal";
 
-    // Momen Berdasarkan Kalender Hijriah
     if (hijriStr) {
       if (hijriStr.includes("1 Muharram")) return "🌙 Tahun Baru Hijriah";
       if (hijriStr.includes("10 Muharram")) return "🕌 Hari Asyura";
@@ -628,25 +634,22 @@
     const now = new Date();
     const currentHour = now.getHours();
     
-    // Rotasi Otomatis Jam 07:00 Pagi
     let activeDate = new Date(now);
     if (currentHour < 7) {
       activeDate.setDate(activeDate.getDate() - 1);
     }
 
-    // 1. Besok (1 Hari dari activeDate)
     const nextDate = new Date(activeDate);
     nextDate.setDate(activeDate.getDate() + 1);
     const diffNext = getDiffDays(BASE_DATE, nextDate);
     const fNext = formatDate(nextDate);
 
-    // 2. Lusa (2 Hari Ke Depan dari activeDate)
     const lusaDate = new Date(activeDate);
     lusaDate.setDate(activeDate.getDate() + 2);
     const diffLusa = getDiffDays(BASE_DATE, lusaDate);
     const fLusa = formatDate(lusaDate);
 
-    // UPDATE TAMPILAN WAQI'AH
+    // WAQI'AH
     const mainNextDuty = getOverrideDuty('waqiah', fNext.isoDate) || getDutyFromList(listMain, diffNext);
     const mainLusaDuty = getOverrideDuty('waqiah', fLusa.isoDate) || getDutyFromList(listMain, diffLusa);
 
@@ -660,7 +663,7 @@
     document.getElementById("mainLusaHijriVal").textContent = fLusa.hijriStr;
     document.getElementById("mainLusaEventBadge").innerHTML = fLusa.eventStr ? `<span class="event-badge">${fLusa.eventStr}</span>` : '';
 
-    // UPDATE TAMPILAN PIKET PUTRA
+    // PUTRA
     const putraNextDuty = getOverrideDuty('putra', fNext.isoDate) || getDutyFromList(listPutra, Math.floor(diffNext / 2));
     const putraLusaDuty = getOverrideDuty('putra', fLusa.isoDate) || getDutyFromList(listPutra, Math.floor(diffLusa / 2));
 
@@ -674,7 +677,7 @@
     document.getElementById("putraLusaHijriVal").textContent = fLusa.hijriStr;
     document.getElementById("putraLusaEventBadge").innerHTML = fLusa.eventStr ? `<span class="event-badge">${fLusa.eventStr}</span>` : '';
 
-    // UPDATE TAMPILAN PIKET PUTRI
+    // PUTRI
     const putriNextDuty = getOverrideDuty('putri', fNext.isoDate) || getDutyFromList(listPutri, diffNext);
     const putriLusaDuty = getOverrideDuty('putri', fLusa.isoDate) || getDutyFromList(listPutri, diffLusa);
 
@@ -688,7 +691,7 @@
     document.getElementById("putriLusaHijriVal").textContent = fLusa.hijriStr;
     document.getElementById("putriLusaEventBadge").innerHTML = fLusa.eventStr ? `<span class="event-badge">${fLusa.eventStr}</span>` : '';
 
-    // Render Proyeksi 7 Hari (menggunakan tanggal aktif)
+    // Render Proyeksi 7 Hari
     renderScheduleList("mainSchedList", activeDate, (d) => {
       const f = formatDate(d);
       return getOverrideDuty('waqiah', f.isoDate) || getDutyFromList(listMain, getDiffDays(BASE_DATE, d));
@@ -836,13 +839,16 @@
           <button class="btn primary sm" onclick="addOfficer()">Tambah</button>
         </div>
       </div>
-      <label style="font-size:12px; font-weight:600;">Urutan Petugas:</label>
-      <div style="margin-top:6px;">`;
+      <label style="font-size:12px; font-weight:600;">Urutan Petugas (Geser/Drag untuk Mengurutkan):</label>
+      <div style="margin-top:6px;" id="dragContainer">`;
 
       currentList.forEach((name, idx) => {
         html += `
-          <div class="list-item-admin">
-            <span>${idx + 1}. <strong>${name}</strong></span>
+          <div class="list-item-admin" draggable="true" data-index="${idx}">
+            <div style="display:flex; align-items:center;">
+              <span class="drag-handle">☰</span>
+              <span>${idx + 1}. <strong>${name}</strong></span>
+            </div>
             <div class="list-item-actions">
               <button class="btn sm" onclick="moveOfficer(${idx}, -1)">⬆️</button>
               <button class="btn sm" onclick="moveOfficer(${idx}, 1)">⬇️</button>
@@ -854,7 +860,79 @@
 
       html += `</div>`;
       container.innerHTML = html;
+      initDragAndDrop();
     }
+  }
+
+  // FUNGSI DRAG AND DROP (MOUSE & TOUCH/HP)
+  function initDragAndDrop() {
+    const list = document.getElementById("dragContainer");
+    if (!list) return;
+
+    let draggedItem = null;
+    let dragIndex = -1;
+
+    const items = list.querySelectorAll(".list-item-admin");
+
+    items.forEach(item => {
+      // EVENT DESKTOP / MOUSE
+      item.addEventListener("dragstart", function (e) {
+        draggedItem = this;
+        dragIndex = parseInt(this.getAttribute("data-index"));
+        setTimeout(() => this.classList.add("dragging"), 0);
+      });
+
+      item.addEventListener("dragend", function () {
+        this.classList.remove("dragging");
+        draggedItem = null;
+      });
+
+      item.addEventListener("dragover", function (e) {
+        e.preventDefault();
+      });
+
+      item.addEventListener("drop", function (e) {
+        e.preventDefault();
+        const targetIndex = parseInt(this.getAttribute("data-index"));
+        if (dragIndex !== -1 && targetIndex !== -1 && dragIndex !== targetIndex) {
+          reorderOfficer(dragIndex, targetIndex);
+        }
+      });
+
+      // EVENT MOBILE / TOUCH SCREEN
+      item.addEventListener("touchstart", function (e) {
+        draggedItem = this;
+        dragIndex = parseInt(this.getAttribute("data-index"));
+        this.classList.add("dragging");
+      }, {passive: true});
+
+      item.addEventListener("touchend", function (e) {
+        if (!draggedItem) return;
+        this.classList.remove("dragging");
+
+        const touch = e.changedTouches[0];
+        const targetEl = document.elementFromPoint(touch.clientX, touch.clientY);
+        const targetItem = targetEl ? targetEl.closest(".list-item-admin") : null;
+
+        if (targetItem) {
+          const targetIndex = parseInt(targetItem.getAttribute("data-index"));
+          if (dragIndex !== -1 && targetIndex !== -1 && dragIndex !== targetIndex) {
+            reorderOfficer(dragIndex, targetIndex);
+          }
+        }
+        draggedItem = null;
+      });
+    });
+  }
+
+  function reorderOfficer(fromIdx, toIdx) {
+    let currentList = currentAdminTab === 'waqiah' ? listMain : (currentAdminTab === 'putra' ? listPutra : listPutri);
+    const movedItem = currentList.splice(fromIdx, 1)[0];
+    currentList.splice(toIdx, 0, movedItem);
+
+    saveData();
+    renderAdminTabContent();
+    initApp();
   }
 
   function addOfficer() {
