@@ -82,7 +82,6 @@
   }
   .wrap{max-width:560px; margin:0 auto; padding:16px 14px 40px; position:relative; z-index:1}
 
-  /* KOTAK BASMALAH KOMPAK */
   .bismillah-box{
     text-align:center; margin-bottom:12px; padding:8px;
     background:var(--card); border:1px solid var(--gold-line); border-radius:12px;
@@ -93,7 +92,6 @@
     font-size:20px; line-height:1.6; color:var(--gold); letter-spacing:.5px;
   }
 
-  /* HEADER */
   .top{display:flex; align-items:center; justify-content:space-between; gap:10px; margin-bottom:14px;}
   .brand{display:flex; align-items:center; gap:10px; min-width:0}
   
@@ -130,7 +128,6 @@
   html[data-theme="dark"] .icon-btn .icon-sun{display:none}
   html[data-theme="dark"] .icon-btn .icon-moon{display:block}
 
-  /* TABS MENU */
   .tabs{
     display:grid; grid-template-columns:repeat(3, 1fr); gap:5px;
     background:var(--card); border:1px solid var(--line); border-radius:14px;
@@ -152,7 +149,6 @@
   .page{animation:fade .2s ease}
   @keyframes fade{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none}}
 
-  /* KARTU UTAMA */
   .duty-next{
     position:relative; text-align:center;
     border:1.5px solid var(--gold-line);
@@ -177,7 +173,6 @@
   .duty-next-date{margin:8px 0 0; font-size:12px; font-weight:600; color:var(--muted)}
   .hijri-date{font-family:"Amiri", serif; font-size:14px; font-weight:700; color:var(--gold); margin-top:3px;}
 
-  /* ORNAMEN GEOMETRIS KECIL */
   .orn-islamic{
     display:flex; align-items:center; justify-content:center; gap:8px;
     margin:8px auto; max-width:140px; color:var(--gold);
@@ -188,13 +183,11 @@
   }
   .orn-islamic svg{width:10px; height:10px; fill:var(--gold)}
 
-  /* BADGE EVENT / HARI BESAR */
   .event-badge{
     display:inline-flex; align-items:center; gap:5px; margin-top:8px; padding:4px 10px; font-size:11px; font-weight:700;
     border-radius:999px; background:var(--accent-soft); border:1px solid var(--accent-line); color:var(--accent);
   }
 
-  /* KARTU PENDUKUNG (LUSA) */
   .duty-lusa{
     position:relative; text-align:center;
     border:1px solid var(--line);
@@ -213,7 +206,6 @@
   }
   .duty-lusa-date{margin:4px 0 0; font-size:12px; color:var(--ink-soft); font-weight:500;}
 
-  /* KARTU UMUM */
   .card{
     background:var(--card); border:1px solid var(--line); border-top:2.5px solid var(--gold);
     border-radius:var(--radius); box-shadow:var(--shadow); padding:16px; margin-top:14px;
@@ -227,7 +219,6 @@
     transform:rotate(45deg); background:var(--gold); border-radius:1px;
   }
 
-  /* LIST JADWAL */
   .sched{list-style:none; margin:0; padding:0}
   .sched li{
     display:grid; grid-template-columns:120px minmax(0,1fr) auto; gap:10px; align-items:center;
@@ -245,7 +236,6 @@
   }
   .sched li.today .d span{color:var(--accent)}
 
-  /* TOMBOL TUKAR */
   .tukar-trigger{margin-top:14px; text-align:center;}
   .tukar-btn-toggle{
     background:var(--gold-bg); border:1px solid var(--gold-line); color:var(--gold);
@@ -289,7 +279,6 @@
   }
   .sync-dot{width:6px; height:6px; border-radius:50%; background:var(--accent); box-shadow:0 0 6px var(--accent)}
 
-  /* MODAL */
   dialog.modal{
     width:min(92vw, 440px); padding:20px; margin:auto;
     background:var(--card); color:var(--ink);
@@ -303,16 +292,18 @@
   .admin-tab-btn{background:none; border:none; padding:6px 10px; font-size:11.5px; font-weight:600; cursor:pointer; color:var(--muted); border-radius:6px; transition:all .2s ease;}
   .admin-tab-btn.active{color:var(--accent); border-bottom:2px solid var(--accent); background:var(--accent-soft)}
 
-  /* ADMIN ITEM */
+  /* ADMIN ITEM DENGAN ANIMASI HALUS DI HP */
   .list-item-admin{
     display:flex; align-items:center; justify-content:space-between;
-    padding:9px 12px; background:var(--card-soft); border:1px solid var(--line);
+    padding:10px 12px; background:var(--card-soft); border:1px solid var(--line);
     border-radius:12px; margin-bottom:6px; font-size:13px; cursor:grab;
-    user-select:none; touch-action:none; transition:all .15s ease;
+    user-select:none; touch-action:none; 
+    transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
   }
   .list-item-admin:active{cursor:grabbing;}
   .list-item-admin.dragging{
-    opacity:0.4; border:2px dashed var(--accent); background:var(--accent-soft);
+    opacity:0.85; transform: scale(1.03); border:2px dashed var(--accent); background:var(--accent-soft);
+    box-shadow: 0 8px 20px rgba(13,92,70,0.15); z-index: 10;
   }
   .drag-handle{
     display:inline-flex; align-items:center; margin-right:8px; color:var(--muted); cursor:grab; font-size:14px;
@@ -352,14 +343,12 @@
     </div>
   </header>
 
-  <!-- TAB NAVIGATION -->
   <nav class="tabs" role="tablist">
     <button class="tab" id="tab-waqiah" aria-current="page" onclick="switchPage('waqiah')">Jadwal Waqi'ah</button>
     <button class="tab" id="tab-putra" onclick="switchPage('putra')">Piket Putra</button>
     <button class="tab" id="tab-putri" onclick="switchPage('putri')">Piket Putri</button>
   </nav>
 
-  <!-- PAGE 1: BERANDA & WAQI'AH -->
   <main class="page" id="page-waqiah">
     <section class="duty-next">
       <p class="duty-next-label" id="mainNextTitleLabel">Petugas Jaga Besok Hari</p>
@@ -392,7 +381,6 @@
     </section>
   </main>
 
-  <!-- PAGE 2: PIKET PUTRA -->
   <main class="page" id="page-putra" hidden>
     <section class="duty-next">
       <p class="duty-next-label" id="putraNextTitleLabel">Petugas Jaga Besok Hari</p>
@@ -419,7 +407,6 @@
     </section>
   </main>
 
-  <!-- PAGE 3: PIKET PUTRI -->
   <main class="page" id="page-putri" hidden>
     <section class="duty-next">
       <p class="duty-next-label" id="putriNextTitleLabel">Petugas Jaga Besok Hari</p>
@@ -446,7 +433,6 @@
     </section>
   </main>
 
-  <!-- FOOTER -->
   <footer class="foot">
     <p><span class="sync-badge"><span class="sync-dot"></span>Sistem Aktif & Ter-sinkronisasi</span></p>
     <p>© PP Nurusy Syuhada' Kedungrejo — Kedisiplinan & Ibadah</p>
@@ -454,7 +440,6 @@
 
 </div>
 
-<!-- MODAL POP-UP TUKAR JADWAL -->
 <dialog class="modal" id="tukarModal">
   <h2 style="margin:0 0 10px; font-size:15px; color:var(--accent); font-family:'Amiri', serif;">Formulir Permohonan Tukar Piket</h2>
   <form id="tukarForm" onsubmit="submitTukar(event)">
@@ -489,7 +474,6 @@
   </form>
 </dialog>
 
-<!-- MODAL ADMIN -->
 <dialog class="modal" id="adminModal">
   <div id="loginSection">
     <h2 style="font-size:15px; margin:0 0 4px;">Akses Pengurus</h2>
@@ -517,7 +501,8 @@
 
     <div id="adminTabContent"></div>
 
-    <div class="modal-actions" style="margin-top:16px; border-top:1px solid var(--line); padding-top:10px;">
+    <div class="modal-actions" style="margin-top:16px; border-top:1px solid var(--line); padding-top:10px; display:flex; justify-content:space-between; align-items:center;">
+      <button class="btn sm primary" onclick="confirmSaveAdmin()" style="font-weight:700;">💾 Simpan Perubahan</button>
       <button class="btn sm" onclick="closeAdmin()">Tutup</button>
     </div>
   </div>
@@ -565,53 +550,36 @@
     return Math.floor((t2 - t1) / (1000 * 60 * 60 * 24));
   }
 
-  // ALGORITMA KONVERSI HIJRIAH MURNI AKURAT KHUSUS HP (TIDAK BERGANTUNG PADA BROWSER HP)
+  // KALENDER HIJRIAH ALA INDONESIA (NUSANTARA / KEMENAG)
   function getHijriDate(date) {
     const months = [
-      "Muharram", "Safar", "Rabi'ul Awwal", "Rabi'us Tsani",
-      "Jumadal Ula", "Jumadas Tsaniyah", "Rajab", "Sya'ban",
-      "Ramadhan", "Syawwal", "Dzulqa'dah", "Dzulhijjah"
+      "Muharram", "Safar", "Rabiul Awal", "Rabiul Akhir",
+      "Jumadil Awal", "Jumadil Akhir", "Rajab", "Sya'ban",
+      "Ramadhan", "Syawal", "Dzulqa'dah", "Dzulhijjah"
     ];
 
-    let day = date.getDate();
-    let month = date.getMonth();
-    let year = date.getFullYear();
+    let d = date.getDate();
+    let m = date.getMonth() + 1;
+    let y = date.getFullYear();
 
-    if (month < 2) {
-      year -= 1;
-      month += 12;
-    }
+    let jd = (Math.floor((1461 * (y + 4800 + Math.floor((m - 14) / 12))) / 4) +
+             Math.floor((367 * (m - 2 - 12 * (Math.floor((m - 14) / 12)))) / 12) -
+             Math.floor((3 * (Math.floor((y + 4900 + Math.floor((m - 14) / 12)) / 100))) / 4) +
+             d - 32075);
 
-    let a = Math.floor(year / 100);
-    let b = 2 - a + Math.floor(a / 4);
-
-    let julianDay = Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + day + b - 1524.5;
-
-    let z = julianDay + 1;
-    let i = Math.floor((z - 1867216.25) / 36524.25);
-    let j = z + 1 + i - Math.floor(i / 4);
-
-    let hJul = j + 1524;
-    let hA = Math.floor((hJul - 1221) / 365.25);
-    let hB = Math.floor(365.25 * hA);
-    let hC = Math.floor((hJul - hB) / 30.6001);
-
-    let hDay = hJul - hB - Math.floor(30.6001 * hC);
-
-    let l = julianDay - 1948440 + 10632;
+    let l = jd - 1948440 + 10632;
     let n = Math.floor((l - 1) / 10631);
     l = l - 10631 * n + 354;
-
-    let j1 = (Math.floor((10985 - l) / 5316)) * (Math.floor((50 * l) / 17719)) + (Math.floor(l / 5670)) * (Math.floor((43 * l) / 15238));
-    l = l - (Math.floor((30 - j1) / 15)) * (Math.floor((17719 * j1) / 50)) - (Math.floor(j1 / 16)) * (Math.floor((15238 * j1) / 43)) + 29;
-
+    let j = (Math.floor((10985 - l) / 5316)) * (Math.floor((50 * l) / 17719)) + (Math.floor(l / 5670)) * (Math.floor((43 * l) / 15238));
+    l = l - (Math.floor((30 - j) / 15)) * (Math.floor((17719 * j) / 50)) - (Math.floor(j / 16)) * (Math.floor((15238 * j) / 43)) + 29;
+    
     let hMonth = Math.floor((24 * l) / 709);
-    let hDate = Math.floor(l - Math.floor((709 * hMonth) / 24));
-    let hYear = 30 * n + j1 - 30;
+    let hDay = l - Math.floor((709 * hMonth) / 24);
+    let hYear = 30 * n + j - 30;
 
     if (hMonth < 0 || hMonth >= 12) hMonth = 0;
 
-    return `${hDate} ${months[hMonth]} ${hYear} H`;
+    return `${hDay} ${months[hMonth]} ${hYear} H`;
   }
 
   function getCalendarEvent(d, hijriStr) {
@@ -628,11 +596,11 @@
     if (hijriStr) {
       if (hijriStr.includes("1 Muharram")) return "🌙 Tahun Baru Hijriah";
       if (hijriStr.includes("10 Muharram")) return "🕌 Hari Asyura";
-      if (hijriStr.includes("12 Rabi'ul Awwal")) return "✨ Maulid Nabi Muhammad SAW";
+      if (hijriStr.includes("12 Rabiul Awal")) return "✨ Maulid Nabi Muhammad SAW";
       if (hijriStr.includes("27 Rajab")) return "🌌 Isra' Mi'raj";
       if (hijriStr.includes("1 Ramadhan")) return "🌙 Awal Puasa Ramadhan";
       if (hijriStr.includes("17 Ramadhan")) return "📖 Nuzulul Qur'an";
-      if (hijriStr.includes("1 Syawwal")) return "🕌 Hari Raya Idul Fitri";
+      if (hijriStr.includes("1 Syawal")) return "🕌 Hari Raya Idul Fitri";
       if (hijriStr.includes("10 Dzulhijjah")) return "🕋 Hari Raya Idul Adha";
     }
 
@@ -713,7 +681,6 @@
     document.getElementById("putriLusaHijriVal").textContent = fLusa.hijriStr;
     document.getElementById("putriLusaEventBadge").innerHTML = fLusa.eventStr ? `<span class="event-badge">${fLusa.eventStr}</span>` : '';
 
-    // Render Proyeksi 7 Hari
     renderScheduleList("mainSchedList", activeDate, (d) => {
       const f = formatDate(d);
       return getOverrideDuty('waqiah', f.isoDate) || getDutyFromList(listMain, getDiffDays(BASE_DATE, d));
@@ -885,6 +852,16 @@
     }
   }
 
+  // KONFIRMASI SIMPAN PERUBAHAN DI ADMIN
+  function confirmSaveAdmin() {
+    if (confirm("Apakah Anda yakin ingin menyimpan perubahan urutan/data petugas ini?")) {
+      saveData();
+      alert("Perubahan berhasil disimpan!");
+      initApp();
+      closeAdmin();
+    }
+  }
+
   function initDragAndDrop() {
     const list = document.getElementById("dragContainer");
     if (!list) return;
@@ -918,15 +895,26 @@
         }
       });
 
+      // SENTUHAN ANIMASI HALUS DI HP (TOUCH)
+      let touchStartY = 0;
       item.addEventListener("touchstart", function (e) {
         draggedItem = this;
         dragIndex = parseInt(this.getAttribute("data-index"));
+        touchStartY = e.touches[0].clientY;
         this.classList.add("dragging");
+      }, {passive: true});
+
+      item.addEventListener("touchmove", function (e) {
+        if (!draggedItem) return;
+        let currentY = e.touches[0].clientY;
+        let diffY = currentY - touchStartY;
+        draggedItem.style.transform = `translateY(${diffY}px) scale(1.03)`;
       }, {passive: true});
 
       item.addEventListener("touchend", function (e) {
         if (!draggedItem) return;
         this.classList.remove("dragging");
+        this.style.transform = "";
 
         const touch = e.changedTouches[0];
         const targetEl = document.elementFromPoint(touch.clientX, touch.clientY);
@@ -948,9 +936,7 @@
     const movedItem = currentList.splice(fromIdx, 1)[0];
     currentList.splice(toIdx, 0, movedItem);
 
-    saveData();
     renderAdminTabContent();
-    initApp();
   }
 
   function addOfficer() {
@@ -962,9 +948,8 @@
     else if (currentAdminTab === 'putra') listPutra.push(name);
     else if (currentAdminTab === 'putri') listPutri.push(name);
 
-    saveData();
+    input.value = "";
     renderAdminTabContent();
-    initApp();
   }
 
   function removeOfficer(idx) {
@@ -972,9 +957,7 @@
     else if (currentAdminTab === 'putra') listPutra.splice(idx, 1);
     else if (currentAdminTab === 'putri') listPutri.splice(idx, 1);
 
-    saveData();
     renderAdminTabContent();
-    initApp();
   }
 
   function moveOfficer(idx, direction) {
@@ -986,9 +969,7 @@
     currentList[idx] = currentList[newIdx];
     currentList[newIdx] = temp;
 
-    saveData();
     renderAdminTabContent();
-    initApp();
   }
 
   function approveTukar(id, isApproved) {
