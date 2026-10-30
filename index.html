@@ -9,10 +9,10 @@
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/png" sizes="192x192" href="logo-nsy.png">
 <link rel="apple-touch-icon" href="logo-nsy.png">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Jadwal Waqi'ah">
-<meta name="application-name" content="Jadwal Waqi'ah">
+<!-- Google Fonts untuk nuansa Islami & modern -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Amiri:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <script>
   (function () {
     try {
@@ -28,282 +28,288 @@
 <style>
   :root{
     color-scheme: light;
-    --bg:#f7f2e7;
-    --card:#fffdf7;
-    --card-soft:#f8f3e6;
-    --ink:#1d2a24;
-    --ink-soft:#3b4a41;
-    --muted:#66705c;
-    --line:#e7ddc6;
-    --line-soft:#f0e8d6;
+    --bg:#f4efe6;
+    --card:#fffdf9;
+    --card-soft:#f7f2ea;
+    --ink:#1a2e26;
+    --ink-soft:#3d5248;
+    --muted:#6b7c73;
+    --line:#e3dad0;
+    --line-soft:#ede7df;
     --accent:#0d5c46;
-    --accent-ink:#fdf9ec;
-    --accent-soft:#eaf3ec;
-    --accent-line:#c9ddcf;
-    --duty-bg:#f3ecda;
-    --gold:#8a6a22;
-    --gold-bg:#faf2dc;
-    --gold-line:#e6d5a8;
-    --danger:#a4423a;
-    --shadow:0 1px 3px rgba(70,55,20,.05), 0 20px 40px -24px rgba(70,55,20,.35);
-    --radius:18px;
-    --pattern:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%230d5c46' stroke-width='.9'%3E%3Crect x='24' y='24' width='32' height='32'/%3E%3Crect x='24' y='24' width='32' height='32' transform='rotate(45 40 40)'/%3E%3Ccircle cx='40' cy='40' r='4'/%3E%3C/g%3E%3C/svg%3E");
+    --accent-ink:#fcf8f0;
+    --accent-soft:#e5f1ec;
+    --accent-line:#b8d6cb;
+    --gold:#9c7828;
+    --gold-bg:#fcf7ec;
+    --gold-line:#e6d3a3;
+    --danger:#b33b32;
+    --shadow:0 10px 30px -10px rgba(13,92,70,0.08), 0 4px 12px rgba(0,0,0,0.03);
+    --radius:22px;
+    --pattern:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%230d5c46' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M30 30L15 15V0h15l15 15v15H30zM0 30l15 15v15H0V30zm60 0L45 45v15h15V30z'/%3E%3C/g%3E%3C/svg%3E");
   }
   html[data-theme="dark"]{
     color-scheme: dark;
-    --bg:#08120f;
-    --card:#0f1b16;
-    --card-soft:#132019;
-    --ink:#f1ebda;
-    --ink-soft:#d0d9ca;
-    --muted:#93a095;
-    --line:#26352c;
-    --line-soft:#1c2a22;
-    --accent:#58cfa4;
-    --accent-ink:#06241a;
-    --accent-soft:#12291f;
-    --accent-line:#2b5544;
-    --duty-bg:#101d17;
-    --gold:#e3c077;
-    --gold-bg:#1e1a10;
-    --gold-line:#3d3420;
-    --danger:#e08b83;
-    --shadow:0 1px 3px rgba(0,0,0,.4), 0 20px 40px -24px rgba(0,0,0,.8);
-    --pattern:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='80' viewBox='0 0 80 80'%3E%3Cg fill='none' stroke='%23e3c077' stroke-width='.9'%3E%3Crect x='24' y='24' width='32' height='32'/%3E%3Crect x='24' y='24' width='32' height='32' transform='rotate(45 40 40)'/%3E%3Ccircle cx='40' cy='40' r='4'/%3E%3C/g%3E%3C/svg%3E");
+    --bg:#07110e;
+    --card:#0e1a15;
+    --card-soft:#14241e;
+    --ink:#f0ebd8;
+    --ink-soft:#c2ccb8;
+    --muted:#8fa195;
+    --line:#1f332a;
+    --line-soft:#172922;
+    --accent:#42b893;
+    --accent-ink:#051c14;
+    --accent-soft:#102c22;
+    --accent-line:#265444;
+    --gold:#d9b359;
+    --gold-bg:#1a1710;
+    --gold-line:#3b321c;
+    --danger:#e07a70;
+    --shadow:0 10px 30px -10px rgba(0,0,0,0.5), 0 4px 12px rgba(0,0,0,0.3);
+    --pattern:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23d9b359' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M30 30L15 15V0h15l15 15v15H30zM0 30l15 15v15H0V30zm60 0L45 45v15h15V30z'/%3E%3C/g%3E%3C/svg%3E");
   }
   *{box-sizing:border-box}
   html,body{margin:0}
   body{
-    font-family:"Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    font-family:"Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
     background:var(--bg); color:var(--ink); min-height:100vh;
     -webkit-font-smoothing:antialiased;
-    transition:background-color .2s ease, color .2s ease;
+    transition:background-color .25s ease, color .25s ease;
   }
   body::before{
     content:""; position:fixed; inset:0; z-index:0; pointer-events:none;
-    background-image:var(--pattern); background-size:80px 80px; opacity:.04;
+    background-image:var(--pattern);
   }
-  .wrap{max-width:620px; margin:0 auto; padding:22px 18px 48px; position:relative; z-index:1}
+  .wrap{max-width:600px; margin:0 auto; padding:24px 18px 56px; position:relative; z-index:1}
 
+  /* KOTAK BASMALAH KLASIK */
+  .bismillah-box{
+    text-align:center; margin-bottom:20px; padding:12px;
+    background:var(--card); border:1px solid var(--gold-line); border-radius:16px;
+    box-shadow:var(--shadow);
+  }
   .bismillah{
-    margin:4px 0 16px; text-align:center;
-    font-family:"Traditional Arabic", "Scheherazade New", "Amiri", "Noto Naskh Arabic", serif;
-    font-size:19px; line-height:2; color:var(--gold); letter-spacing:.5px;
+    margin:0; font-family:"Amiri", serif;
+    font-size:24px; line-height:1.8; color:var(--gold); letter-spacing:1px;
   }
 
-  .orn{
-    display:flex; align-items:center; justify-content:center; gap:10px;
-    margin:0 auto; max-width:200px; color:var(--gold);
-  }
-  .orn::before, .orn::after{
-    content:""; flex:1; height:1px;
-    background:linear-gradient(90deg, transparent, var(--gold-line));
-  }
-  .orn::after{background:linear-gradient(90deg, var(--gold-line), transparent)}
-  .orn svg{width:10px; height:10px; flex:0 0 auto}
-
-  .top{display:flex; align-items:center; justify-content:space-between; gap:14px}
+  /* HEADER */
+  .top{display:flex; align-items:center; justify-content:space-between; gap:14px; margin-bottom:18px;}
   .brand{display:flex; align-items:center; gap:12px; min-width:0}
-  .brand-text{min-width:0}
   
   .brand-logo-wrap{
     display:flex; align-items:center; justify-content:center;
-    width:44px; height:44px; flex:0 0 auto;
-    padding:4px; border-radius:12px;
+    width:50px; height:50px; flex:0 0 auto;
+    padding:6px; border-radius:14px;
     background:var(--card);
-    border:1px solid var(--gold-line);
-    box-shadow:0 2px 6px rgba(138,106,34,0.12);
+    border:1.5px solid var(--gold-line);
+    box-shadow:0 4px 12px rgba(156,120,40,0.15);
   }
   .brand-logo-wrap img{
-    width:36px; height:36px; object-fit:contain;
+    width:38px; height:38px; object-fit:contain;
   }
 
   .pondok{
-    margin:0 0 2px; font-size:9.5px; letter-spacing:.15em; text-transform:uppercase;
+    margin:0 0 3px; font-size:10px; letter-spacing:0.18em; text-transform:uppercase;
     color:var(--muted); font-weight:700;
   }
   h1{
-    margin:0; font-family:"Georgia", "Palatino Linotype", serif;
-    font-size:clamp(14px, 3.4vw, 20px); font-weight:700; letter-spacing:.005em; line-height:1.2; color:var(--accent);
+    margin:0; font-family:"Amiri", serif;
+    font-size:clamp(16px, 4vw, 21px); font-weight:700; line-height:1.25; color:var(--accent);
   }
   .top-actions{display:flex; gap:8px; flex:0 0 auto}
   .icon-btn{
-    position:relative; width:38px; height:38px; display:grid; place-items:center;
+    position:relative; width:40px; height:40px; display:grid; place-items:center;
     background:var(--card); color:var(--ink-soft);
     border:1px solid var(--line); border-radius:50%; cursor:pointer;
-    transition:all .15s ease;
+    box-shadow:var(--shadow); transition:all .2s ease;
   }
-  .icon-btn:hover{background:var(--card-soft); border-color:var(--accent-line); color:var(--ink); transform:translateY(-1px)}
-  .icon-btn svg{width:17px; height:17px; fill:none; stroke:currentColor; stroke-width:1.8; stroke-linecap:round; stroke-linejoin:round}
+  .icon-btn:hover{background:var(--card-soft); border-color:var(--accent-line); color:var(--accent); transform:translateY(-2px)}
+  .icon-btn svg{width:18px; height:18px; fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round}
   .icon-btn .icon-moon{display:none}
   html[data-theme="dark"] .icon-btn .icon-sun{display:none}
   html[data-theme="dark"] .icon-btn .icon-moon{display:block}
 
+  /* TABS MENU */
   .tabs{
     display:grid; grid-template-columns:repeat(3, 1fr); gap:6px;
-    background:var(--card); border:1px solid var(--line); border-radius:16px;
-    padding:6px; margin:16px 0 16px; box-shadow:var(--shadow);
+    background:var(--card); border:1px solid var(--line); border-radius:18px;
+    padding:6px; margin-bottom:20px; box-shadow:var(--shadow);
   }
   .tab{
-    font:inherit; font-size:12px; font-weight:600; cursor:pointer;
+    font:inherit; font-size:12.5px; font-weight:600; cursor:pointer;
     border:0; background:transparent; color:var(--muted);
-    padding:9px 4px; border-radius:12px; text-align:center;
-    transition:all .15s ease;
+    padding:10px 4px; border-radius:14px; text-align:center;
+    transition:all .2s ease;
   }
   .tab:hover{color:var(--ink); background:var(--card-soft)}
   .tab[aria-current="page"]{
     background:var(--accent); color:var(--accent-ink);
-    box-shadow:0 2px 8px rgba(13,92,70,0.25);
+    box-shadow:0 4px 14px rgba(13,92,70,0.25);
   }
 
   .page[hidden]{display:none}
-  .page{animation:fade .2s ease}
-  @keyframes fade{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none}}
+  .page{animation:fade .25s ease}
+  @keyframes fade{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
 
-  /* KARTU UTAMA: PETUGAS JAGA BESOK */
+  /* KARTU UTAMA DENGAN ORNAMEN ISLAMI */
   .duty-next{
     position:relative; text-align:center;
     border:2px solid var(--gold-line);
-    border-radius:28px 28px 84px 84px;
-    background:radial-gradient(140% 110% at 50% 100%, var(--card) 0%, var(--gold-bg) 75%);
-    padding:38px 24px 44px; margin-bottom:16px;
+    border-radius:30px 30px 80px 80px;
+    background:radial-gradient(150% 120% at 50% 100%, var(--card) 0%, var(--gold-bg) 80%);
+    padding:40px 24px 44px; margin-bottom:16px;
     box-shadow:var(--shadow);
   }
-  .duty-next::after{
-    content:""; position:absolute; inset:8px; pointer-events:none;
-    border:1px solid var(--gold-line); opacity:.6;
-    border-radius:20px 20px 76px 76px;
+  .duty-next::before{
+    content:""; position:absolute; top:12px; left:50%; transform:translateX(-50%);
+    width:40px; height:6px; border-radius:3px; background:var(--gold-line); opacity:0.6;
   }
   .duty-next > *{position:relative; z-index:1}
   .duty-next-label{
-    margin:0 0 8px; font-size:11px; letter-spacing:0.22em; text-transform:uppercase;
+    margin:0 0 8px; font-size:11px; letter-spacing:0.25em; text-transform:uppercase;
     font-weight:800; color:var(--gold);
   }
   .duty-next-name{
-    margin:0; font-family:"Georgia", "Palatino Linotype", serif;
-    font-size:clamp(30px, 7.5vw, 42px); line-height:1.15; font-weight:700; color:var(--ink);
+    margin:0; font-family:"Amiri", serif;
+    font-size:clamp(32px, 8vw, 44px); line-height:1.2; font-weight:700; color:var(--ink);
   }
-  .duty-next-date{margin:10px 0 0; font-size:13px; font-weight:600; color:var(--muted)}
-  .hijri-date{font-size:12px; font-weight:600; color:var(--gold); margin-top:4px;}
+  .duty-next-date{margin:10px 0 0; font-size:13.5px; font-weight:600; color:var(--muted)}
+  .hijri-date{font-family:"Amiri", serif; font-size:15px; font-weight:700; color:var(--gold); margin-top:4px;}
+
+  /* ORNAMEN GEOMETRIS / PEMBATAS */
+  .orn-islamic{
+    display:flex; align-items:center; justify-content:center; gap:12px;
+    margin:12px auto; max-width:180px; color:var(--gold);
+  }
+  .orn-islamic::before, .orn-islamic::after{
+    content:""; flex:1; height:1px;
+    background:linear-gradient(90deg, transparent, var(--gold-line));
+  }
+  .orn-islamic svg{width:12px; height:12px; fill:var(--gold)}
 
   /* BADGE EVENT / HARI BESAR */
   .event-badge{
-    display:inline-block; margin-top:10px; padding:5px 12px; font-size:11px; font-weight:700;
-    border-radius:999px; background:var(--gold-bg); border:1px solid var(--gold-line); color:var(--gold);
+    display:inline-flex; align-items:center; gap:6px; margin-top:12px; padding:6px 14px; font-size:12px; font-weight:700;
+    border-radius:999px; background:var(--accent-soft); border:1px solid var(--accent-line); color:var(--accent);
+    box-shadow:0 2px 6px rgba(0,0,0,0.03);
   }
 
-  /* KARTU PETUGAS LUSA */
+  /* KARTU PENDUKUNG (LUSA) */
   .duty-lusa{
     position:relative; text-align:center;
     border:1px solid var(--line);
-    border-radius:22px;
+    border-radius:20px;
     background:var(--card);
-    padding:20px 18px;
+    padding:22px 20px;
     box-shadow:var(--shadow);
   }
   .duty-lusa-label{
-    margin:0 0 6px; font-size:10px; letter-spacing:0.18em; text-transform:uppercase;
+    margin:0 0 6px; font-size:10.5px; letter-spacing:0.2em; text-transform:uppercase;
     font-weight:700; color:var(--muted);
   }
   .duty-lusa-name{
-    margin:0; font-family:"Georgia", "Palatino Linotype", serif;
-    font-size:20px; font-weight:700; color:var(--accent);
+    margin:0; font-family:"Amiri", serif;
+    font-size:24px; font-weight:700; color:var(--accent);
   }
-  .duty-lusa-date{margin:6px 0 0; font-size:12.5px; color:var(--ink-soft)}
+  .duty-lusa-date{margin:6px 0 0; font-size:13px; color:var(--ink-soft); font-weight:500;}
 
+  /* KARTU UMUM */
   .card{
-    background:var(--card); border:1px solid var(--line); border-top:2px solid var(--gold-line);
-    border-radius:var(--radius); box-shadow:var(--shadow); padding:20px; margin-top:16px;
+    background:var(--card); border:1px solid var(--line); border-top:3px solid var(--gold);
+    border-radius:var(--radius); box-shadow:var(--shadow); padding:22px; margin-top:18px;
   }
   .card h2{
-    margin:0 0 12px; font-size:12px; letter-spacing:.14em; text-transform:uppercase;
-    color:var(--muted); font-weight:700;
+    margin:0 0 14px; font-size:12.5px; letter-spacing:.15em; text-transform:uppercase;
+    color:var(--muted); font-weight:700; display:flex; align-items:center; gap:8px;
   }
   .card h2::before{
-    content:""; display:inline-block; width:6px; height:6px; margin-right:8px;
-    transform:rotate(45deg); background:var(--gold); border-radius:1px; vertical-align:middle;
+    content:""; display:inline-block; width:7px; height:7px;
+    transform:rotate(45deg); background:var(--gold); border-radius:1px;
   }
 
   /* LIST JADWAL */
   .sched{list-style:none; margin:0; padding:0}
   .sched li{
-    display:grid; grid-template-columns:115px minmax(0,1fr) auto; gap:10px; align-items:center;
-    padding:12px 0; border-bottom:1px solid var(--line-soft);
+    display:grid; grid-template-columns:125px minmax(0,1fr) auto; gap:12px; align-items:center;
+    padding:13px 4px; border-bottom:1px solid var(--line-soft);
   }
   .sched li:last-child{border-bottom:0}
-  .sched .d{font-size:12px; font-weight:600}
-  .sched .d span{display:block; font-size:10.5px; font-weight:400; color:var(--muted); margin-top:2px}
-  .sched .d .hj{display:block; font-size:10px; font-weight:600; color:var(--gold); margin-top:1px}
-  .sched .n{font-size:14px; font-weight:600; color:var(--ink)}
-  .sched .t{font-size:11px; color:var(--muted); font-variant-numeric:tabular-nums}
+  .sched .d{font-size:12.5px; font-weight:600; color:var(--ink-soft)}
+  .sched .d span{display:block; font-size:11px; font-weight:400; color:var(--muted); margin-top:2px}
+  .sched .d .hj{display:block; font-family:"Amiri", serif; font-size:11.5px; font-weight:700; color:var(--gold); margin-top:2px}
+  .sched .n{font-size:14.5px; font-weight:600; color:var(--ink)}
+  .sched .t{font-size:11.5px; font-weight:600; color:var(--muted); background:var(--card-soft); padding:4px 8px; border-radius:8px; border:1px solid var(--line);}
   .sched li.today{
-    background:var(--accent-soft); border-radius:10px; border-bottom-color:transparent;
-    box-shadow:inset 3px 0 0 var(--gold); padding-left:12px; padding-right:12px; margin:0 -12px;
+    background:var(--accent-soft); border-radius:12px; border-bottom-color:transparent;
+    box-shadow:inset 3px 0 0 var(--accent); padding-left:14px; padding-right:14px; margin:0 -14px;
   }
   .sched li.today .d span{color:var(--accent)}
 
-  /* TOMBOL BUKA MODAL TUKAR JADWAL */
-  .tukar-trigger{margin-top:16px; text-align:center;}
+  /* TOMBOL TUKAR JADWAL */
+  .tukar-trigger{margin-top:18px; text-align:center;}
   .tukar-btn-toggle{
-    background:none; border:none; color:var(--gold); font-size:13px; font-weight:700;
-    cursor:pointer; text-decoration:underline; text-underline-offset:4px;
+    background:var(--gold-bg); border:1px solid var(--gold-line); color:var(--gold);
+    font:inherit; font-size:13px; font-weight:700; padding:10px 20px; border-radius:99px;
+    cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .2s ease;
+    box-shadow:0 4px 12px rgba(156,120,40,0.1);
   }
+  .tukar-btn-toggle:hover{filter:brightness(1.05); transform:translateY(-1px)}
 
-  .field{margin-top:12px}
-  .field label{display:block; font-size:12px; font-weight:600; margin-bottom:5px; color:var(--ink-soft)}
+  .field{margin-top:14px}
+  .field label{display:block; font-size:12px; font-weight:600; margin-bottom:6px; color:var(--ink-soft)}
   select, input[type="text"], input[type="date"], textarea{
-    width:100%; font:inherit; font-size:13.5px; color:var(--ink);
-    background:var(--card-soft); border:1px solid var(--line); border-radius:12px;
-    padding:10px 12px; outline:none; transition:all .15s ease;
+    width:100%; font:inherit; font-size:14px; color:var(--ink);
+    background:var(--card-soft); border:1px solid var(--line); border-radius:14px;
+    padding:11px 14px; outline:none; transition:all .2s ease;
   }
   input[type="password"] {
     width:100%; font:inherit; font-size:16px; color:var(--ink);
-    background:var(--card-soft); border:1px solid var(--line); border-radius:12px;
-    padding:10px 12px; outline:none; transition:all .15s ease;
-    letter-spacing: 4px;
+    background:var(--card-soft); border:1px solid var(--line); border-radius:14px;
+    padding:11px 14px; outline:none; transition:all .2s ease;
+    letter-spacing: 5px;
   }
   select:focus, input:focus, textarea:focus{
     border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); background:var(--card);
   }
   .btn{
-    font:inherit; font-size:13.5px; font-weight:600; cursor:pointer;
-    border-radius:12px; padding:10px 16px; border:1px solid var(--line);
-    background:var(--card); color:var(--ink-soft); transition:all .15s ease;
+    font:inherit; font-size:14px; font-weight:600; cursor:pointer;
+    border-radius:14px; padding:11px 18px; border:1px solid var(--line);
+    background:var(--card); color:var(--ink-soft); transition:all .2s ease;
   }
-  .btn.primary{background:var(--accent); border-color:var(--accent); color:var(--accent-ink)}
+  .btn.primary{background:var(--accent); border-color:var(--accent); color:var(--accent-ink); box-shadow:0 4px 12px rgba(13,92,70,0.2)}
   .btn.danger{background:var(--danger); border-color:var(--danger); color:#fff}
-  .btn.sm{font-size:11.5px; padding:5px 10px; border-radius:8px}
-  .btn.block{width:100%; margin-top:14px}
+  .btn.sm{font-size:11.5px; padding:6px 12px; border-radius:10px}
+  .btn.block{width:100%; margin-top:16px}
 
-  .foot{margin-top:28px; text-align:center; font-size:11.5px; color:var(--muted); line-height:1.7}
+  .foot{margin-top:32px; text-align:center; font-size:12px; color:var(--muted); line-height:1.8}
   .sync-badge{
-    display:inline-flex; align-items:center; gap:6px; padding:4px 10px;
-    font-size:10.5px; font-weight:700; border-radius:999px; border:1px solid var(--accent-line);
+    display:inline-flex; align-items:center; gap:6px; padding:6px 14px;
+    font-size:11px; font-weight:700; border-radius:999px; border:1px solid var(--accent-line);
     background:var(--accent-soft); color:var(--accent);
   }
-  .sync-dot{width:6px; height:6px; border-radius:50%; background:var(--accent)}
+  .sync-dot{width:7px; height:7px; border-radius:50%; background:var(--accent); box-shadow:0 0 8px var(--accent)}
 
-  /* MODAL UMUM & ADMIN */
+  /* MODAL */
   dialog.modal{
-    width:min(94vw, 480px); padding:22px; margin:auto;
+    width:min(94vw, 480px); padding:24px; margin:auto;
     background:var(--card); color:var(--ink);
-    border:1px solid var(--line); border-radius:20px;
-    box-shadow:0 30px 60px -30px rgba(0,0,0,.5);
+    border:1px solid var(--line); border-radius:24px;
+    box-shadow:0 25px 50px -12px rgba(0,0,0,0.3);
     max-height:88vh; overflow-y:auto;
   }
-  dialog.modal::backdrop{background:rgba(8,16,13,.5); backdrop-filter:blur(3px)}
-  .modal-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:20px}
-  .admin-panel{display:none}
-  .admin-panel.active{display:block}
+  dialog.modal::backdrop{background:rgba(5,15,12,0.6); backdrop-filter:blur(4px)}
+  .modal-actions{display:flex; justify-content:flex-end; gap:10px; margin-top:22px}
   .admin-tab-nav{display:flex; gap:6px; margin:14px 0; border-bottom:1px solid var(--line); padding-bottom:8px}
-  .admin-tab-btn{background:none; border:none; padding:6px 10px; font-size:12px; font-weight:600; cursor:pointer; color:var(--muted); border-radius:6px}
+  .admin-tab-btn{background:none; border:none; padding:7px 12px; font-size:12.5px; font-weight:600; cursor:pointer; color:var(--muted); border-radius:8px; transition:all .2s ease;}
   .admin-tab-btn.active{color:var(--accent); border-bottom:2px solid var(--accent); background:var(--accent-soft)}
 
-  /* STYLES KHUSUS DRAG & DROP ITEM ADMIN */
+  /* ADMIN ITEM */
   .list-item-admin{
     display:flex; align-items:center; justify-content:space-between;
-    padding:10px 12px; background:var(--card-soft); border:1px solid var(--line);
-    border-radius:12px; margin-bottom:8px; font-size:13px; cursor:grab;
+    padding:11px 14px; background:var(--card-soft); border:1px solid var(--line);
+    border-radius:14px; margin-bottom:8px; font-size:13.5px; cursor:grab;
     user-select:none; touch-action:none; transition:all .15s ease;
   }
   .list-item-admin:active{cursor:grabbing;}
@@ -311,19 +317,22 @@
     opacity:0.4; border:2px dashed var(--accent); background:var(--accent-soft);
   }
   .drag-handle{
-    display:inline-flex; align-items:center; margin-right:10px; color:var(--muted); cursor:grab; font-size:14px;
+    display:inline-flex; align-items:center; margin-right:10px; color:var(--muted); cursor:grab; font-size:15px;
   }
-  .list-item-actions{display:flex; gap:5px; align-items:center;}
+  .list-item-actions{display:flex; gap:6px; align-items:center;}
   .pending-card{
     background:var(--gold-bg); border:1px solid var(--gold-line);
-    padding:12px; border-radius:10px; margin-bottom:10px; font-size:12.5px;
+    padding:14px; border-radius:14px; margin-bottom:12px; font-size:13px;
   }
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <p class="bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+  <!-- KOTAK BASMALAH ISLAMI -->
+  <div class="bismillah-box">
+    <p class="bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
+  </div>
 
   <header class="top">
     <div class="brand">
@@ -332,7 +341,7 @@
       </div>
       <div class="brand-text">
         <p class="pondok">PP Nurusy Syuhada' Kedungrejo</p>
-        <h1>JADWAL PIKET WAQIAH DAN BANGUNKAN SANTRI</h1>
+        <h1>Jadwal Piket Waqi'ah & Bangunkan Santri</h1>
       </div>
     </div>
     <div class="top-actions">
@@ -355,17 +364,17 @@
 
   <!-- PAGE 1: BERANDA & WAQI'AH -->
   <main class="page" id="page-waqiah">
-    <!-- KARTU UTAMA: PETUGAS JAGA BESOK -->
     <section class="duty-next">
       <p class="duty-next-label" id="mainNextTitleLabel">Petugas Jaga Besok Hari</p>
       <h2 class="duty-next-name" id="mainNextDutyVal">-</h2>
-      <div class="orn" style="margin:10px auto;"><svg viewBox="0 0 10 10"><polygon points="5,0 10,5 5,10 0,5"/></svg></div>
+      <div class="orn-islamic">
+        <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+      </div>
       <p class="duty-next-date" id="mainNextDateVal">-</p>
       <div class="hijri-date" id="mainNextHijriVal">-</div>
       <div id="mainNextEventBadge"></div>
     </section>
 
-    <!-- KARTU PENDUKUNG: PETUGAS 2 HARI KE DEPAN (LUSA) -->
     <section class="duty-lusa">
       <p class="duty-lusa-label" id="mainLusaTitleLabel">Petugas Jaga 2 Hari Ke Depan (Lusa)</p>
       <h2 class="duty-lusa-name" id="mainLusaDutyVal">-</h2>
@@ -374,7 +383,6 @@
       <div id="mainLusaEventBadge"></div>
     </section>
 
-    <!-- PROYEKSI JADWAL WAQIAH (TERBUKA PERMANEN TANPA COLLAPSE) -->
     <section class="card">
       <h2>Jadwal Lengkap Waqi'ah 7 Hari</h2>
       <ul class="sched" id="mainSchedList"></ul>
@@ -387,12 +395,14 @@
     </section>
   </main>
 
-  <!-- PAGE 2: PIKET BANGUNKAN SANTRI PUTRA -->
+  <!-- PAGE 2: PIKET PUTRA -->
   <main class="page" id="page-putra" hidden>
     <section class="duty-next">
       <p class="duty-next-label" id="putraNextTitleLabel">Petugas Jaga Besok Hari</p>
       <h2 class="duty-next-name" id="putraNextDutyVal">-</h2>
-      <div class="orn" style="margin:10px auto;"><svg viewBox="0 0 10 10"><polygon points="5,0 10,5 5,10 0,5"/></svg></div>
+      <div class="orn-islamic">
+        <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+      </div>
       <p class="duty-next-date" id="putraNextDateVal">-</p>
       <div class="hijri-date" id="putraNextHijriVal">-</div>
       <div id="putraNextEventBadge"></div>
@@ -412,12 +422,14 @@
     </section>
   </main>
 
-  <!-- PAGE 3: PIKET BANGUNKAN SANTRI PUTRI -->
+  <!-- PAGE 3: PIKET PUTRI -->
   <main class="page" id="page-putri" hidden>
     <section class="duty-next">
       <p class="duty-next-label" id="putriNextTitleLabel">Petugas Jaga Besok Hari</p>
       <h2 class="duty-next-name" id="putriNextDutyVal">-</h2>
-      <div class="orn" style="margin:10px auto;"><svg viewBox="0 0 10 10"><polygon points="5,0 10,5 5,10 0,5"/></svg></div>
+      <div class="orn-islamic">
+        <svg viewBox="0 0 24 24"><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>
+      </div>
       <p class="duty-next-date" id="putriNextDateVal">-</p>
       <div class="hijri-date" id="putriNextHijriVal">-</div>
       <div id="putriNextEventBadge"></div>
@@ -445,9 +457,9 @@
 
 </div>
 
-<!-- MODAL POP-UP PERMOHONAN TUKAR JADWAL -->
+<!-- MODAL POP-UP TUKAR JADWAL -->
 <dialog class="modal" id="tukarModal">
-  <h2 style="margin:0 0 12px; font-size:16px; color:var(--accent);">Formulir Permohonan Tukar Piket</h2>
+  <h2 style="margin:0 0 14px; font-size:16px; color:var(--accent); font-family:'Amiri', serif;">Formulir Permohonan Tukar Piket</h2>
   <form id="tukarForm" onsubmit="submitTukar(event)">
     <div class="field">
       <label>Kategori Piket</label>
@@ -534,7 +546,6 @@
     localStorage.setItem("piket-waqiah-theme", next);
   }
 
-  // KONTROL MODAL TUKAR JADWAL (POP-UP)
   function openTukarModal() {
     document.getElementById("tukarModal").showModal();
   }
@@ -557,7 +568,6 @@
     return Math.floor((t2 - t1) / (1000 * 60 * 60 * 24));
   }
 
-  // KALENDER HIJRIAH (DIPERBAIKI AGAR TIDAK DOBEL H)
   function getHijriDate(d) {
     try {
       const formatter = new Intl.DateTimeFormat('id-ID-u-ca-islamic-umalqura', {
@@ -725,9 +735,9 @@
         </div>
         <div class="n">
           ${dutyName}
-          ${f.eventStr ? `<div style="font-size:10px; color:var(--gold); font-weight:700;">${f.eventStr}</div>` : ''}
+          ${f.eventStr ? `<div style="font-size:10px; color:var(--gold); font-weight:700; margin-top:2px;">${f.eventStr}</div>` : ''}
         </div>
-        <div class="t">03.00 WIB</div>
+        <div class="t">03.00</div>
       `;
       ul.appendChild(li);
     }
@@ -800,7 +810,7 @@
           <strong>Pemohon:</strong> ${r.pemohon} | <strong>Tanggal:</strong> ${r.tgl} <br>
           <strong>Pengganti:</strong> ${r.pengganti || '-'} <br>
           <strong>Alasan:</strong> ${r.alasan}
-          <div style="margin-top:8px; display:flex; gap:6px;">
+          <div style="margin-top:10px; display:flex; gap:6px;">
             <button class="btn sm primary" onclick="approveTukar(${r.id}, true)">Setujui</button>
             <button class="btn sm danger" onclick="approveTukar(${r.id}, false)">Tolak</button>
           </div>
@@ -810,15 +820,15 @@
     } else {
       let currentList = currentAdminTab === 'waqiah' ? listMain : (currentAdminTab === 'putra' ? listPutra : listPutri);
 
-      let html = `<div style="margin-top:12px; margin-bottom:12px;">
+      let html = `<div style="margin-top:12px; margin-bottom:14px;">
         <label style="font-size:12px; font-weight:600;">Tambah Petugas Baru:</label>
-        <div style="display:flex; gap:6px; margin-top:4px;">
+        <div style="display:flex; gap:6px; margin-top:6px;">
           <input type="text" id="newOfficerName" placeholder="Nama petugas...">
           <button class="btn primary sm" onclick="addOfficer()">Tambah</button>
         </div>
       </div>
       <label style="font-size:12px; font-weight:600;">Urutan Petugas (Geser/Drag untuk Mengurutkan):</label>
-      <div style="margin-top:6px;" id="dragContainer">`;
+      <div style="margin-top:8px;" id="dragContainer">`;
 
       currentList.forEach((name, idx) => {
         html += `
@@ -948,7 +958,6 @@
     initApp();
   }
 
-  // JIKA DISETUJUI, NAMA PEMOHON BERGESER OTOMATIS KE POSISI HARI TERAKHIR DALAM ROTASI
   function approveTukar(id, isApproved) {
     const req = tukarRequests.find(r => r.id === id);
     if (req) {
@@ -958,7 +967,6 @@
         let targetList = req.kat === 'waqiah' ? listMain : (req.kat === 'putra' ? listPutra : listPutri);
         const nameToMove = req.pengganti ? req.pengganti : req.pemohon;
         
-        // Geser ke posisi terakhir dalam array list rotasi
         const idx = targetList.indexOf(nameToMove);
         if (idx !== -1) {
           targetList.splice(idx, 1);
