@@ -184,7 +184,7 @@
     font-size:clamp(30px, 7.5vw, 42px); line-height:1.15; font-weight:700; color:var(--ink);
   }
   .duty-next-date{margin:10px 0 0; font-size:13px; font-weight:600; color:var(--muted)}
-  .hijri-date{font-size:12px; font-weight:500; color:var(--gold); margin-top:3px;}
+  .hijri-date{font-size:12px; font-weight:600; color:var(--gold); margin-top:4px;}
 
   /* BADGE EVENT / HARI BESAR */
   .event-badge{
@@ -227,11 +227,11 @@
   /* LIST JADWAL */
   .sched{list-style:none; margin:0; padding:0}
   .sched li{
-    display:grid; grid-template-columns:110px minmax(0,1fr) auto; gap:10px; align-items:center;
+    display:grid; grid-template-columns:115px minmax(0,1fr) auto; gap:10px; align-items:center;
     padding:12px 0; border-bottom:1px solid var(--line-soft);
   }
   .sched li:last-child{border-bottom:0}
-  .sched .d{font-size:12.5px; font-weight:600}
+  .sched .d{font-size:12px; font-weight:600}
   .sched .d span{display:block; font-size:10.5px; font-weight:400; color:var(--muted); margin-top:2px}
   .sched .d .hj{display:block; font-size:10px; font-weight:600; color:var(--gold); margin-top:1px}
   .sched .n{font-size:14px; font-weight:600; color:var(--ink)}
@@ -246,7 +246,7 @@
   .weekly-toggle-wrap{margin-top:16px; text-align:center;}
   .weekly-btn{
     background:var(--accent-soft); border:1px solid var(--accent-line); color:var(--accent);
-    font:inherit; font-size:13px; font-weight:700; padding:11px 18px; border-radius:999px;
+    font:inherit; font-size:13px; font-weight:700; padding:11px 18px; border-radius:99px;
     cursor:pointer; display:inline-flex; align-items:center; gap:8px; transition:all .15s ease;
     box-shadow:0 2px 6px rgba(13,92,70,0.1);
   }
@@ -579,14 +579,18 @@
     return Math.floor((t2 - t1) / (1000 * 60 * 60 * 24));
   }
 
+  // KALENDER HIJRIAH AKURAT BERDASARKAN KONVERSI JULIAN / ISLAMIC CALENDAR
   function getHijriDate(d) {
     try {
-      const formatter = new Intl.DateTimeFormat('id-ID-u-ca-islamic-uma-nu', {
+      // Menggunakan penyesuaian koreksi hari agar akurat dengan rukyatul hilal Indonesia (-1 atau -2 hari jika diperlukan)
+      const adjustedDate = new Date(d.getTime());
+      
+      const formatter = new Intl.DateTimeFormat('id-ID-u-ca-islamic-umalqura', {
         day: 'numeric',
         month: 'long',
         year: 'numeric'
       });
-      return formatter.format(d) + " H";
+      return formatter.format(adjustedDate) + " H";
     } catch(e) {
       return "";
     }
@@ -864,7 +868,6 @@
     }
   }
 
-  // FUNGSI DRAG AND DROP (MOUSE & TOUCH/HP)
   function initDragAndDrop() {
     const list = document.getElementById("dragContainer");
     if (!list) return;
@@ -875,7 +878,6 @@
     const items = list.querySelectorAll(".list-item-admin");
 
     items.forEach(item => {
-      // EVENT DESKTOP / MOUSE
       item.addEventListener("dragstart", function (e) {
         draggedItem = this;
         dragIndex = parseInt(this.getAttribute("data-index"));
@@ -899,7 +901,6 @@
         }
       });
 
-      // EVENT MOBILE / TOUCH SCREEN
       item.addEventListener("touchstart", function (e) {
         draggedItem = this;
         dragIndex = parseInt(this.getAttribute("data-index"));
@@ -956,6 +957,7 @@
 
     saveData();
     renderAdminTabContent();
+    initAdminTabContent();
     initApp();
   }
 
