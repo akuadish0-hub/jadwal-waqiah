@@ -152,7 +152,7 @@
   .page{animation:fade .2s ease}
   @keyframes fade{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none}}
 
-  /* KARTU UTAMA LEBIH COMPACT */
+  /* KARTU UTAMA */
   .duty-next{
     position:relative; text-align:center;
     border:1.5px solid var(--gold-line);
@@ -175,7 +175,7 @@
     font-size:clamp(26px, 7vw, 36px); line-height:1.15; font-weight:700; color:var(--ink);
   }
   .duty-next-date{margin:8px 0 0; font-size:12px; font-weight:600; color:var(--muted)}
-  .hijri-date{font-family:"Amiri", serif; font-size:13.5px; font-weight:700; color:var(--gold); margin-top:3px;}
+  .hijri-date{font-family:"Amiri", serif; font-size:14px; font-weight:700; color:var(--gold); margin-top:3px;}
 
   /* ORNAMEN GEOMETRIS KECIL */
   .orn-islamic{
@@ -194,7 +194,7 @@
     border-radius:999px; background:var(--accent-soft); border:1px solid var(--accent-line); color:var(--accent);
   }
 
-  /* KARTU PENDUKUNG (LUSA) RINGKAS */
+  /* KARTU PENDUKUNG (LUSA) */
   .duty-lusa{
     position:relative; text-align:center;
     border:1px solid var(--line);
@@ -227,10 +227,10 @@
     transform:rotate(45deg); background:var(--gold); border-radius:1px;
   }
 
-  /* LIST JADWAL RAPAT & PADAT */
+  /* LIST JADWAL */
   .sched{list-style:none; margin:0; padding:0}
   .sched li{
-    display:grid; grid-template-columns:110px minmax(0,1fr) auto; gap:10px; align-items:center;
+    display:grid; grid-template-columns:120px minmax(0,1fr) auto; gap:10px; align-items:center;
     padding:10px 4px; border-bottom:1px solid var(--line-soft);
   }
   .sched li:last-child{border-bottom:0}
@@ -327,7 +327,6 @@
 <body>
 <div class="wrap">
 
-  <!-- KOTAK BASMALAH ISLAMI -->
   <div class="bismillah-box">
     <p class="bismillah" lang="ar" dir="rtl">بِسْمِ اللَّهِ الرَّحْمَنِ الرَّحِيمِ</p>
   </div>
@@ -566,22 +565,53 @@
     return Math.floor((t2 - t1) / (1000 * 60 * 60 * 24));
   }
 
-  // FUNGSI KALENDER HIJRIAH YANG AMAN & KOMPATIBEL DI SEMUA HP (MOBILE & DESKTOP)
-  function getHijriDate(d) {
-    try {
-      // Mencoba menggunakan Intl dengan fallback aman untuk perangkat mobile
-      const options = { day: 'numeric', month: 'long', year: 'numeric' };
-      let formatter;
-      try {
-        formatter = new Intl.DateTimeFormat('id-ID-u-ca-islamic-umalqura', options);
-      } catch (err) {
-        formatter = new Intl.DateTimeFormat('id-ID-u-ca-islamic', options);
-      }
-      return formatter.format(d);
-    } catch(e) {
-      // Fallback manual sederhana jika browser sama sekali tidak mendukung
-      return "";
+  // ALGORITMA KONVERSI HIJRIAH MURNI AKURAT KHUSUS HP (TIDAK BERGANTUNG PADA BROWSER HP)
+  function getHijriDate(date) {
+    const months = [
+      "Muharram", "Safar", "Rabi'ul Awwal", "Rabi'us Tsani",
+      "Jumadal Ula", "Jumadas Tsaniyah", "Rajab", "Sya'ban",
+      "Ramadhan", "Syawwal", "Dzulqa'dah", "Dzulhijjah"
+    ];
+
+    let day = date.getDate();
+    let month = date.getMonth();
+    let year = date.getFullYear();
+
+    if (month < 2) {
+      year -= 1;
+      month += 12;
     }
+
+    let a = Math.floor(year / 100);
+    let b = 2 - a + Math.floor(a / 4);
+
+    let julianDay = Math.floor(365.25 * (year + 4716)) + Math.floor(30.6001 * (month + 1)) + day + b - 1524.5;
+
+    let z = julianDay + 1;
+    let i = Math.floor((z - 1867216.25) / 36524.25);
+    let j = z + 1 + i - Math.floor(i / 4);
+
+    let hJul = j + 1524;
+    let hA = Math.floor((hJul - 1221) / 365.25);
+    let hB = Math.floor(365.25 * hA);
+    let hC = Math.floor((hJul - hB) / 30.6001);
+
+    let hDay = hJul - hB - Math.floor(30.6001 * hC);
+
+    let l = julianDay - 1948440 + 10632;
+    let n = Math.floor((l - 1) / 10631);
+    l = l - 10631 * n + 354;
+
+    let j1 = (Math.floor((10985 - l) / 5316)) * (Math.floor((50 * l) / 17719)) + (Math.floor(l / 5670)) * (Math.floor((43 * l) / 15238));
+    l = l - (Math.floor((30 - j1) / 15)) * (Math.floor((17719 * j1) / 50)) - (Math.floor(j1 / 16)) * (Math.floor((15238 * j1) / 43)) + 29;
+
+    let hMonth = Math.floor((24 * l) / 709);
+    let hDate = Math.floor(l - Math.floor((709 * hMonth) / 24));
+    let hYear = 30 * n + j1 - 30;
+
+    if (hMonth < 0 || hMonth >= 12) hMonth = 0;
+
+    return `${hDate} ${months[hMonth]} ${hYear} H`;
   }
 
   function getCalendarEvent(d, hijriStr) {
@@ -598,10 +628,10 @@
     if (hijriStr) {
       if (hijriStr.includes("1 Muharram")) return "🌙 Tahun Baru Hijriah";
       if (hijriStr.includes("10 Muharram")) return "🕌 Hari Asyura";
-      if (hijriStr.includes("12 Rabi’ul-Awwal") || hijriStr.includes("12 Rabi'ul-Awwal")) return "✨ Maulid Nabi Muhammad SAW";
+      if (hijriStr.includes("12 Rabi'ul Awwal")) return "✨ Maulid Nabi Muhammad SAW";
       if (hijriStr.includes("27 Rajab")) return "🌌 Isra' Mi'raj";
-      if (hijriStr.includes("1 Ramadan") || hijriStr.includes("1 Ramadhan")) return "🌙 Awal Puasa Ramadan";
-      if (hijriStr.includes("17 Ramadan") || hijriStr.includes("17 Ramadhan")) return "📖 Nuzulul Qur'an";
+      if (hijriStr.includes("1 Ramadhan")) return "🌙 Awal Puasa Ramadhan";
+      if (hijriStr.includes("17 Ramadhan")) return "📖 Nuzulul Qur'an";
       if (hijriStr.includes("1 Syawwal")) return "🕌 Hari Raya Idul Fitri";
       if (hijriStr.includes("10 Dzulhijjah")) return "🕋 Hari Raya Idul Adha";
     }
