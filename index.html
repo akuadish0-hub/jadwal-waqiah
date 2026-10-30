@@ -106,7 +106,6 @@
   .brand{display:flex; align-items:center; gap:12px; min-width:0}
   .brand-text{min-width:0}
   
-  /* WADAH LOGO DIPERKECIL & RAPI */
   .brand-logo-wrap{
     display:flex; align-items:center; justify-content:center;
     width:44px; height:44px; flex:0 0 auto;
@@ -161,7 +160,7 @@
   .page{animation:fade .2s ease}
   @keyframes fade{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:none}}
 
-  /* KARTU BESAR DI ATAS: JANGAN LUPA, BESOK ANDA PIKET */
+  /* KARTU UTAMA: PETUGAS JAGA HARI BERIKUTNYA */
   .duty-next{
     position:relative; text-align:center;
     border:2px solid var(--gold-line);
@@ -186,7 +185,7 @@
   }
   .duty-next-date{margin:10px 0 0; font-size:14px; font-weight:600; color:var(--muted)}
 
-  /* KARTU PETUGAS HARI INI */
+  /* KARTU INFORMASI PENDUKUNG */
   .duty-today{
     position:relative; text-align:center;
     border:1px solid var(--line);
@@ -266,6 +265,13 @@
     background:var(--card-soft); border:1px solid var(--line); border-radius:12px;
     padding:10px 12px; outline:none; transition:all .15s ease;
   }
+  /* Khusus input password dengan keypad angka */
+  input[type="password"] {
+    width:100%; font:inherit; font-size:16px; color:var(--ink);
+    background:var(--card-soft); border:1px solid var(--line); border-radius:12px;
+    padding:10px 12px; outline:none; transition:all .15s ease;
+    letter-spacing: 4px;
+  }
   select:focus, input:focus, textarea:focus{
     border-color:var(--accent); box-shadow:0 0 0 3px var(--accent-soft); background:var(--card);
   }
@@ -321,7 +327,6 @@
 
   <header class="top">
     <div class="brand">
-      <!-- MENGGUNAKAN LOGO logo-nsy.png -->
       <div class="brand-logo-wrap" title="PP Nurusy Syuhada'">
         <img src="logo-nsy.png" alt="Logo PP Nurusy Syuhada'" onError="this.style.display='none';">
       </div>
@@ -350,19 +355,19 @@
 
   <!-- PAGE 1: BERANDA & WAQI'AH -->
   <main class="page" id="page-waqiah">
-    <!-- KARTU BESAR DI ATAS: JANGAN LUPA, BESOK ANDA PIKET (MUNCUL JAM 07:00 - 19:00) -->
-    <section class="duty-next" id="mainNextCard" style="display:none;">
-      <p class="duty-next-label">Jangan Lupa, Besok Anda Piket</p>
+    <!-- KARTU UTAMA: PETUGAS JAGA HARI BERIKUTNYA (BESOK) -->
+    <section class="duty-next">
+      <p class="duty-next-label" id="mainNextTitleLabel">Petugas Jaga Hari Berikutnya</p>
       <h2 class="duty-next-name" id="mainNextDutyVal">-</h2>
       <div class="orn" style="margin:12px auto;"><svg viewBox="0 0 10 10"><polygon points="5,0 10,5 5,10 0,5"/></svg></div>
       <p class="duty-next-date" id="mainNextDateVal">-</p>
     </section>
 
-    <!-- KARTU PETUGAS HARI INI -->
+    <!-- KARTU INFORMASI PENDUKUNG -->
     <section class="duty-today">
-      <p class="duty-today-label">Petugas Jaga Hari Ini (Mulai Pukul 03.00 WIB)</p>
+      <p class="duty-today-label">Informasi Jadwal Jaga</p>
       <h2 class="duty-today-name" id="mainDutyName">-</h2>
-      <p class="duty-today-date" id="mainDutyDate">-</p>
+      <p class="duty-today-date" id="mainDutyDate">Mulai Pukul 03.00 WIB</p>
     </section>
 
     <!-- PROYEKSI JADWAL WAQIAH (COLLAPSIBLE MINGGUAN) -->
@@ -419,15 +424,13 @@
 
   <!-- PAGE 2: PIKET BANGUNKAN SANTRI PUTRA -->
   <main class="page" id="page-putra" hidden>
-    <!-- KARTU BESAR DI ATAS: JANGAN LUPA, BESOK ANDA PIKET (MUNCUL JAM 07:00 - 19:00) -->
-    <section class="duty-next" id="putraNextCard" style="display:none;">
-      <p class="duty-next-label">Jangan Lupa, Besok Anda Piket</p>
+    <section class="duty-next">
+      <p class="duty-next-label" id="putraNextTitleLabel">Petugas Jaga Hari Berikutnya</p>
       <h2 class="duty-next-name" id="putraNextDutyVal">-</h2>
       <div class="orn" style="margin:12px auto;"><svg viewBox="0 0 10 10"><polygon points="5,0 10,5 5,10 0,5"/></svg></div>
       <p class="duty-next-date" id="putraNextDateVal">-</p>
     </section>
 
-    <!-- KARTU PETUGAS HARI INI -->
     <section class="duty-today">
       <p class="duty-today-label">Piket Bangunkan Santri Putra (Rotasi Tiap 2 Hari)</p>
       <h2 class="duty-today-name" id="putraDutyName">-</h2>
@@ -442,15 +445,13 @@
 
   <!-- PAGE 3: PIKET BANGUNKAN SANTRI PUTRI -->
   <main class="page" id="page-putri" hidden>
-    <!-- KARTU BESAR DI ATAS: JANGAN LUPA, BESOK ANDA PIKET (MUNCUL JAM 07:00 - 19:00) -->
-    <section class="duty-next" id="putriNextCard" style="display:none;">
-      <p class="duty-next-label">Jangan Lupa, Besok Anda Piket</p>
+    <section class="duty-next">
+      <p class="duty-next-label" id="putriNextTitleLabel">Petugas Jaga Hari Berikutnya</p>
       <h2 class="duty-next-name" id="putriNextDutyVal">-</h2>
       <div class="orn" style="margin:12px auto;"><svg viewBox="0 0 10 10"><polygon points="5,0 10,5 5,10 0,5"/></svg></div>
       <p class="duty-next-date" id="putriNextDateVal">-</p>
     </section>
 
-    <!-- KARTU PETUGAS HARI INI -->
     <section class="duty-today">
       <p class="duty-today-label">Piket Bangunkan Santri Putri (Rotasi Harian)</p>
       <h2 class="duty-today-name" id="putriDutyName">-</h2>
@@ -478,7 +479,8 @@
     <h3 style="margin:0 0 12px; font-size:18px;">Login Admin</h3>
     <div class="field">
       <label>Sandi Admin</label>
-      <input type="password" id="adminPass" placeholder="Masukkan sandi (2405)...">
+      <!-- DIUBAH JADI PASSWORD TERSEMBUNYI DAN KEYPAD ANGKA OTOMATIS -->
+      <input type="password" id="adminPass" inputmode="numeric" pattern="[0-9]*" placeholder="Masukkan PIN angka...">
     </div>
     <p id="adminErr" style="color:var(--danger); font-size:12px; margin:8px 0 0; display:none;">Sandi salah!</p>
     <div class="modal-actions">
@@ -560,65 +562,70 @@
   }
 
   function initApp() {
-    const today = new Date();
-    const currentHour = today.getHours();
+    const now = new Date();
+    const currentHour = now.getHours();
     
-    // Aktif mulai jam 07:00 pagi hingga 19:00 malam
-    const showReminder = currentHour >= 7 && currentHour < 19;
+    // Logika Rotasi Otomatis Berganti Pukul 07:00 Pagi:
+    // Jika sebelum jam 07:00 pagi, maka "Hari Aktif" dihitung mundur ke kemarin.
+    // Jika sudah lewat atau sama dengan jam 07:00 pagi, maka dihitung hari ini.
+    let activeDate = new Date(now);
+    if (currentHour < 7) {
+      activeDate.setDate(activeDate.getDate() - 1);
+    }
 
-    const diff = getDiffDays(BASE_DATE, today);
-    const fToday = formatDate(today);
+    const diff = getDiffDays(BASE_DATE, activeDate);
+    const fActive = formatDate(activeDate);
 
-    const tomorrow = new Date(today);
-    tomorrow.setDate(today.getDate() + 1);
-    const diffTom = getDiffDays(BASE_DATE, tomorrow);
-    const fTom = formatDate(tomorrow);
+    // Tanggal untuk kartu utama (Hari Berikutnya / Besok dari activeDate)
+    const nextDate = new Date(activeDate);
+    nextDate.setDate(activeDate.getDate() + 1);
+    const diffNext = getDiffDays(BASE_DATE, nextDate);
+    const fNext = formatDate(nextDate);
+
+    // Label dinamis kartu utama
+    let labelText = `Petugas Jaga Hari Berikutnya (${fNext.dayName})`;
 
     // 1. Piket Waqi'ah
-    const mainDuty = getOverrideDuty('waqiah', fToday.isoDate) || getDutyFromList(listMain, diff);
-    const mainTomDuty = getOverrideDuty('waqiah', fTom.isoDate) || getDutyFromList(listMain, diffTom);
-    document.getElementById("mainDutyName").textContent = mainDuty;
-    document.getElementById("mainDutyDate").textContent = `${fToday.dayName}, ${fToday.dateStr}`;
-    document.getElementById("mainNextDutyVal").textContent = mainTomDuty;
-    document.getElementById("mainNextDateVal").textContent = `${fTom.dayName}, ${fTom.dateStr}`;
+    const todayDuty = getOverrideDuty('waqiah', fActive.isoDate) || getDutyFromList(listMain, diff);
+    const nextDuty = getOverrideDuty('waqiah', fNext.isoDate) || getDutyFromList(listMain, diffNext);
     
-    const mainCard = document.getElementById("mainNextCard");
-    mainCard.style.display = showReminder ? "block" : "none";
+    document.getElementById("mainNextDutyVal").textContent = nextDuty;
+    document.getElementById("mainNextDateVal").textContent = `${fNext.dayName}, ${fNext.dateStr}`;
+    document.getElementById("mainNextTitleLabel").textContent = labelText;
+    document.getElementById("mainDutyName").textContent = `Hari Ini: ${todayDuty}`;
 
     // 2. Piket Putra
-    const putraDuty = getOverrideDuty('putra', fToday.isoDate) || getDutyFromList(listPutra, Math.floor(diff / 2));
-    const putraTomDuty = getOverrideDuty('putra', fTom.isoDate) || getDutyFromList(listPutra, Math.floor(diffTom / 2));
-    document.getElementById("putraDutyName").textContent = putraDuty;
+    const todayPutra = getOverrideDuty('putra', fActive.isoDate) || getDutyFromList(listPutra, Math.floor(diff / 2));
+    const nextPutra = getOverrideDuty('putra', fNext.isoDate) || getDutyFromList(listPutra, Math.floor(diffNext / 2));
+
+    document.getElementById("putraNextDutyVal").textContent = nextPutra;
+    document.getElementById("putraNextDateVal").textContent = `${fNext.dayName}, ${fNext.dateStr}`;
+    document.getElementById("putraNextTitleLabel").textContent = labelText;
+    document.getElementById("putraDutyName").textContent = `Hari Ini: ${todayPutra}`;
     document.getElementById("putraRotasiLabel").textContent = "Rotasi Berjalan: " + listPutra.join(" ⇄ ");
-    document.getElementById("putraNextDutyVal").textContent = putraTomDuty;
-    document.getElementById("putraNextDateVal").textContent = `${fTom.dayName}, ${fTom.dateStr}`;
-    
-    const putraCard = document.getElementById("putraNextCard");
-    putraCard.style.display = showReminder ? "block" : "none";
 
     // 3. Piket Putri
-    const putriDuty = getOverrideDuty('putri', fToday.isoDate) || getDutyFromList(listPutri, diff);
-    const putriTomDuty = getOverrideDuty('putri', fTom.isoDate) || getDutyFromList(listPutri, diffTom);
-    document.getElementById("putriDutyName").textContent = putriDuty;
-    document.getElementById("putriRotasiLabel").textContent = "Rotasi Berjalan: " + listPutri.join(" → ");
-    document.getElementById("putriNextDutyVal").textContent = putriTomDuty;
-    document.getElementById("putriNextDateVal").textContent = `${fTom.dayName}, ${fTom.dateStr}`;
-    
-    const putriCard = document.getElementById("putriNextCard");
-    putriCard.style.display = showReminder ? "block" : "none";
+    const todayPutri = getOverrideDuty('putri', fActive.isoDate) || getDutyFromList(listPutri, diff);
+    const nextPutri = getOverrideDuty('putri', fNext.isoDate) || getDutyFromList(listPutri, diffNext);
 
-    // Render Proyeksi 7 Hari
-    renderScheduleList("mainSchedList", today, (d) => {
+    document.getElementById("putriNextDutyVal").textContent = nextPutri;
+    document.getElementById("putriNextDateVal").textContent = `${fNext.dayName}, ${fNext.dateStr}`;
+    document.getElementById("putriNextTitleLabel").textContent = labelText;
+    document.getElementById("putriDutyName").textContent = `Hari Ini: ${todayPutri}`;
+    document.getElementById("putriRotasiLabel").textContent = "Rotasi Berjalan: " + listPutri.join(" → ");
+
+    // Render Proyeksi 7 Hari (menggunakan tanggal aktif)
+    renderScheduleList("mainSchedList", activeDate, (d) => {
       const f = formatDate(d);
       return getOverrideDuty('waqiah', f.isoDate) || getDutyFromList(listMain, getDiffDays(BASE_DATE, d));
     });
 
-    renderScheduleList("putraSchedList", today, (d) => {
+    renderScheduleList("putraSchedList", activeDate, (d) => {
       const f = formatDate(d);
       return getOverrideDuty('putra', f.isoDate) || getDutyFromList(listPutra, Math.floor(getDiffDays(BASE_DATE, d) / 2));
     });
 
-    renderScheduleList("putriSchedList", today, (d) => {
+    renderScheduleList("putriSchedList", activeDate, (d) => {
       const f = formatDate(d);
       return getOverrideDuty('putri', f.isoDate) || getDutyFromList(listPutri, getDiffDays(BASE_DATE, d));
     });
